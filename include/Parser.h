@@ -14,6 +14,7 @@
  *   2. Merge overlapping live ranges of the same variable into Web objects
  *      using a greedy algorithm.
  *   3. Read the algorithm configuration file (register count, algorithm type).
+ *   4. Build a timeline vector preserving the execution order from the input file.
  *
  * The webs produced here become the nodes of the interference graph, which
  * is built separately by InterferenceGraph using Graph<int> as its base.
@@ -43,7 +44,9 @@ public:
      *
      * Reads variable names and their associated live ranges, applies the
      * '+'/'-' markers, then merges overlapping ranges for each variable
-     * into webs. The resulting webs are retrievable via getWebs().
+     * into webs. Also builds the timeline vector in input file order.
+     * The resulting webs are retrievable via getWebs().
+     * The timeline is retrievable via getTimeline().
      *
      * Time complexity: O(V * R^2 * P * log P)
      *
@@ -78,6 +81,17 @@ public:
     const AlgorithmConfig& getConfig() const;
 
     /**
+     * @brief Returns the timeline of program points in input file order.
+     *
+     * The timeline preserves the execution order as given in the input file,
+     * including backwards jumps (e.g. a range starting at line 20 and ending
+     * at line 11). This is essential for the linear scan allocation algorithm.
+     *
+     * @return Const reference to the timeline vector.
+     */
+    const std::vector<int>& getTimeline() const;
+
+    /**
      * @brief Prints a human-readable summary of all webs to stdout.
      */
     void printWebs() const;
@@ -88,14 +102,17 @@ public:
     void printConfig() const;
 
 private:
-    std::vector<Web> webs;   ///< Final webs, one node each in the interference graph
-    AlgorithmConfig config;  ///< Parsed algorithm configuration
+    std::vector<Web> webs;      ///< Final webs, one node each in the interference graph
+    AlgorithmConfig config;     ///< Parsed algorithm configuration
+    std::vector<int> timeline;  ///< Program points in input file execution order
 
     /**
      * @brief Parses one line of the live ranges file into a LiveRange.
      *
      * Handles the "varName: p1+, p2, p3-" format, strips whitespace,
      * and extracts the '+'/'-' markers from program point tokens.
+     * Populates both programPoints (set) and orderedPoints (vector)
+     * to preserve input order.
      *
      * Time complexity: O(P log P)
      *

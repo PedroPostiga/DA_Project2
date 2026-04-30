@@ -16,10 +16,10 @@
  * they share any program point.
  */
 struct LiveRange {
-    std::string variable;        ///< Variable name this range belongs to
-    std::set<int> programPoints; ///< Sorted set of program line numbers
-    int defPoint;                ///< Line where the variable is defined ('+'), -1 if none
-    int lastUsePoint;            ///< Line where the variable is last used ('-'), -1 if none
+    std::string variable;           ///< Variable name this range belongs to
+    std::vector<int> programPoints; ///< Program points in input file order
+    int defPoint;                   ///< Line where the variable is defined ('+'), -1 if none
+    int lastUsePoint;               ///< Line where the variable is last used ('-'), -1 if none
 
     LiveRange();
 
@@ -29,20 +29,16 @@ struct LiveRange {
      * Two live ranges overlap if they share at least one program point,
      * with the exception: if one range starts at point P due to a definition
      * and the other ends at P due to a last use, they do NOT overlap at P.
-     * This models the "i = i + 1" pattern where the old value is consumed
-     * and a new value is defined at the same instruction.
      *
      * Time complexity: O(min(|A|,|B|) * log(max(|A|,|B|)))
      *
      * @param other The other live range.
-     * @return true if the ranges overlap (and should be fused into one web).
+     * @return true if the ranges overlap.
      */
     bool overlapsWith(const LiveRange& other) const;
 
     /**
      * @brief Merges another live range into this one in-place.
-     *
-     * Unions all program points and updates defPoint / lastUsePoint.
      *
      * Time complexity: O(m log n)
      *
@@ -66,8 +62,10 @@ struct Web {
     int id;                      ///< Unique ID — matches the vertex info in Graph<int>
     std::string variable;        ///< Variable name this web represents
     std::set<int> programPoints; ///< Union of all program points across merged ranges
+    std::vector<int> orderedPoints; ///< Program points in input file execution order
     int defPoint;                ///< Earliest definition point, -1 if none
     int lastUsePoint;            ///< Latest last-use point, -1 if none
+    int reg;                     ///< Assigned register ID (-1 = unassigned, -2 = spilled to memory)
 
     Web();
     Web(int id, const LiveRange& lr);
@@ -121,4 +119,10 @@ struct AlgorithmConfig {
     int algorithmParam;  ///< Parameter K for spilling/splitting; -1 if not applicable
 
     AlgorithmConfig();
+};
+
+struct Register {
+    int reg_id;
+    std::string current_variable;
+    bool allocated;
 };

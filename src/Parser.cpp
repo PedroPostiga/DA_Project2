@@ -12,12 +12,13 @@
 LiveRange::LiveRange() : defPoint(-1), lastUsePoint(-1) {}
 
 bool LiveRange::overlapsWith(const LiveRange& other) const {
-    for (int pt : programPoints) {
-        if (!other.programPoints.count(pt)) continue;
+    // Build a set from other's points for fast lookup
+    std::set<int> otherPoints(other.programPoints.begin(), other.programPoints.end());
 
-        // Exception: this starts here (def) and other ends here (last use) → no interference
+    for (int pt : programPoints) {
+        if (!otherPoints.count(pt)) continue;
+
         if (pt == defPoint && pt == other.lastUsePoint) continue;
-        // Symmetric
         if (pt == other.defPoint && pt == lastUsePoint) continue;
 
         return true;
@@ -26,8 +27,13 @@ bool LiveRange::overlapsWith(const LiveRange& other) const {
 }
 
 void LiveRange::merge(const LiveRange& other) {
-    for (int pt : other.programPoints)
-        programPoints.insert(pt);
+    std::set<int> existing(programPoints.begin(), programPoints.end());
+    for (int pt : other.programPoints) {
+        if (!existing.count(pt)) {
+            programPoints.push_back(pt);
+            existing.insert(pt);
+        }
+    }
 
     if (other.defPoint != -1) {
         if (defPoint == -1) defPoint = other.defPoint;
@@ -43,20 +49,21 @@ void LiveRange::merge(const LiveRange& other) {
 // Web
 // ─────────────────────────────────────────────────────────────
 
-Web::Web() : id(-1), defPoint(-1), lastUsePoint(-1) {}
+Web::Web() : id(-1), defPoint(-1), lastUsePoint(-1), reg(-1) {}
 
 Web::Web(int id, const LiveRange& lr)
     : id(id), variable(lr.variable),
-      programPoints(lr.programPoints),
+      programPoints(lr.programPoints.begin(), lr.programPoints.end()),
       defPoint(lr.defPoint),
-      lastUsePoint(lr.lastUsePoint) {}
+      lastUsePoint(lr.lastUsePoint),
+      reg(-1) {}
 
 bool Web::interferesWith(const Web& other) const {
     for (int pt : programPoints) {
         if (!other.programPoints.count(pt)) continue;
 
-        if (pt == defPoint      && pt == other.lastUsePoint) continue;
-        if (pt == other.defPoint && pt == lastUsePoint)      continue;
+        if (pt == defPoint       && pt == other.lastUsePoint) continue;
+        if (pt == other.defPoint && pt == lastUsePoint)       continue;
 
         return true;
     }
@@ -80,12 +87,12 @@ void Web::merge(const LiveRange& lr) {
 std::string Web::toString() const {
     std::ostringstream oss;
     bool first = true;
-    for (int pt : programPoints) {   // std::set iterates in sorted order
+    for (int pt : programPoints) {
         if (!first) oss << ",";
         first = false;
         oss << pt;
-        if (pt == defPoint)      oss << "+";
-        if (pt == lastUsePoint)  oss << "-";
+        if (pt == defPoint)     oss << "+";
+        if (pt == lastUsePoint) oss << "-";
     }
     return oss.str();
 }
@@ -140,7 +147,8 @@ bool Parser::parseLiveRangeLine(const std::string& line,
 
     std::string pointsPart = trim(line.substr(colonPos + 1));
     if (pointsPart.empty()) {
-        std::cerr << "[Parser] Error: no program points for variable '" << varName << "'\n";
+        std::cerr << "[Parser] Error: no program points for variable '"
+                  << varName << "'\n";
         return false;
     }
 
@@ -149,7 +157,8 @@ bool Parser::parseLiveRangeLine(const std::string& line,
 
         bool hasDef     = (tok.back() == '+');
         bool hasLastUse = (tok.back() == '-');
-        std::string numStr = (hasDef || hasLastUse) ? tok.substr(0, tok.size() - 1) : tok;
+        std::string numStr = (hasDef || hasLastUse)
+                             ? tok.substr(0, tok.size() - 1) : tok;
         numStr = trim(numStr);
 
         if (numStr.empty()) {
@@ -161,8 +170,8 @@ bool Parser::parseLiveRangeLine(const std::string& line,
         try {
             lineNum = std::stoi(numStr);
         } catch (...) {
-            std::cerr << "[Parser] Error: invalid program point '" << numStr
-                      << "' in line: " << line << "\n";
+            std::cerr << "[Parser] Error: invalid program point '"
+                      << numStr << "' in line: " << line << "\n";
             return false;
         }
 
@@ -172,7 +181,7 @@ bool Parser::parseLiveRangeLine(const std::string& line,
             return false;
         }
 
-        range.programPoints.insert(lineNum);
+        range.programPoints.push_back(lineNum);  // preserves input order
 
         if (hasDef) {
             if (range.defPoint != -1)
@@ -182,11 +191,12 @@ bool Parser::parseLiveRangeLine(const std::string& line,
                 range.defPoint = lineNum;
         }
         if (hasLastUse)
-            range.lastUsePoint = lineNum;   // keep the last '-' seen
+            range.lastUsePoint = lineNum;
     }
 
     if (range.programPoints.empty()) {
-        std::cerr << "[Parser] Error: no valid program points for '" << varName << "'\n";
+        std::cerr << "[Parser] Error: no valid program points for '"
+                  << varName << "'\n";
         return false;
     }
 
@@ -195,36 +205,31 @@ bool Parser::parseLiveRangeLine(const std::string& line,
 
 void Parser::mergeRangesIntoWebs(const std::string& variable,
                                  std::vector<LiveRange>& ranges) {
-    (void)variable;  // retained for debugging; already stored in each LiveRange
-    // Local webs built for this variable before committing to the global list.
+    (void)variable;
     std::vector<Web> varWebs;
 
     for (LiveRange& lr : ranges) {
         int mergeTarget = -1;
 
+        std::set<int> lrPoints(lr.programPoints.begin(), lr.programPoints.end());
+
         for (int i = 0; i < (int)varWebs.size(); i++) {
             Web& w = varWebs[i];
             bool touches = false;
 
-            for (int pt : lr.programPoints) {
+            for (int pt : lrPoints) {
                 if (!w.programPoints.count(pt)) continue;
 
-                // Fusion rule (spec §3.1): if a range ends at L and another
-                // starts at L, fuse them — this is the "i = i + 1" pattern.
-                // Both the def-end and use-start cases must trigger a merge.
                 bool lrStartsHere = (pt == lr.defPoint);
                 bool wEndsHere    = (pt == w.lastUsePoint);
                 bool wStartsHere  = (pt == w.defPoint);
                 bool lrEndsHere   = (pt == lr.lastUsePoint);
 
-                // Normally these would be non-interfering, but the spec says
-                // to fuse the two ranges in this case.
                 if ((lrStartsHere && wEndsHere) || (wStartsHere && lrEndsHere)) {
                     touches = true;
                     break;
                 }
 
-                // Regular overlap
                 touches = true;
                 break;
             }
@@ -236,14 +241,11 @@ void Parser::mergeRangesIntoWebs(const std::string& variable,
         }
 
         if (mergeTarget == -1) {
-            // No overlap found: start a new web for this range.
             int newId = (int)webs.size() + (int)varWebs.size();
             varWebs.emplace_back(newId, lr);
         } else {
             varWebs[mergeTarget].merge(lr);
 
-            // Fixup pass: the newly enlarged web may now touch other varWebs
-            // that were previously disjoint — chain-merge until stable.
             bool changed = true;
             while (changed) {
                 changed = false;
@@ -267,14 +269,16 @@ void Parser::mergeRangesIntoWebs(const std::string& variable,
                                 varWebs[mergeTarget].defPoint = absorbed.defPoint;
                             else
                                 varWebs[mergeTarget].defPoint =
-                                    std::min(varWebs[mergeTarget].defPoint, absorbed.defPoint);
+                                    std::min(varWebs[mergeTarget].defPoint,
+                                             absorbed.defPoint);
                         }
                         if (absorbed.lastUsePoint != -1) {
                             if (varWebs[mergeTarget].lastUsePoint == -1)
                                 varWebs[mergeTarget].lastUsePoint = absorbed.lastUsePoint;
                             else
                                 varWebs[mergeTarget].lastUsePoint =
-                                    std::max(varWebs[mergeTarget].lastUsePoint, absorbed.lastUsePoint);
+                                    std::max(varWebs[mergeTarget].lastUsePoint,
+                                             absorbed.lastUsePoint);
                         }
                         varWebs.erase(varWebs.begin() + i);
                         if (i < mergeTarget) mergeTarget--;
@@ -286,7 +290,6 @@ void Parser::mergeRangesIntoWebs(const std::string& variable,
         }
     }
 
-    // Assign final sequential IDs and move into the global webs list.
     for (Web& w : varWebs) {
         w.id = (int)webs.size();
         webs.push_back(w);
@@ -300,12 +303,15 @@ void Parser::mergeRangesIntoWebs(const std::string& variable,
 bool Parser::parseLiveRanges(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "[Parser] Error: cannot open live ranges file '" << filename << "'\n";
+        std::cerr << "[Parser] Error: cannot open live ranges file '"
+                  << filename << "'\n";
         return false;
     }
 
     std::map<std::string, std::vector<LiveRange>> rawRanges;
-    std::vector<std::string> varOrder;   // preserves declaration order
+    std::vector<std::string> varOrder;
+
+    timeline.clear();
 
     std::string line;
     int lineNo = 0;
@@ -321,6 +327,10 @@ bool Parser::parseLiveRanges(const std::string& filename) {
             return false;
         }
 
+        // Build timeline in input file order
+        for (int pt : lr.programPoints)
+            timeline.push_back(pt);
+
         if (!rawRanges.count(varName))
             varOrder.push_back(varName);
         rawRanges[varName].push_back(lr);
@@ -328,7 +338,8 @@ bool Parser::parseLiveRanges(const std::string& filename) {
     file.close();
 
     if (rawRanges.empty()) {
-        std::cerr << "[Parser] Warning: no live ranges found in '" << filename << "'\n";
+        std::cerr << "[Parser] Warning: no live ranges found in '"
+                  << filename << "'\n";
         return true;
     }
 
@@ -342,7 +353,8 @@ bool Parser::parseLiveRanges(const std::string& filename) {
 bool Parser::parseConfig(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "[Parser] Error: cannot open config file '" << filename << "'\n";
+        std::cerr << "[Parser] Error: cannot open config file '"
+                  << filename << "'\n";
         return false;
     }
 
@@ -376,7 +388,8 @@ bool Parser::parseConfig(const std::string& filename) {
                 }
                 foundRegisters = true;
             } catch (...) {
-                std::cerr << "[Parser] Error: invalid register count '" << value << "'\n";
+                std::cerr << "[Parser] Error: invalid register count '"
+                          << value << "'\n";
                 return false;
             }
 
@@ -389,11 +402,12 @@ bool Parser::parseConfig(const std::string& filename) {
 
             config.algorithm = trim(parts[0]);
 
-            if (config.algorithm != "basic"    &&
-                config.algorithm != "spilling" &&
-                config.algorithm != "splitting"&&
+            if (config.algorithm != "basic"     &&
+                config.algorithm != "spilling"  &&
+                config.algorithm != "splitting" &&
                 config.algorithm != "free") {
-                std::cerr << "[Parser] Error: unknown algorithm '" << config.algorithm << "'\n";
+                std::cerr << "[Parser] Error: unknown algorithm '"
+                          << config.algorithm << "'\n";
                 return false;
             }
 
@@ -443,9 +457,9 @@ bool Parser::parseConfig(const std::string& filename) {
     return true;
 }
 
-const std::vector<Web>& Parser::getWebs() const { return webs; }
-
-const AlgorithmConfig& Parser::getConfig() const { return config; }
+const std::vector<Web>& Parser::getWebs()     const { return webs; }
+const AlgorithmConfig&  Parser::getConfig()   const { return config; }
+const std::vector<int>& Parser::getTimeline() const { return timeline; }
 
 void Parser::printWebs() const {
     std::cout << "webs: " << webs.size() << "\n";

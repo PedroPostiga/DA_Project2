@@ -7,8 +7,6 @@ add_executable(DA_Project2
         include/DataTypes.h
         include/Parser.h
         src/Parser.cpp
-        include/InterferenceGraph.h
-        src/InterferenceGraph.cpp
-        include/Graph.h)
+        src/Free.cpp)
 
 target_include_directories(DA_Project2 PRIVATE include)
