@@ -7,6 +7,7 @@ add_executable(DA_Project2
         include/DataTypes.h
         include/Parser.h
         src/Parser.cpp
-        src/Free.cpp)
+        src/Free.cpp
+        src/main.cpp)
 
 target_include_directories(DA_Project2 PRIVATE include)
