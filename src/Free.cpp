@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "DataTypes.h"
 #include <vector>
+#include "Free.h"
 
 void freeAllocate(std::vector<Web>& webs, const std::vector<int>& timeline, int numRegisters) {
 

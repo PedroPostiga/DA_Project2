@@ -63,6 +63,7 @@ struct Web {
     std::string variable;        ///< Variable name this web represents
     std::set<int> programPoints; ///< Union of all program points across merged ranges
     std::vector<int> orderedPoints; ///< Program points in input file execution order
+    std::vector<LiveRange> originalRanges; ///< Ensures output displays the original live ranges of each web
     int defPoint;                ///< Earliest definition point, -1 if none
     int lastUsePoint;            ///< Latest last-use point, -1 if none
     int reg;                     ///< Assigned register ID (-1 = unassigned, -2 = spilled to memory)

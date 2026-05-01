@@ -12,7 +12,6 @@
 LiveRange::LiveRange() : defPoint(-1), lastUsePoint(-1) {}
 
 bool LiveRange::overlapsWith(const LiveRange& other) const {
-    // Build a set from other's points for fast lookup
     std::set<int> otherPoints(other.programPoints.begin(), other.programPoints.end());
 
     for (int pt : programPoints) {
@@ -56,7 +55,9 @@ Web::Web(int id, const LiveRange& lr)
       programPoints(lr.programPoints.begin(), lr.programPoints.end()),
       defPoint(lr.defPoint),
       lastUsePoint(lr.lastUsePoint),
-      reg(-1) {}
+      reg(-1) {
+    originalRanges.push_back(lr);
+}
 
 bool Web::interferesWith(const Web& other) const {
     for (int pt : programPoints) {
@@ -73,6 +74,7 @@ bool Web::interferesWith(const Web& other) const {
 void Web::merge(const LiveRange& lr) {
     for (int pt : lr.programPoints)
         programPoints.insert(pt);
+    originalRanges.push_back(lr);
 
     if (lr.defPoint != -1) {
         if (defPoint == -1) defPoint = lr.defPoint;
@@ -181,7 +183,7 @@ bool Parser::parseLiveRangeLine(const std::string& line,
             return false;
         }
 
-        range.programPoints.push_back(lineNum);  // preserves input order
+        range.programPoints.push_back(lineNum);
 
         if (hasDef) {
             if (range.defPoint != -1)
@@ -264,6 +266,11 @@ void Parser::mergeRangesIntoWebs(const std::string& variable,
                         Web& absorbed = varWebs[i];
                         for (int pt : absorbed.programPoints)
                             varWebs[mergeTarget].programPoints.insert(pt);
+
+                        // transfer original ranges before erasing
+                        for (const LiveRange& lr : absorbed.originalRanges)
+                            varWebs[mergeTarget].originalRanges.push_back(lr);
+
                         if (absorbed.defPoint != -1) {
                             if (varWebs[mergeTarget].defPoint == -1)
                                 varWebs[mergeTarget].defPoint = absorbed.defPoint;
@@ -327,7 +334,6 @@ bool Parser::parseLiveRanges(const std::string& filename) {
             return false;
         }
 
-        // Build timeline in input file order
         for (int pt : lr.programPoints)
             timeline.push_back(pt);
 

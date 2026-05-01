@@ -8,6 +8,8 @@ add_executable(DA_Project2
         include/Parser.h
         src/Parser.cpp
         src/Free.cpp
-        src/main.cpp)
+        src/main.cpp
+        include/Free.h
+        include/InterferenceGraph.h)
 
 target_include_directories(DA_Project2 PRIVATE include)

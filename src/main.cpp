@@ -1,13 +1,11 @@
 #include "Parser.h"
 #include "DataTypes.h"
+#include "Free.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
-#include "Free.h"
-
-// Forward declarations
-void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::string& filename);
+#include <set>
 
 // ─────────────────────────────────────────────────────────────
 // Output
@@ -26,7 +24,7 @@ void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::stri
         out = &fileOut;
     }
 
-    // Count how many registers were actually used
+    // Count actually used registers
     std::set<int> usedRegs;
     bool anySpilled = false;
     for (const Web& w : webs) {
@@ -37,10 +35,22 @@ void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::stri
     if (anySpilled)
         std::cerr << "[Warning] Register allocation was not fully possible — some webs spilled to memory.\n";
 
-    // Print webs
+    // Print webs — each original range on its own line
     *out << "webs: " << webs.size() << "\n";
-    for (const Web& w : webs)
-        *out << "web" << w.id << ": " << w.toString() << "\n";
+    for (const Web& w : webs) {
+        for (const LiveRange& lr : w.originalRanges) {
+            *out << "web" << w.id << ": ";
+            bool first = true;
+            for (int pt : lr.programPoints) {
+                if (!first) *out << ",";
+                first = false;
+                *out << pt;
+                if (pt == lr.defPoint)     *out << "+";
+                if (pt == lr.lastUsePoint) *out << "-";
+            }
+            *out << "\n";
+        }
+    }
 
     *out << "\n";
 
@@ -105,6 +115,7 @@ void runMenu() {
     AlgorithmConfig config;
     bool rangesLoaded = false;
     bool configLoaded = false;
+    bool allocated = false;
 
     while (true) {
         std::cout << "\n=============================\n";
@@ -134,6 +145,7 @@ void runMenu() {
                 webs = parser.getWebs();
                 timeline = parser.getTimeline();
                 rangesLoaded = true;
+                allocated = false;  // reset if new file loaded
                 std::cout << "[OK] Loaded " << webs.size() << " webs.\n";
             }
 
@@ -144,6 +156,7 @@ void runMenu() {
             if (parser.parseConfig(filename)) {
                 config = parser.getConfig();
                 configLoaded = true;
+                allocated = false;  // reset if new config loaded
                 std::cout << "[OK] Config loaded.\n";
                 parser.printConfig();
             }
@@ -170,6 +183,7 @@ void runMenu() {
 
             if (config.algorithm == "free") {
                 freeAllocate(webs, timeline, config.numRegisters);
+                allocated = true;
                 std::cout << "[OK] Allocation complete.\n";
                 writeOutput(webs, config.numRegisters, "");
             } else {
@@ -179,7 +193,11 @@ void runMenu() {
 
         } else if (choice == 6) {
             if (!rangesLoaded || !configLoaded) {
-                std::cout << "[Error] Please load both files and run allocation first.\n";
+                std::cout << "[Error] Please load both files first.\n";
+                continue;
+            }
+            if (!allocated) {
+                std::cout << "[Error] Please run allocation first (option 5).\n";
                 continue;
             }
             std::string filename;
