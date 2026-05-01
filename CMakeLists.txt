@@ -9,6 +9,8 @@ add_executable(DA_Project2
         src/Parser.cpp
         include/InterferenceGraph.h
         src/InterferenceGraph.cpp
-        include/Graph.h)
+        include/Graph.h
+        include/RegisterAllocator.h
+        src/RegisterAllocator.cpp)
 
 target_include_directories(DA_Project2 PRIVATE include)
