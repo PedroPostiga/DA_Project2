@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DATATYPES_H
+#define DATATYPES_H
 
 #include <set>
 #include <string>
@@ -122,3 +123,5 @@ struct AlgorithmConfig {
 
     AlgorithmConfig();
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PARSER_H
+#define PARSER_H
 
 #include "DataTypes.h"
 
@@ -140,3 +141,5 @@ private:
      */
     static std::vector<std::string> split(const std::string& s, char del);
 };
+
+#endif

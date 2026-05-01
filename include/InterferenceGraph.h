@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INTERFERENCEGRAPH_H
+#define INTERFERENCEGRAPH_H
 
 #include "DataTypes.h"
 #include "Graph.h"
@@ -149,3 +150,5 @@ private:
     Graph<int> graph;          ///< Underlying graph; vertex info = web ID
     std::vector<Web> webs;     ///< Parallel web data, indexed by web ID
 };
+
+#endif
