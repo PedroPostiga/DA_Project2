@@ -14,7 +14,6 @@
  *   2. Merge overlapping live ranges of the same variable into Web objects
  *      using a greedy algorithm.
  *   3. Read the algorithm configuration file (register count, algorithm type).
- *   4. Build a timeline vector preserving the execution order from the input file.
  *
  * The webs produced here become the nodes of the interference graph, which
  * is built separately by InterferenceGraph using Graph<int> as its base.
@@ -44,9 +43,7 @@ public:
      *
      * Reads variable names and their associated live ranges, applies the
      * '+'/'-' markers, then merges overlapping ranges for each variable
-     * into webs. Also builds the timeline vector in input file order.
-     * The resulting webs are retrievable via getWebs().
-     * The timeline is retrievable via getTimeline().
+     * into webs. The resulting webs are retrievable via getWebs().
      *
      * Time complexity: O(V * R^2 * P * log P)
      *
@@ -81,17 +78,6 @@ public:
     const AlgorithmConfig& getConfig() const;
 
     /**
-     * @brief Returns the timeline of program points in input file order.
-     *
-     * The timeline preserves the execution order as given in the input file,
-     * including backwards jumps (e.g. a range starting at line 20 and ending
-     * at line 11). This is essential for the linear scan allocation algorithm.
-     *
-     * @return Const reference to the timeline vector.
-     */
-    const std::vector<int>& getTimeline() const;
-
-    /**
      * @brief Prints a human-readable summary of all webs to stdout.
      */
     void printWebs() const;
@@ -102,17 +88,11 @@ public:
     void printConfig() const;
 
 private:
-    std::vector<Web> webs;      ///< Final webs, one node each in the interference graph
-    AlgorithmConfig config;     ///< Parsed algorithm configuration
-    std::vector<int> timeline;  ///< Program points in input file execution order
+    std::vector<Web> webs;   ///< Final webs, one node each in the interference graph
+    AlgorithmConfig config;  ///< Parsed algorithm configuration
 
     /**
      * @brief Parses one line of the live ranges file into a LiveRange.
-     *
-     * Handles the "varName: p1+, p2, p3-" format, strips whitespace,
-     * and extracts the '+'/'-' markers from program point tokens.
-     * Populates both programPoints (set) and orderedPoints (vector)
-     * to preserve input order.
      *
      * Time complexity: O(P log P)
      *
@@ -128,12 +108,6 @@ private:
     /**
      * @brief Merges a list of raw live ranges for one variable into webs.
      *
-     * Greedy strategy: for each range, if it overlaps any existing web for
-     * this variable, merge it in; otherwise create a new web. After each
-     * merge, a fixup pass chains together any webs that now transitively
-     * overlap. Handles the fusion rule: a range ending and another starting
-     * on the same line (the "i = i + 1" case) are always fused.
-     *
      * Time complexity: O(R^2 * P * log P)
      *
      * @param variable The variable name.
@@ -144,16 +118,11 @@ private:
 
     /**
      * @brief Trims leading and trailing whitespace from a string.
-     * @param s Input string.
-     * @return Trimmed copy.
      */
     static std::string trim(const std::string& s);
 
     /**
      * @brief Splits a string by a delimiter, trimming each token.
-     * @param s   Input string.
-     * @param del Delimiter character.
-     * @return Vector of trimmed tokens.
      */
     static std::vector<std::string> split(const std::string& s, char del);
 };

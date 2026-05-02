@@ -267,7 +267,6 @@ void Parser::mergeRangesIntoWebs(const std::string& variable,
                         for (int pt : absorbed.programPoints)
                             varWebs[mergeTarget].programPoints.insert(pt);
 
-                        // transfer original ranges before erasing
                         for (const LiveRange& lr : absorbed.originalRanges)
                             varWebs[mergeTarget].originalRanges.push_back(lr);
 
@@ -318,8 +317,6 @@ bool Parser::parseLiveRanges(const std::string& filename) {
     std::map<std::string, std::vector<LiveRange>> rawRanges;
     std::vector<std::string> varOrder;
 
-    timeline.clear();
-
     std::string line;
     int lineNo = 0;
     while (std::getline(file, line)) {
@@ -333,9 +330,6 @@ bool Parser::parseLiveRanges(const std::string& filename) {
             std::cerr << "[Parser] Error at line " << lineNo << "\n";
             return false;
         }
-
-        for (int pt : lr.programPoints)
-            timeline.push_back(pt);
 
         if (!rawRanges.count(varName))
             varOrder.push_back(varName);
@@ -463,9 +457,8 @@ bool Parser::parseConfig(const std::string& filename) {
     return true;
 }
 
-const std::vector<Web>& Parser::getWebs()     const { return webs; }
-const AlgorithmConfig&  Parser::getConfig()   const { return config; }
-const std::vector<int>& Parser::getTimeline() const { return timeline; }
+const std::vector<Web>& Parser::getWebs()    const { return webs; }
+const AlgorithmConfig&  Parser::getConfig()  const { return config; }
 
 void Parser::printWebs() const {
     std::cout << "webs: " << webs.size() << "\n";

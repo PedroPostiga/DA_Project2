@@ -1,0 +1,4 @@
+# test case that requires spilling with 2 registers
+a: 1+,2,3,4,5-
+b: 1+,2,3,4,5-
+c: 1+,2,3,4,5-

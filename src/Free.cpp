@@ -1,69 +1,90 @@
 #include "Parser.h"
 #include "DataTypes.h"
-#include <vector>
 #include "Free.h"
+#include <vector>
+#include <set>
+#include <algorithm>
 
-void freeAllocate(std::vector<Web>& webs, const std::vector<int>& timeline, int numRegisters) {
+void freeAllocate(std::vector<Web>& webs, int numRegisters) {
 
-    // Initialize registers — all free
-    std::vector<Register> registers;
-    for (int i = 0; i < numRegisters; i++) {
-        registers.push_back({i, "", false});
+    int n;
+    n = webs.size();
+
+    // building interference matrix
+    std::vector interferes(n, std::vector(n, false));
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (webs[i].interferesWith(webs[j])) {
+                interferes[i][j] = true;
+                interferes[j][i] = true;
+            }
+        }
     }
 
-    // Scan through timeline in execution order
-    for (int point : timeline) {
-        for (Web& web : webs) {
-            if (!web.programPoints.contains(point)) continue;
+    // Sort webs by defPoint — process earliest definitions first
+    std::vector<int> order(n);
+    for (int i = 0; i < n; i++) order[i] = i;
+    std::sort(order.begin(), order.end(), [&](int a, int b) {
+        return webs[a].defPoint < webs[b].defPoint;
+    });
 
-            // Free before assign — handle endings first
-            if (point == web.lastUsePoint && web.reg >= 0) {
-                registers[web.reg].allocated = false;
-                registers[web.reg].current_variable = "";
+    // assign registers in greedy way
+    for (int idx : order) {
+        Web& web = webs[idx];
+
+        // Find registers used by interfering neighbors
+        std::set<int> usedByNeighbors;
+        for (int j = 0; j < n; j++) {
+            if (interferes[idx][j] && webs[j].reg >= 0) {
+                usedByNeighbors.insert(webs[j].reg);
             }
         }
 
-        for (Web& web : webs) {
-            if (!web.programPoints.contains(point)) continue;
+        // Assign lowest numbered free register not used by neighbors
+        bool assigned = false;
+        for (int r = 0; r < numRegisters; r++) {
+            if (!usedByNeighbors.count(r)) {
+                web.reg = r;
+                assigned = true;
+                break;
+            }
+        }
 
-            // Web starts at this point — assign a free register
-            if (point == web.defPoint && web.reg == -1) {
-                for (Register& reg : registers) {
-                    if (!reg.allocated) {
-                        reg.allocated = true;
-                        reg.current_variable = web.variable;
-                        web.reg = reg.reg_id;
+        // If no register available, put smallest web in memory
+        // that is already assigned and interferes with this one
+        if (!assigned) {
+            Web* spillCandidate = nullptr;
+            for (int j = 0; j < n; j++) {
+                if (interferes[idx][j] && webs[j].reg >= 0) {
+                    if (!spillCandidate ||
+                        webs[j].programPoints.size() < spillCandidate->programPoints.size()) {
+                        spillCandidate = &webs[j];
+                    }
+                }
+            }
+            if (spillCandidate) {
+                spillCandidate->reg = -2;  // spill to memory
+
+                // retry assignment
+                usedByNeighbors.clear();
+                for (int j = 0; j < n; j++) {
+                    if (interferes[idx][j] && webs[j].reg >= 0) {
+                        usedByNeighbors.insert(webs[j].reg);
+                    }
+                }
+                for (int r = 0; r < numRegisters; r++) {
+                    if (!usedByNeighbors.count(r)) {
+                        web.reg = r;
                         break;
                     }
                 }
-
-                // if no register was assigned, spill the shortest web
-                if (web.reg == -1) {
-                    Web* spillCandidate = nullptr;
-                    for (Web& w : webs) {
-                        if (w.reg >= 0) {
-                            if (!spillCandidate || w.programPoints.size() < spillCandidate->programPoints.size()) {
-                                spillCandidate = &w;
-                            }
-                        }
-                    }
-                    if (spillCandidate) {
-                        registers[spillCandidate->reg].allocated = false;
-                        spillCandidate->reg = -2;  // spilled to memory
-                        // now assign the freed register to current web
-                        for (Register& reg : registers) {
-                            if (!reg.allocated) {
-                                reg.allocated = true;
-                                reg.current_variable = web.variable;
-                                web.reg = reg.reg_id;
-                                break;
-                            }
-                        }
-                    }
-                }
+            } else {
+                // no interfering web to spill — spill current web
+                web.reg = -2;
             }
         }
     }
 }
 
-// O(T * W * R)
+// Time complexity: O(W^2 * P + W^2 * R)
+// W = number of webs, P = program points per web, R = number of registers

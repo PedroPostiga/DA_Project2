@@ -24,7 +24,6 @@ void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::stri
         out = &fileOut;
     }
 
-    // Count actually used registers
     std::set<int> usedRegs;
     bool anySpilled = false;
     for (const Web& w : webs) {
@@ -35,7 +34,6 @@ void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::stri
     if (anySpilled)
         std::cerr << "[Warning] Register allocation was not fully possible — some webs spilled to memory.\n";
 
-    // Print webs — each original range on its own line
     *out << "webs: " << webs.size() << "\n";
     for (const Web& w : webs) {
         for (const LiveRange& lr : w.originalRanges) {
@@ -54,7 +52,6 @@ void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::stri
 
     *out << "\n";
 
-    // Print register assignments
     *out << "registers: " << usedRegs.size() << "\n";
     for (int r : usedRegs) {
         for (const Web& w : webs) {
@@ -63,7 +60,6 @@ void writeOutput(const std::vector<Web>& webs, int numRegisters, const std::stri
         }
     }
 
-    // Print spilled webs
     for (const Web& w : webs) {
         if (w.reg == -2)
             *out << "M: web" << w.id << "\n";
@@ -90,11 +86,10 @@ void runBatch(const std::string& rangesFile,
     }
 
     std::vector<Web> webs = parser.getWebs();
-    const std::vector<int>& timeline = parser.getTimeline();
     const AlgorithmConfig& config = parser.getConfig();
 
     if (config.algorithm == "free") {
-        freeAllocate(webs, timeline, config.numRegisters);
+        freeAllocate(webs, config.numRegisters);
     } else {
         std::cerr << "[Batch] Error: algorithm '" << config.algorithm
                   << "' not yet implemented.\n";
@@ -111,7 +106,6 @@ void runBatch(const std::string& rangesFile,
 void runMenu() {
     Parser parser;
     std::vector<Web> webs;
-    std::vector<int> timeline;
     AlgorithmConfig config;
     bool rangesLoaded = false;
     bool configLoaded = false;
@@ -143,9 +137,8 @@ void runMenu() {
             std::cin >> filename;
             if (parser.parseLiveRanges(filename)) {
                 webs = parser.getWebs();
-                timeline = parser.getTimeline();
                 rangesLoaded = true;
-                allocated = false;  // reset if new file loaded
+                allocated = false;
                 std::cout << "[OK] Loaded " << webs.size() << " webs.\n";
             }
 
@@ -156,7 +149,7 @@ void runMenu() {
             if (parser.parseConfig(filename)) {
                 config = parser.getConfig();
                 configLoaded = true;
-                allocated = false;  // reset if new config loaded
+                allocated = false;
                 std::cout << "[OK] Config loaded.\n";
                 parser.printConfig();
             }
@@ -182,7 +175,7 @@ void runMenu() {
             }
 
             if (config.algorithm == "free") {
-                freeAllocate(webs, timeline, config.numRegisters);
+                freeAllocate(webs, config.numRegisters);
                 allocated = true;
                 std::cout << "[OK] Allocation complete.\n";
                 writeOutput(webs, config.numRegisters, "");
