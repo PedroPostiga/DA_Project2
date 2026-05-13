@@ -7,13 +7,14 @@
 // Web
 // ─────────────────────────────────────────────────────────────
 
-Web::Web() : id(-1), defPoint(-1), lastUsePoint(-1) {}
+Web::Web() : id(-1), defPoint(-1), lastUsePoint(-1), reg(-1) {}
 
 Web::Web(int id, const LiveRange& lr)
     : id(id), variable(lr.variable),
       programPoints(lr.programPoints),
       defPoint(lr.defPoint),
-      lastUsePoint(lr.lastUsePoint) {}
+      lastUsePoint(lr.lastUsePoint),
+      reg(-1) {}
 
 bool Web::interferesWith(const Web& other) const {
     for (int pt : programPoints) {

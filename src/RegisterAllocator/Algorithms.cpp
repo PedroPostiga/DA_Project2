@@ -3,6 +3,8 @@
 #include <climits>
 #include <set>
 #include <stack>
+#include <algorithm>
+#include <vector>
 
 // ─────────────────────────────────────────────────────────────
 // T2.1 — Basic Register Allocation
@@ -107,79 +109,111 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
 // ─────────────────────────────────────────────────────────────
 
 AllocationResult RegisterAllocator::allocateFree() const {
-    int K = config.numRegisters;
-    InterferenceGraph workingIg = ig;
-    const std::vector<Web>& webs = workingIg.getWebs();
-    int W = (int)webs.size();
+    std::vector<Web> webs = ig.getWebs(); // Mutable copy to use web.reg
+    const int n = static_cast<int>(webs.size());
+    const int numRegisters = config.numRegisters;
+    if (n == 0) return AllocationResult();
 
-    std::vector<bool> disabled(W, false);
-    std::vector<int>  spilledIds;
-    std::stack<int>   stk;
-    int active = W;
-
-    // ── Phase 1: Smallest-last simplification ────────────────────────────
-    while (active > 0) {
-        // Find the active node with minimum effective degree
-        int minId  = -1;
-        int minDeg = INT_MAX;
-        for (const Web& w : webs) {
-            if (disabled[w.id]) continue;
-            int deg = effectiveDegree(workingIg, w.id, disabled);
-            if (deg < minDeg || (deg == minDeg && w.id < minId)) {
-                minDeg = deg;
-                minId  = w.id;
+    // ── 1. Build interference matrix ────────────────────────────────────────
+    std::vector<bool> interferes(n * n, false);
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (webs[i].interferesWith(webs[j])) {
+                interferes[i * n + j] = true;
+                interferes[j * n + i] = true;
             }
         }
-        if (minId == -1) break;
+    }
 
-        if (minDeg < K) {
-            // Safe to push — will always find a color on reinsertion
-            disabled[minId] = true;
-            stk.push(minId);
-            active--;
-        } else {
-            // All remaining nodes have degree >= K; spill the worst one
-            int victim = selectSpillCandidate(workingIg, disabled);
-            if (victim == -1) break;
-            disabled[victim] = true;
-            spilledIds.push_back(victim);
-            active--;
+    // ── 2. Sort webs by defPoint (earliest definition first) ────────────────
+    std::vector<int> order(n);
+    for (int i = 0; i < n; i++) order[i] = i;
+    std::sort(order.begin(), order.end(), [&](int a, int b) {
+        return webs[a].defPoint < webs[b].defPoint;
+    });
+
+    std::vector<bool> usedReg(numRegisters, false);
+
+    // ── 3. Greedy assignment with eviction ──────────────────────────────────
+    for (int idx : order) {
+        Web& web = webs[idx];
+ 
+        // ── 3a. Mark registers used by already-assigned interfering neighbors ──
+        // Reset only the slots we set last iteration (or use fill for simplicity).
+        std::fill(usedReg.begin(), usedReg.end(), false);
+ 
+        int usedCount = 0;  // early-exit counter
+        const bool* row = interferes.data() + idx * n;  // pointer to row idx
+ 
+        for (int j = 0; j < n && usedCount < numRegisters; j++) {
+            if (row[j] && webs[j].reg >= 0) {
+                if (!usedReg[webs[j].reg]) {
+                    usedReg[webs[j].reg] = true;
+                    ++usedCount;
+                }
+            }
+        }
+ 
+        // ── 3b. Assign lowest free register ────────────────────────────────
+        int assigned = -1;
+        for (int r = 0; r < numRegisters; r++) {
+            if (!usedReg[r]) { assigned = r; break; }
+        }
+ 
+        if (assigned >= 0) {
+            web.reg = assigned;
+            continue;  // done for this web
+        }
+ 
+        // ── 3c. No register free — spill the interfering neighbor with the
+        //        fewest program points, then retry in a single pass ───────────
+        Web* spillCandidate = nullptr;
+        int  spillCandidateIdx = -1;
+ 
+        for (int j = 0; j < n; j++) {
+            if (row[j] && webs[j].reg >= 0) {
+                if (!spillCandidate ||
+                    webs[j].programPoints.size() < spillCandidate->programPoints.size()) {
+                    spillCandidate    = &webs[j];
+                    spillCandidateIdx = j;
+                }
+            }
+        }
+ 
+        if (!spillCandidate) {
+            // No assigned neighbor to evict — spill the current web itself.
+            web.reg = -2;
+            continue;
+        }
+ 
+        // Evict the candidate and free its register slot.
+        int freedReg = spillCandidate->reg;
+        spillCandidate->reg = -2;
+        usedReg[freedReg] = false;  // no rescan needed — just unmark
+ 
+        // Now find the lowest free register (freedReg is guaranteed free,
+        // but there may be an even lower one that was never taken).
+        for (int r = 0; r < numRegisters; r++) {
+            if (!usedReg[r]) { web.reg = r; break; }
         }
     }
 
-    // ── Phase 2: Coloring (mirrors greedyColor phase 2) ──────────────────
-    std::fill(disabled.begin(), disabled.end(), true);
-    for (int sid : spilledIds) disabled[sid] = true;
-
-    std::vector<int>  color(W, -1);
-    std::vector<bool> reinserted(W, false);
-
-    while (!stk.empty()) {
-        int id = stk.top(); stk.pop();
-        reinserted[id] = true;
-
-        std::set<int> usedColors;
-        for (int nb : workingIg.getNeighbors(id))
-            if (reinserted[nb] && color[nb] != -1)
-                usedColors.insert(color[nb]);
-
-        int chosen = -1;
-        for (int c = 0; c < K; c++) {
-            if (!usedColors.count(c)) { chosen = c; break; }
-        }
-
-        if (chosen == -1) spilledIds.push_back(id);
-        else              color[id] = chosen;
-    }
-
-    // ── Build result ─────────────────────────────────────────────────────
+    // ── 4. Build result ─────────────────────────────────────────────────────
     AllocationResult result;
-    std::set<int> usedRegs;
-    for (const Web& w : webs) {
-        result.webToRegister[w.id] = color[w.id];
-        if (color[w.id] != -1) usedRegs.insert(color[w.id]);
+    std::set<int> distinctRegs;
+    bool anySpilled = false;
+
+    for (const auto& w : webs) {
+        int finalReg = (w.reg == -2) ? SPILLED : w.reg;
+        result.webToRegister[w.id] = finalReg;
+        if (finalReg != SPILLED) {
+            distinctRegs.insert(finalReg);
+        } else {
+            anySpilled = true;
+        }
     }
-    result.registersUsed = (int)usedRegs.size();
-    result.feasible      = spilledIds.empty();
+
+    result.registersUsed = static_cast<int>(distinctRegs.size());
+    result.feasible      = !anySpilled;
     return result;
 }

@@ -69,6 +69,7 @@ struct Web {
     std::set<int> programPoints; ///< Union of all program points across merged ranges
     int defPoint;                ///< Earliest definition point, -1 if none
     int lastUsePoint;            ///< Latest last-use point, -1 if none
+    int reg;                     ///< Assigned register: -1 (none), -2 (spilled), or 0..K-1
 
     Web();
     Web(int id, const LiveRange& lr);
