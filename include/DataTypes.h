@@ -70,6 +70,7 @@ struct Web {
     int defPoint;                ///< Earliest definition point, -1 if none
     int lastUsePoint;            ///< Latest last-use point, -1 if none
     int reg;                     ///< Assigned register: -1 (none), -2 (spilled), or 0..K-1
+    std::vector<LiveRange> originalRanges; ///< Original live ranges that make up this web
 
     Web();
     Web(int id, const LiveRange& lr);

@@ -17,6 +17,7 @@ add_executable(DA_Project2
         src/RegisterAllocator/RegisterAllocator.cpp
         src/RegisterAllocator/AllocationResult.cpp
         src/RegisterAllocator/Helpers.cpp
-        src/RegisterAllocator/Algorithms.cpp)
+        src/RegisterAllocator/Algorithms.cpp
+        src/main.cpp)
 
 target_include_directories(DA_Project2 PRIVATE include)

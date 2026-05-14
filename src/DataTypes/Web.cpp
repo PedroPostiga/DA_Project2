@@ -14,7 +14,8 @@ Web::Web(int id, const LiveRange& lr)
       programPoints(lr.programPoints),
       defPoint(lr.defPoint),
       lastUsePoint(lr.lastUsePoint),
-      reg(-1) {}
+      reg(-1),
+      originalRanges({lr}) {}
 
 bool Web::interferesWith(const Web& other) const {
     for (int pt : programPoints) {
@@ -29,6 +30,7 @@ bool Web::interferesWith(const Web& other) const {
 }
 
 void Web::merge(const LiveRange& lr) {
+    originalRanges.push_back(lr);
     for (int pt : lr.programPoints)
         programPoints.insert(pt);
 
@@ -49,8 +51,17 @@ std::string Web::toString() const {
         if (!first) oss << ",";
         first = false;
         oss << pt;
-        if (pt == defPoint)      oss << "+";
-        if (pt == lastUsePoint)  oss << "-";
+
+        // Check if any original live range had a marker at this point
+        bool hasDef = false;
+        bool hasLastUse = false;
+        for (const auto& lr : originalRanges) {
+            if (lr.defPoint == pt) hasDef = true;
+            if (lr.lastUsePoint == pt) hasLastUse = true;
+        }
+
+        if (hasDef)      oss << "+";
+        if (hasLastUse)  oss << "-";
     }
     return oss.str();
 }
