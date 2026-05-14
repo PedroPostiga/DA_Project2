@@ -115,12 +115,12 @@ AllocationResult RegisterAllocator::allocateFree() const {
     if (n == 0) return AllocationResult();
 
     // ── 1. Build interference matrix ────────────────────────────────────────
-    std::vector<bool> interferes(n * n, false);
+    std::vector<char> interferes(n * n, 0);
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             if (webs[i].interferesWith(webs[j])) {
-                interferes[i * n + j] = true;
-                interferes[j * n + i] = true;
+                interferes[i * n + j] = 1;
+                interferes[j * n + i] = 1;
             }
         }
     }
@@ -143,7 +143,7 @@ AllocationResult RegisterAllocator::allocateFree() const {
         std::fill(usedReg.begin(), usedReg.end(), false);
  
         int usedCount = 0;  // early-exit counter
-        const bool* row = interferes.data() + idx * n;  // pointer to row idx
+        const char* row = interferes.data() + idx * n;  // pointer to row idx
  
         for (int j = 0; j < n && usedCount < numRegisters; j++) {
             if (row[j] && webs[j].reg >= 0) {
