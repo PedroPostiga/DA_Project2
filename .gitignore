@@ -72,3 +72,4 @@ Testing/
 cmake-build-debug/
 *.iml
 *.csv
+basic/

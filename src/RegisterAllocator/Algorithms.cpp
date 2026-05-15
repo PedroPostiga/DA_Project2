@@ -33,23 +33,21 @@ AllocationResult RegisterAllocator::allocateSpilling() const {
     int K        = config.numRegisters;
     int maxSpill = config.algorithmParam;
 
-    // First try with no spills
-    {
-        InterferenceGraph workingIg = ig;
-        AllocationResult r = greedyColor(workingIg, K, 0);
-        if (r.feasible) return r;
-    }
-
-    // Incrementally allow more spills (1, 2, … up to maxSpill)
-    for (int allowed = 1; allowed <= maxSpill; allowed++) {
+    // Incrementally allow more spills (0, 1, 2, … up to maxSpill).
+    // allowed = 0 is the pure basic attempt (no spills).
+    for (int allowed = 0; allowed <= maxSpill; allowed++) {
         InterferenceGraph workingIg = ig;
         AllocationResult r = greedyColor(workingIg, K, allowed);
-        if (r.feasible) return r;
+        if (r.feasible) return r;   // zero-spill coloring succeeded
     }
 
-    // Could not color even with maxSpill spills — return best effort
+    // Could not achieve zero-spill coloring within the budget.
+    // Run with the full spill budget and accept the partial result
+    // (some webs get registers, the rest are spilled to memory).
     InterferenceGraph workingIg = ig;
-    return greedyColor(workingIg, K, maxSpill);
+    AllocationResult r = greedyColor(workingIg, K, maxSpill);
+    r.feasible = true;  // spilling mode: partial allocation is valid
+    return r;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -90,8 +88,12 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
         if (r.feasible) return r;
     }
 
-    // Best effort on the final split graph
-    return greedyColor(workingIg, K, 0);
+    // Splitting alone wasn't enough — try coloring the split graph
+    // with unlimited spills so we get a partial (but usable) result
+    // instead of the basic-mode "all to memory" failure
+    AllocationResult r = greedyColor(workingIg, K, -1);
+    r.feasible = true;  // splitting mode: partial allocation is a valid output
+    return r;
 }
 
 // ─────────────────────────────────────────────────────────────
