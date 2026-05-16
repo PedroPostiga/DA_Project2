@@ -63,11 +63,22 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
     int K         = config.numRegisters;
     int maxSplits = config.algorithmParam;
 
+    // Guard: if K <= 0, we can't allocate any registers, so spill everything
+    if (K <= 0) {
+        InterferenceGraph workingIg = ig;
+        AllocationResult r = greedyColor(workingIg, K, -1);
+        r.feasible = true;
+        return r;
+    }
+
     // First try with no splits
     {
         InterferenceGraph workingIg = ig;
         AllocationResult r = greedyColor(workingIg, K, 0);
-        if (r.feasible) return r;
+        if (r.feasible) {
+            r.webs = workingIg.getWebs();
+            return r;
+        }
     }
 
     // Incrementally split webs (1, 2, … up to maxSplits)
@@ -85,7 +96,10 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
 
         InterferenceGraph trialIg = workingIg;
         AllocationResult r = greedyColor(trialIg, K, 0);
-        if (r.feasible) return r;
+        if (r.feasible) {
+            r.webs = workingIg.getWebs();
+            return r;
+        }
     }
 
     // Splitting alone wasn't enough — try coloring the split graph
@@ -93,6 +107,7 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
     // instead of the basic-mode "all to memory" failure
     AllocationResult r = greedyColor(workingIg, K, -1);
     r.feasible = true;  // splitting mode: partial allocation is a valid output
+    r.webs = workingIg.getWebs();
     return r;
 }
 
@@ -139,14 +154,14 @@ AllocationResult RegisterAllocator::allocateFree() const {
     // ── 3. Greedy assignment with eviction ──────────────────────────────────
     for (int idx : order) {
         Web& web = webs[idx];
- 
+
         // ── 3a. Mark registers used by already-assigned interfering neighbors ──
         // Reset only the slots we set last iteration (or use fill for simplicity).
         std::fill(usedReg.begin(), usedReg.end(), false);
- 
+
         int usedCount = 0;  // early-exit counter
         const char* row = interferes.data() + idx * n;  // pointer to row idx
- 
+
         for (int j = 0; j < n && usedCount < numRegisters; j++) {
             if (row[j] && webs[j].reg >= 0) {
                 if (!usedReg[webs[j].reg]) {
@@ -155,23 +170,23 @@ AllocationResult RegisterAllocator::allocateFree() const {
                 }
             }
         }
- 
+
         // ── 3b. Assign lowest free register ────────────────────────────────
         int assigned = -1;
         for (int r = 0; r < numRegisters; r++) {
             if (!usedReg[r]) { assigned = r; break; }
         }
- 
+
         if (assigned >= 0) {
             web.reg = assigned;
             continue;  // done for this web
         }
- 
+
         // ── 3c. No register free — spill the interfering neighbor with the
         //        fewest program points, then retry in a single pass ───────────
         Web* spillCandidate = nullptr;
         int  spillCandidateIdx = -1;
- 
+
         for (int j = 0; j < n; j++) {
             if (row[j] && webs[j].reg >= 0) {
                 if (!spillCandidate ||
@@ -181,18 +196,18 @@ AllocationResult RegisterAllocator::allocateFree() const {
                 }
             }
         }
- 
+
         if (!spillCandidate) {
             // No assigned neighbor to evict — spill the current web itself.
             web.reg = -2;
             continue;
         }
- 
+
         // Evict the candidate and free its register slot.
         int freedReg = spillCandidate->reg;
         spillCandidate->reg = -2;
         usedReg[freedReg] = false;  // no rescan needed — just unmark
- 
+
         // Now find the lowest free register (freedReg is guaranteed free,
         // but there may be an even lower one that was never taken).
         for (int r = 0; r < numRegisters; r++) {

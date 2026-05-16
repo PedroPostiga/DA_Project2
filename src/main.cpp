@@ -1,7 +1,7 @@
 #include "Parser.h"
-#include "DataTypes.h"
 #include "RegisterAllocator.h"
 #include "InterferenceGraph.h"
+#include "DataTypes.h"
 #include <iostream>
 #include <vector>
 #include <string>

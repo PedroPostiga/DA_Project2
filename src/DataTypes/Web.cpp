@@ -52,12 +52,19 @@ std::string Web::toString() const {
         first = false;
         oss << pt;
 
-        // Check if any original live range had a marker at this point
         bool hasDef = false;
         bool hasLastUse = false;
-        for (const auto& lr : originalRanges) {
-            if (lr.defPoint == pt) hasDef = true;
-            if (lr.lastUsePoint == pt) hasLastUse = true;
+
+        if (!originalRanges.empty()) {
+            // Check if any original live range had a marker at this point
+            for (const auto& lr : originalRanges) {
+                if (lr.defPoint == pt) hasDef = true;
+                if (lr.lastUsePoint == pt) hasLastUse = true;
+            }
+        } else {
+            // Split web: use defPoint/lastUsePoint directly
+            if (defPoint == pt) hasDef = true;
+            if (lastUsePoint == pt) hasLastUse = true;
         }
 
         if (hasDef)      oss << "+";

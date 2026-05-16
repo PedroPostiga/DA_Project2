@@ -22,6 +22,7 @@ struct AllocationResult {
     std::map<int, int> webToRegister; ///< web ID → register number, or SPILLED
     int registersUsed;                ///< Number of distinct registers actually assigned
     bool feasible;                    ///< true if all webs got a register (no spills forced)
+    std::vector<Web> webs;            ///< Final webs used (may differ from original after splitting)
 
     AllocationResult();
 };

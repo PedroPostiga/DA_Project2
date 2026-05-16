@@ -1,0 +1,2 @@
+registers: 1
+algorithm: splitting, 2

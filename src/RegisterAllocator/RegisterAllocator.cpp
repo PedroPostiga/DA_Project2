@@ -42,7 +42,8 @@ bool RegisterAllocator::writeOutput(const AllocationResult& result,
         return false;
     }
 
-    const std::vector<Web>& webs = ig.getWebs();
+    // Use the webs stored in the result (may differ from ig after splitting)
+    const std::vector<Web>& webs = result.webs.empty() ? ig.getWebs() : result.webs;
 
     // ── Webs section ─────────────────────────────────────────────────────
     out << "# Total number of webs followed by the listing of the program points of each one\n";
@@ -83,7 +84,8 @@ bool RegisterAllocator::writeOutput(const AllocationResult& result,
 }
 
 void RegisterAllocator::printResult(const AllocationResult& result) const {
-    const std::vector<Web>& webs = ig.getWebs();
+    // Use the webs stored in the result (may differ from ig after splitting)
+    const std::vector<Web>& webs = result.webs.empty() ? ig.getWebs() : result.webs;
 
     std::cout << "\n# Register Allocation Result\n";
     std::cout << "webs: " << webs.size() << "\n";
