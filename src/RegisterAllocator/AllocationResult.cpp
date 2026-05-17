@@ -4,4 +4,4 @@
 // AllocationResult
 // ─────────────────────────────────────────────────────────────
 
-AllocationResult::AllocationResult() : registersUsed(0), feasible(false) {}
+AllocationResult::AllocationResult() : registersUsed(0), feasible(false), partialResult(false) {}
