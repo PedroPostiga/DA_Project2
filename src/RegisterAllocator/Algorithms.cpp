@@ -88,10 +88,10 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
     std::vector<bool> disabled(workingIg.getWebs().size(), false);
 
     for (int s = 0; s < maxSplits; s++) {
-        int victim = selectSplitCandidate(workingIg, disabled);
+        auto [victim, splitIndex] = selectSplitCandidate(workingIg, disabled);
         if (victim == -1) break;   // no splittable web left
 
-        splitWeb(workingIg, victim);
+        splitWeb(workingIg, victim, splitIndex);
 
         // Resize disabled conservatively after the new web is appended
         disabled.assign(workingIg.getWebs().size(), false);

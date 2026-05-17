@@ -7,6 +7,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <utility>
 
 /// Sentinel value meaning the web was spilled to memory, not assigned a register
 static constexpr int SPILLED = -1;
@@ -212,10 +213,10 @@ private:
      *
      * @param workingIg  The current working graph.
      * @param disabled   Set of web IDs already removed from consideration.
-     * @return Web ID to split, or -1 if no splittable web exists.
+     * @return Pair of (Web ID to split, split index), or (-1, -1) if no splittable web exists.
      */
-    int selectSplitCandidate(const InterferenceGraph& workingIg,
-                             const std::vector<bool>& disabled) const;
+    std::pair<int, int> selectSplitCandidate(const InterferenceGraph& workingIg,
+                                             const std::vector<bool>& disabled) const;
 
     /**
      * @brief Splits a web into two derived webs at the midpoint of its
@@ -225,10 +226,11 @@ private:
      * half receives a new ID and the lastUsePoint. The interference graph
      * is rebuilt after splitting.
      *
-     * @param workingIg  The interference graph to modify.
-     * @param webId      The web to split.
+     * @param workingIg   The interference graph to modify.
+     * @param webId       The web to split.
+     * @param splitIndex  The pre-calculated index to split the web at.
      */
-    void splitWeb(InterferenceGraph& workingIg, int webId) const;
+    void splitWeb(InterferenceGraph& workingIg, int webId, int splitIndex) const;
 
     /**
      * @brief Computes the effective degree of a node in the active subgraph.
