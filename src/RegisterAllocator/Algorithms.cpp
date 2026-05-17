@@ -66,8 +66,10 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
     // Guard: if K <= 0, we can't allocate any registers, so spill everything
     if (K <= 0) {
         InterferenceGraph workingIg = ig;
-        AllocationResult r = greedyColor(workingIg, K, -1);
+        int W = (int)workingIg.getWebs().size();
+        AllocationResult r = greedyColor(workingIg, K, W);
         r.feasible = true;
+        r.webs = workingIg.getWebs();
         return r;
     }
 
@@ -102,11 +104,12 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
         }
     }
 
-    // Splitting alone wasn't enough — try coloring the split graph
-    // with unlimited spills so we get a partial (but usable) result
-    // instead of the basic-mode "all to memory" failure
-    AllocationResult r = greedyColor(workingIg, K, -1);
-    r.feasible = true;  // splitting mode: partial allocation is a valid output
+    // Splitting alone wasn't enough — color the split graph allowing up to
+    // W spills (effectively unlimited) so phase 2 gets to attempt coloring
+    // all remaining nodes. Force feasible=true: partial allocation is valid.
+    int W = (int)workingIg.getWebs().size();
+    AllocationResult r = greedyColor(workingIg, K, W);
+    r.feasible = true;
     r.webs = workingIg.getWebs();
     return r;
 }
@@ -185,14 +188,13 @@ AllocationResult RegisterAllocator::allocateFree() const {
         // ── 3c. No register free — spill the interfering neighbor with the
         //        fewest program points, then retry in a single pass ───────────
         Web* spillCandidate = nullptr;
-        int  spillCandidateIdx = -1;
 
         for (int j = 0; j < n; j++) {
             if (row[j] && webs[j].reg >= 0) {
                 if (!spillCandidate ||
                     webs[j].programPoints.size() < spillCandidate->programPoints.size()) {
                     spillCandidate    = &webs[j];
-                    spillCandidateIdx = j;
+
                 }
             }
         }

@@ -127,10 +127,10 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Builds and manages the web interference graph for register allocation. </p>
 <p><a class="el" href="class_interference_graph.html" title="Builds and manages the web interference graph for register allocation.">InterferenceGraph</a> is a domain-specific layer on top of <a class="el" href="class_graph.html">Graph&lt;int&gt;</a>. Each vertex in the underlying <a class="el" href="class_graph.html">Graph&lt;int&gt;</a> stores a web ID (int), and the full <a class="el" href="struct_web.html" title="Represents a web: the union of all overlapping live ranges for one variable.">Web</a> data is kept in a parallel vector indexed by that same ID.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md0"></a>
 Why Graph&lt;int&gt; and not Graph&lt;Web&gt;?</h3>
 <p><a class="el" href="struct_web.html" title="Represents a web: the union of all overlapping live ranges for one variable.">Web</a> objects are large and mutable — they are modified during spilling and splitting (T2.2, T2.3). Storing only the integer ID in the graph avoids copying and allows the full <a class="el" href="struct_web.html" title="Represents a web: the union of all overlapping live ranges for one variable.">Web</a> data to be looked up in O(1) via the vector, from any graph traversal result.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Why two directed edges per interference?</h3>
 <p><a class="el" href="class_graph.html">Graph&lt;T&gt;</a> models directed edges. An interference relation is symmetric (if web A interferes with web B, B interferes with A), so we add one edge in each direction. The degree of a node is then the size of its adjacency list, which correctly reflects the number of interfering webs.</p>
 <p>Time complexity of <a class="el" href="#ad68d7a95dbde1a1aa7e5dac96ff13b6e" title="Builds the interference graph from a list of webs.">build()</a>: O(W^2 * P * log P) W = number of webs, P = average program points per web. </p>

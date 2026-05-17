@@ -1,16 +1,19 @@
 var searchData=
 [
-  ['parse_20input_20data_0',['T1.2 — Read and Parse Input Data',['../md__r_e_a_d_m_e.html#autotoc_md17',1,'']]],
-  ['parseconfig_1',['parseConfig',['../class_parser.html#a8f80891b51e5f74f443904df25aa6c5a',1,'Parser']]],
-  ['parseliveranges_2',['parseLiveRanges',['../class_parser.html#a4f01c9e96b81aced2c597d39a1bfb8ee',1,'Parser']]],
-  ['parser_3',['Parser',['../class_parser.html',1,'Parser'],['../class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8',1,'Parser::Parser()']]],
-  ['parser_2ecpp_4',['Parser.cpp',['../_parser_8cpp.html',1,'']]],
-  ['parser_2eh_5',['Parser.h',['../_parser_8h.html',1,'']]],
-  ['per_20interference_6',['Why two directed edges per interference?',['../class_interference_graph.html#autotoc_md9',1,'']]],
-  ['print_7',['print',['../class_interference_graph.html#a8ed2be8330ae75504ef60eacae1bd41e',1,'InterferenceGraph']]],
-  ['printconfig_8',['printConfig',['../class_parser.html#af13bcf3da1dbe6b8300571bae5219792',1,'Parser']]],
-  ['printresult_9',['printResult',['../class_register_allocator.html#af49b4735c8df38beeb820932bb508662',1,'RegisterAllocator']]],
-  ['printwebs_10',['printWebs',['../class_parser.html#ad4f098f98e6bf0bb913a753ad69055ee',1,'Parser']]],
-  ['problem_11',['Problem',['../md__b_u_g___f_i_x_e_s.html#autotoc_md1',1,'']]],
-  ['programpoints_12',['programPoints',['../struct_live_range.html#a25f54ba9b3d2ea723954adfe9ee364d4',1,'LiveRange::programPoints'],['../struct_web.html#ac915c14d714a4e4c1f09faab36035bf9',1,'Web::programPoints']]]
+  ['ranges_20file_20format_0',['Live Ranges File Format',['../class_parser.html#autotoc_md2',1,'']]],
+  ['read_20and_20parse_20input_20data_1',['T1.2 — Read and Parse Input Data',['../md__r_e_a_d_m_e.html#autotoc_md9',1,'']]],
+  ['readme_2emd_2',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['reg_3',['reg',['../struct_web.html#a8a11a58992b0434d2ffa52f75cc24904',1,'Web']]],
+  ['register_20allocation_20greedy_20coloring_4',['T2.1 — Basic Register Allocation (Greedy Coloring)',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]],
+  ['register_20allocation_20with_20web_20spilling_5',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md13',1,'']]],
+  ['register_20allocation_20with_20web_20splitting_6',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md15',1,'']]],
+  ['registerallocator_7',['RegisterAllocator',['../class_register_allocator.html',1,'RegisterAllocator'],['../class_register_allocator.html#a7df802175fd709ff94da6db43b209e3a',1,'RegisterAllocator::RegisterAllocator()']]],
+  ['registerallocator_2ecpp_8',['RegisterAllocator.cpp',['../_register_allocator_8cpp.html',1,'']]],
+  ['registerallocator_2eh_9',['RegisterAllocator.h',['../_register_allocator_8h.html',1,'']]],
+  ['registersused_10',['registersUsed',['../struct_allocation_result.html#ad2745bf126a525f87be4ea94e99d393a',1,'AllocationResult']]],
+  ['removeedge_11',['removeEdge',['../class_graph.html#a1106092a37366486cf55576f9ec01692',1,'Graph']]],
+  ['removevertex_12',['removeVertex',['../class_graph.html#af9c903104ad69a7782979fa9caedf163',1,'Graph']]],
+  ['run_13',['How to run',['../md__r_e_a_d_m_e.html#autotoc_md19',1,'']]],
+  ['runbatch_14',['runBatch',['../main_8cpp.html#a8a83e59a6d15e3e2d74a3a3645d5afce',1,'main.cpp']]],
+  ['runmenu_15',['runMenu',['../main_8cpp.html#a57588b447fb96de491807b12e6cf3048',1,'main.cpp']]]
 ];

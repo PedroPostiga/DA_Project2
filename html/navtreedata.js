@@ -25,26 +25,16 @@
 var NAVTREE =
 [
   [ "DA2026_PRJ2_T03_G06", "index.html", [
-    [ "Bug Analysis and Fixes for Split Function Crash", "md__b_u_g___f_i_x_e_s.html", [
-      [ "Problem", "md__b_u_g___f_i_x_e_s.html#autotoc_md1", null ],
-      [ "Root Causes Found and Fixed", "md__b_u_g___f_i_x_e_s.html#autotoc_md2", [
-        [ "Bug 1: Improper Comparison in <span class=\"tt\">selectSplitCandidate</span> Fallback", "md__b_u_g___f_i_x_e_s.html#autotoc_md3", null ],
-        [ "Bug 2: Similar Issue in <span class=\"tt\">selectSpillCandidate</span>", "md__b_u_g___f_i_x_e_s.html#autotoc_md4", null ],
-        [ "Bug 3: No Guard for K &lt;= 0 in <span class=\"tt\">allocateSplitting</span>", "md__b_u_g___f_i_x_e_s.html#autotoc_md5", null ]
-      ] ],
-      [ "Why These Bugs Cause Crashes", "md__b_u_g___f_i_x_e_s.html#autotoc_md6", null ],
-      [ "Testing", "md__b_u_g___f_i_x_e_s.html#autotoc_md7", null ]
-    ] ],
     [ "DA_Project2", "md__r_e_a_d_m_e.html", [
-      [ "Task Implementation Map", "md__r_e_a_d_m_e.html#autotoc_md14", [
-        [ "T1.1 — Command-Line Menu &amp; Batch Interface", "md__r_e_a_d_m_e.html#autotoc_md15", null ],
-        [ "T1.2 — Read and Parse Input Data", "md__r_e_a_d_m_e.html#autotoc_md17", null ],
-        [ "T2.1 — Basic Register Allocation (Greedy Coloring)", "md__r_e_a_d_m_e.html#autotoc_md19", null ],
-        [ "T2.2 — Register Allocation with Web Spilling", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
-        [ "T2.3 — Register Allocation with Web Splitting", "md__r_e_a_d_m_e.html#autotoc_md23", null ],
-        [ "T2.4 — Free Strategy (Smallest-Last + Selective Spill)", "md__r_e_a_d_m_e.html#autotoc_md25", null ]
+      [ "Task Implementation Map", "md__r_e_a_d_m_e.html#autotoc_md6", [
+        [ "T1.1 — Command-Line Menu &amp; Batch Interface", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
+        [ "T1.2 — Read and Parse Input Data", "md__r_e_a_d_m_e.html#autotoc_md9", null ],
+        [ "T2.1 — Basic Register Allocation (Greedy Coloring)", "md__r_e_a_d_m_e.html#autotoc_md11", null ],
+        [ "T2.2 — Register Allocation with Web Spilling", "md__r_e_a_d_m_e.html#autotoc_md13", null ],
+        [ "T2.3 — Register Allocation with Web Splitting", "md__r_e_a_d_m_e.html#autotoc_md15", null ],
+        [ "T2.4 — Free Strategy (Smallest-Last + Selective Spill)", "md__r_e_a_d_m_e.html#autotoc_md17", null ]
       ] ],
-      [ "How to run", "md__r_e_a_d_m_e.html#autotoc_md27", null ]
+      [ "How to run", "md__r_e_a_d_m_e.html#autotoc_md19", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],

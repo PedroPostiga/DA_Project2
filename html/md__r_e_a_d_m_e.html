@@ -91,10 +91,10 @@ $(function(){initNavTree('md__r_e_a_d_m_e.html','',''); });
   <div class="headertitle"><div class="title">DA_Project2 </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md13"></a></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md5"></a></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Task Implementation Map</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 T1.1 — Command-Line Menu &amp; Batch Interface</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="main_8cpp.html">main.cpp</a></span></b> — Entry point; detects the <span class="tt">-b</span> flag to route between batch and interactive mode. Interactive menu (options 1-6) is implemented directly in <span class="tt"><a class="el" href="main_8cpp.html#a57588b447fb96de491807b12e6cf3048">runMenu()</a></span>. Batch mode accepts: <span class="tt">myProg -b ranges.txt registers.txt allocation.txt</span></li>
@@ -102,7 +102,7 @@ T1.1 — Command-Line Menu &amp; Batch Interface</h2>
 <li><b><span class="tt"><a class="el" href="_parser_8cpp.html">Parser.cpp</a></span></b> — All parsing errors are directed to <span class="tt">std::cerr</span> for console output as required</li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 T1.2 — Read and Parse Input Data</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="_parser_8h.html">Parser.h</a></span> / <span class="tt"><a class="el" href="_parser_8cpp.html">Parser.cpp</a></span></b> — <span class="tt">parseLiveRanges()</span> reads the variable ranges file; <span class="tt">parseConfig()</span> reads the algorithm configuration. Helpers <span class="tt">parseLiveRangeLine()</span>, <span class="tt">trim()</span>, and <span class="tt">split()</span> handle tokenization</li>
@@ -111,7 +111,7 @@ T1.2 — Read and Parse Input Data</h2>
 <li><b><span class="tt"><a class="el" href="main_8cpp.html">main.cpp</a></span></b> — <span class="tt"><a class="el" href="main_8cpp.html#a57588b447fb96de491807b12e6cf3048">runMenu()</a></span> provides options 1 (load ranges), 2 (load config), 3 (display webs), 4 (display config). Option 3 calls <span class="tt">parser.printWebs()</span>, option 4 calls <span class="tt">parser.printConfig()</span></li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 T2.1 — Basic Register Allocation (Greedy Coloring)</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="_register_allocator_8cpp.html">RegisterAllocator.cpp</a></span></b> — <span class="tt">allocateBasic()</span> dispatches to the core <span class="tt">greedyColor()</span> algorithm</li>
@@ -124,7 +124,7 @@ T2.1 — Basic Register Allocation (Greedy Coloring)</h2>
 <li><b><span class="tt"><a class="el" href="_allocation_result_8cpp.html">AllocationResult.cpp</a></span></b> — Stores coloring results with <span class="tt">webToRegister</span> map and <span class="tt">feasible</span> flag</li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 T2.2 — Register Allocation with Web Spilling</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="_register_allocator_8cpp.html">RegisterAllocator.cpp</a></span></b> — <span class="tt">allocateSpilling()</span> implements the spilling strategy:<ul>
@@ -137,7 +137,7 @@ T2.2 — Register Allocation with Web Spilling</h2>
 <li><b><span class="tt">greedyColor()</span></b> — Accepts <span class="tt">maxSpills</span> parameter; spills selected candidates during simplification phase</li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 T2.3 — Register Allocation with Web Splitting</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="_register_allocator_8cpp.html">RegisterAllocator.cpp</a></span></b> — <span class="tt">allocateSplitting()</span> implements the splitting strategy:<ul>
@@ -150,7 +150,7 @@ T2.3 — Register Allocation with Web Splitting</h2>
 <li><b><span class="tt">splitWeb()</span></b> — Splits a web at its midpoint (or optimal cut point), creating two derived webs. Updates the interference graph via <span class="tt"><a class="el" href="class_interference_graph.html#ad68d7a95dbde1a1aa7e5dac96ff13b6e" title="Builds the interference graph from a list of webs.">InterferenceGraph::build()</a></span></li>
 </ul>
 <hr  />
-<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 T2.4 — Free Strategy (Smallest-Last + Selective Spill)</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="_algorithms_8cpp.html">Algorithms.cpp</a></span></b> — <span class="tt">allocateFree()</span> implements a custom strategy combining:<ul>
@@ -162,7 +162,7 @@ T2.4 — Free Strategy (Smallest-Last + Selective Spill)</h2>
 <li><b>Rationale:</b> This approach minimizes spills by prioritizing long-lived webs (many program points) for registers, while short-lived webs (few program points) are cheaper to spill/reload. The defPoint ordering approximates program execution order, improving spatial locality</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 How to run</h1>
 <p>If you are on Windows, you have to do this in the wsl terminal.</p>
 <ol type="1">

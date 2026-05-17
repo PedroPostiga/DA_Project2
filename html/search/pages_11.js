@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['no_20guard_20for_20k_20allocatesplitting_0',['Bug 3: No Guard for K &amp;lt;= 0 in &lt;span class=&quot;tt&quot;&gt;allocateSplitting&lt;/span&gt;',['../md__b_u_g___f_i_x_e_s.html#autotoc_md5',1,'']]],
-  ['not_20graph_1',['Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?',['../class_interference_graph.html#autotoc_md8',1,'']]]
+  ['of_20the_20spec_0',['Algorithm overview (greedy coloring, Figure 9 of the spec)',['../class_register_allocator.html#autotoc_md4',1,'']]],
+  ['overview_20greedy_20coloring_20figure_209_20of_20the_20spec_1',['Algorithm overview (greedy coloring, Figure 9 of the spec)',['../class_register_allocator.html#autotoc_md4',1,'']]]
 ];

@@ -1,15 +1,9 @@
 var searchData=
 [
-  ['web_0',['Web',['../struct_web.html',1,'Web'],['../struct_web.html#aa5e813821bc4a8e27b85e384298b3dcf',1,'Web::Web()'],['../struct_web.html#a236268ad8dcb4487b4533c7535cad1ae',1,'Web::Web(int id, const LiveRange &amp;lr)']]],
-  ['web_20spilling_1',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md21',1,'']]],
-  ['web_20splitting_2',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md23',1,'']]],
-  ['web_2ecpp_3',['Web.cpp',['../_web_8cpp.html',1,'']]],
-  ['webs_4',['webs',['../struct_allocation_result.html#a0594ff7608a831b09e23c8767079c13d',1,'AllocationResult']]],
-  ['webtoregister_5',['webToRegister',['../struct_allocation_result.html#aeb09a1803c90a5ba1a8d6638f9ff3b3d',1,'AllocationResult']]],
-  ['why_20graph_20and_20not_20graph_6',['Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?',['../class_interference_graph.html#autotoc_md8',1,'']]],
-  ['why_20these_20bugs_20cause_20crashes_7',['Why These Bugs Cause Crashes',['../md__b_u_g___f_i_x_e_s.html#autotoc_md6',1,'']]],
-  ['why_20two_20directed_20edges_20per_20interference_8',['Why two directed edges per interference?',['../class_interference_graph.html#autotoc_md9',1,'']]],
-  ['with_20web_20spilling_9',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md21',1,'']]],
-  ['with_20web_20splitting_10',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md23',1,'']]],
-  ['writeoutput_11',['writeOutput',['../class_register_allocator.html#a688e441792bf93ae2e64445f194960dd',1,'RegisterAllocator']]]
+  ['—_20basic_20register_20allocation_20greedy_20coloring_0',['T2.1 — Basic Register Allocation (Greedy Coloring)',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]],
+  ['—_20command_20line_20menu_20batch_20interface_1',['T1.1 — Command-Line Menu &amp;amp; Batch Interface',['../md__r_e_a_d_m_e.html#autotoc_md7',1,'']]],
+  ['—_20free_20strategy_20smallest_20last_20selective_20spill_2',['T2.4 — Free Strategy (Smallest-Last + Selective Spill)',['../md__r_e_a_d_m_e.html#autotoc_md17',1,'']]],
+  ['—_20read_20and_20parse_20input_20data_3',['T1.2 — Read and Parse Input Data',['../md__r_e_a_d_m_e.html#autotoc_md9',1,'']]],
+  ['—_20register_20allocation_20with_20web_20spilling_4',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md13',1,'']]],
+  ['—_20register_20allocation_20with_20web_20splitting_5',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md15',1,'']]]
 ];

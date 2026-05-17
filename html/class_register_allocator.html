@@ -117,7 +117,7 @@ Public Member Functions</h2></td></tr>
 <li><b>splitting</b> (T2.3): If basic coloring fails with K registers, splits up to K webs into two derived webs with fewer interferences, then retries coloring on the modified graph.</li>
 <li><b>free</b> (T2.4): A custom strategy combining degree-ordered coloring with selective spilling, aiming to minimise the number of registers used without an explicit spill budget.</li>
 </ul>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Algorithm overview (greedy coloring, Figure 9 of the spec)</h3>
 <p>Phase 1 — Simplification: While the graph is not empty, repeatedly remove nodes whose degree &lt; N and push them onto a stack. If all remaining nodes have degree &gt;= N, select one node to spill and remove it (no register assigned). Nodes are "removed" by marking them disabled — the underlying <a class="el" href="class_graph.html">Graph&lt;int&gt;</a> is not structurally modified; degrees are recomputed on the active subgraph.</p>
 <p>Phase 2 — Coloring: Pop nodes from the stack and assign each the lowest-numbered color not already used by any of its active neighbors. Because the node had degree &lt; N when it was pushed, a free color always exists.</p>

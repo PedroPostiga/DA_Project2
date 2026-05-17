@@ -141,14 +141,20 @@ void RegisterAllocator::splitWeb(InterferenceGraph& workingIg, int webId) const 
 // greedyColor  (spec Figure 9)
 //
 // Phase 1: push nodes with degree < N onto stack.
-//          If none exist and budget allows, spill the highest-
-//          degree node (remove it entirely, no color assigned).
+//          If none exist and budget allows, spill the worst node
+//          (removed entirely, no color assigned).
 //          When budget is exhausted, push ALL remaining active
-//          nodes onto the stack (highest degree first) so phase 2
-//          can still attempt to color as many as possible.
+//          nodes onto the stack so phase 2 can still attempt to
+//          color as many as possible.
 //
 // Phase 2: pop and assign lowest free color; if none available,
-//          spill (mark as -1).
+//          record as a phase-2 spill.
+//
+// maxSpills >= 0 : hard budget (0 = basic, K = spilling mode)
+// maxSpills == -1: NEVER used — callers pass W (total webs) as
+//                  an "unlimited" budget instead, which still
+//                  triggers the budget-exhausted push so phase 2
+//                  can color whatever is left.
 // ─────────────────────────────────────────────────────────────
 
 AllocationResult RegisterAllocator::greedyColor(InterferenceGraph& workingIg,
@@ -158,14 +164,13 @@ AllocationResult RegisterAllocator::greedyColor(InterferenceGraph& workingIg,
     int W = (int)webs.size();
 
     std::vector<bool> disabled(W, false);
-    std::vector<int>  spilledIds;   // webs spilled in phase 1 (no color attempted)
+    std::vector<int>  spilledIds;
     std::stack<int>   stk;
     int spillsUsed = 0;
     int active     = W;
 
     // ── Phase 1: Simplification ──────────────────────────────────────────
     while (active > 0) {
-        // Look for any active node with effective degree < N
         int candidate = -1;
         for (const Web& w : webs) {
             if (disabled[w.id]) continue;
@@ -182,21 +187,18 @@ AllocationResult RegisterAllocator::greedyColor(InterferenceGraph& workingIg,
             continue;
         }
 
-        // No node has degree < N.
-        // If we still have spill budget, spill the worst node.
-        bool canSpill = (maxSpills < 0) || (spillsUsed < maxSpills);
-        if (!canSpill) {
+        // No node has degree < N — check spill budget
+        if (spillsUsed >= maxSpills) {
             // Budget exhausted: push remaining nodes onto stack so phase 2
-            // can still try to color them (it will spill those it can't color).
-            // Push in ascending degree order so highest-degree nodes are
-            // popped first and colored first, giving lower-degree nodes
-            // (which have fewer conflicts) a better chance at a free color.
+            // can still attempt to color them. Push ascending by degree so
+            // highest-degree nodes are popped first (colored first), giving
+            // lower-degree nodes the best chance of finding a free color.
             std::vector<std::pair<int,int>> remaining;
             for (const Web& w : webs) {
                 if (disabled[w.id]) continue;
                 remaining.emplace_back(effectiveDegree(workingIg, w.id, disabled), w.id);
             }
-            std::sort(remaining.begin(), remaining.end()); // ascending degree → push low first → pop high first
+            std::sort(remaining.begin(), remaining.end());
             for (auto& [deg, id] : remaining) {
                 disabled[id] = true;
                 stk.push(id);
@@ -205,7 +207,6 @@ AllocationResult RegisterAllocator::greedyColor(InterferenceGraph& workingIg,
             break;
         }
 
-        // Spill the highest-scoring candidate
         int victim = selectSpillCandidate(workingIg, disabled);
         if (victim == -1) break;
 
@@ -234,7 +235,7 @@ AllocationResult RegisterAllocator::greedyColor(InterferenceGraph& workingIg,
         }
 
         if (chosen == -1)
-            spilledIds.push_back(id);  // phase-2 spill
+            spilledIds.push_back(id);
         else
             color[id] = chosen;
     }
@@ -248,8 +249,6 @@ AllocationResult RegisterAllocator::greedyColor(InterferenceGraph& workingIg,
     }
 
     result.registersUsed = (int)usedRegs.size();
-    // feasible = true only if NO spills occurred at all (phase 1 or phase 2)
     result.feasible = spilledIds.empty();
-
     return result;
 }

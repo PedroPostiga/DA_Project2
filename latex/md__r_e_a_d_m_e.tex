@@ -1,9 +1,9 @@
 \chapter{DA\+\_\+\+Project2 }
 \hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{DA\_Project2@{DA\_Project2}}
-\label{md__r_e_a_d_m_e_autotoc_md13}%
-\Hypertarget{md__r_e_a_d_m_e_autotoc_md13}%
-\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysection{\texorpdfstring{Task Implementation Map}{Task Implementation Map}}\label{md__r_e_a_d_m_e_autotoc_md14}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{T1.\+1 — Command-\/\+Line Menu \& Batch Interface}{T1.\+1 — Command-\/\+Line Menu \& Batch Interface}}\label{md__r_e_a_d_m_e_autotoc_md15}
+\label{md__r_e_a_d_m_e_autotoc_md5}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md5}%
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{Task Implementation Map}{Task Implementation Map}}\label{md__r_e_a_d_m_e_autotoc_md6}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{T1.\+1 — Command-\/\+Line Menu \& Batch Interface}{T1.\+1 — Command-\/\+Line Menu \& Batch Interface}}\label{md__r_e_a_d_m_e_autotoc_md7}
 
 \begin{DoxyItemize}
 \item {\bfseries{{\ttfamily \doxylink{main_8cpp}{main.\+cpp}}}} — Entry point; detects the {\ttfamily -\/b} flag to route between batch and interactive mode. Interactive menu (options 1-\/6) is implemented directly in {\ttfamily \doxylink{main_8cpp_a57588b447fb96de491807b12e6cf3048}{run\+Menu()}}. Batch mode accepts:\+ {\ttfamily my\+Prog -\/b ranges.\+txt registers.\+txt allocation.\+txt}
@@ -12,7 +12,7 @@
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysubsection{\texorpdfstring{T1.\+2 — Read and Parse Input Data}{T1.\+2 — Read and Parse Input Data}}\label{md__r_e_a_d_m_e_autotoc_md17}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{\texorpdfstring{T1.\+2 — Read and Parse Input Data}{T1.\+2 — Read and Parse Input Data}}\label{md__r_e_a_d_m_e_autotoc_md9}
 
 \begin{DoxyItemize}
 \item {\bfseries{{\ttfamily \doxylink{_parser_8h}{Parser.\+h}} /\+ {\ttfamily \doxylink{_parser_8cpp}{Parser.\+cpp}}}} — {\ttfamily parse\+Live\+Ranges()} reads the variable ranges file; {\ttfamily parse\+Config()} reads the algorithm configuration. Helpers {\ttfamily parse\+Live\+Range\+Line()}, {\ttfamily trim()}, and {\ttfamily split()} handle tokenization
@@ -22,7 +22,7 @@
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md19}{}\doxysubsection{\texorpdfstring{T2.\+1 — Basic Register Allocation (Greedy Coloring)}{T2.\+1 — Basic Register Allocation (Greedy Coloring)}}\label{md__r_e_a_d_m_e_autotoc_md19}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsection{\texorpdfstring{T2.\+1 — Basic Register Allocation (Greedy Coloring)}{T2.\+1 — Basic Register Allocation (Greedy Coloring)}}\label{md__r_e_a_d_m_e_autotoc_md11}
 
 \begin{DoxyItemize}
 \item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily allocate\+Basic()} dispatches to the core {\ttfamily greedy\+Color()} algorithm
@@ -36,7 +36,7 @@
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md21}{}\doxysubsection{\texorpdfstring{T2.\+2 — Register Allocation with Web Spilling}{T2.\+2 — Register Allocation with Web Spilling}}\label{md__r_e_a_d_m_e_autotoc_md21}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysubsection{\texorpdfstring{T2.\+2 — Register Allocation with Web Spilling}{T2.\+2 — Register Allocation with Web Spilling}}\label{md__r_e_a_d_m_e_autotoc_md13}
 
 \begin{DoxyItemize}
 \item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily allocate\+Spilling()} implements the spilling strategy:\+
@@ -50,7 +50,7 @@
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md23}{}\doxysubsection{\texorpdfstring{T2.\+3 — Register Allocation with Web Splitting}{T2.\+3 — Register Allocation with Web Splitting}}\label{md__r_e_a_d_m_e_autotoc_md23}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{T2.\+3 — Register Allocation with Web Splitting}{T2.\+3 — Register Allocation with Web Splitting}}\label{md__r_e_a_d_m_e_autotoc_md15}
 
 \begin{DoxyItemize}
 \item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily allocate\+Splitting()} implements the splitting strategy:\+
@@ -64,7 +64,7 @@
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md25}{}\doxysubsection{\texorpdfstring{T2.\+4 — Free Strategy (Smallest-\/\+Last + Selective Spill)}{T2.\+4 — Free Strategy (Smallest-\/\+Last + Selective Spill)}}\label{md__r_e_a_d_m_e_autotoc_md25}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysubsection{\texorpdfstring{T2.\+4 — Free Strategy (Smallest-\/\+Last + Selective Spill)}{T2.\+4 — Free Strategy (Smallest-\/\+Last + Selective Spill)}}\label{md__r_e_a_d_m_e_autotoc_md17}
 
 \begin{DoxyItemize}
 \item {\bfseries{{\ttfamily \doxylink{_algorithms_8cpp}{Algorithms.\+cpp}}}} — {\ttfamily allocate\+Free()} implements a custom strategy combining:\+
@@ -77,7 +77,7 @@
 \end{DoxyItemize}
 
 \DoxyHorRuler{0}
-\hypertarget{md__r_e_a_d_m_e_autotoc_md27}{}\doxysection{\texorpdfstring{How to run}{How to run}}\label{md__r_e_a_d_m_e_autotoc_md27}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md19}{}\doxysection{\texorpdfstring{How to run}{How to run}}\label{md__r_e_a_d_m_e_autotoc_md19}
 If you are on Windows, you have to do this in the wsl terminal.
 
 

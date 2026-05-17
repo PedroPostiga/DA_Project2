@@ -17,12 +17,11 @@ var searchData=
   ['getweb_14',['getWeb',['../class_interference_graph.html#a3415195d916ef205619f356386181bf3',1,'InterferenceGraph']]],
   ['getwebs_15',['getWebs',['../class_interference_graph.html#a82e45889d4203f30ff7331dced1f5650',1,'InterferenceGraph::getWebs()'],['../class_parser.html#ad12d47fe359415455c4a738f817ced12',1,'Parser::getWebs()']]],
   ['getweight_16',['getWeight',['../class_edge.html#a3df378e283d6c8be5be4170ac8d7f4e8',1,'Edge']]],
-  ['graph_17',['Graph',['../class_graph.html',1,'Graph&lt; T &gt;'],['../class_interference_graph.html#autotoc_md8',1,'Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?']]],
-  ['graph_20and_20not_20graph_18',['Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?',['../class_interference_graph.html#autotoc_md8',1,'']]],
+  ['graph_17',['Graph',['../class_graph.html',1,'Graph&lt; T &gt;'],['../class_interference_graph.html#autotoc_md0',1,'Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?']]],
+  ['graph_20and_20not_20graph_18',['Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?',['../class_interference_graph.html#autotoc_md0',1,'']]],
   ['graph_2eh_19',['Graph.h',['../_graph_8h.html',1,'']]],
   ['graph_3c_20int_20_3e_20',['Graph&lt; int &gt;',['../class_graph.html',1,'']]],
   ['graph_3c_20t_20_3e_21',['Graph&lt; T &gt;',['../class_vertex.html#aefa9b76cd57411c5354e5620dc2d84dd',1,'Vertex::Graph&lt; T &gt;()'],['../class_edge.html#aefa9b76cd57411c5354e5620dc2d84dd',1,'Edge::Graph&lt; T &gt;()']]],
-  ['greedy_20coloring_22',['T2.1 — Basic Register Allocation (Greedy Coloring)',['../md__r_e_a_d_m_e.html#autotoc_md19',1,'']]],
-  ['greedy_20coloring_20figure_209_20of_20the_20spec_23',['Algorithm overview (greedy coloring, Figure 9 of the spec)',['../class_register_allocator.html#autotoc_md12',1,'']]],
-  ['guard_20for_20k_20allocatesplitting_24',['Bug 3: No Guard for K &amp;lt;= 0 in &lt;span class=&quot;tt&quot;&gt;allocateSplitting&lt;/span&gt;',['../md__b_u_g___f_i_x_e_s.html#autotoc_md5',1,'']]]
+  ['greedy_20coloring_22',['T2.1 — Basic Register Allocation (Greedy Coloring)',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]],
+  ['greedy_20coloring_20figure_209_20of_20the_20spec_23',['Algorithm overview (greedy coloring, Figure 9 of the spec)',['../class_register_allocator.html#autotoc_md4',1,'']]]
 ];

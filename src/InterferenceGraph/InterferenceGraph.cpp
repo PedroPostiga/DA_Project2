@@ -83,6 +83,10 @@ const std::vector<Web>& InterferenceGraph::getWebs() const {
     return webs;
 }
 
+Graph<int>& InterferenceGraph::getGraph() {
+    return graph;
+}
+
 const Graph<int>& InterferenceGraph::getGraph() const {
     return graph;
 }

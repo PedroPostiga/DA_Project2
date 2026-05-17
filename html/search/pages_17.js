@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['web_20spilling_0',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md21',1,'']]],
-  ['web_20splitting_1',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md23',1,'']]],
-  ['why_20graph_20and_20not_20graph_2',['Why Graph&amp;lt;int&amp;gt; and not Graph&amp;lt;Web&amp;gt;?',['../class_interference_graph.html#autotoc_md8',1,'']]],
-  ['why_20these_20bugs_20cause_20crashes_3',['Why These Bugs Cause Crashes',['../md__b_u_g___f_i_x_e_s.html#autotoc_md6',1,'']]],
-  ['why_20two_20directed_20edges_20per_20interference_4',['Why two directed edges per interference?',['../class_interference_graph.html#autotoc_md9',1,'']]],
-  ['with_20web_20spilling_5',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md21',1,'']]],
-  ['with_20web_20splitting_6',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md23',1,'']]]
+  ['—_20basic_20register_20allocation_20greedy_20coloring_0',['T2.1 — Basic Register Allocation (Greedy Coloring)',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]],
+  ['—_20command_20line_20menu_20batch_20interface_1',['T1.1 — Command-Line Menu &amp;amp; Batch Interface',['../md__r_e_a_d_m_e.html#autotoc_md7',1,'']]],
+  ['—_20free_20strategy_20smallest_20last_20selective_20spill_2',['T2.4 — Free Strategy (Smallest-Last + Selective Spill)',['../md__r_e_a_d_m_e.html#autotoc_md17',1,'']]],
+  ['—_20read_20and_20parse_20input_20data_3',['T1.2 — Read and Parse Input Data',['../md__r_e_a_d_m_e.html#autotoc_md9',1,'']]],
+  ['—_20register_20allocation_20with_20web_20spilling_4',['T2.2 — Register Allocation with Web Spilling',['../md__r_e_a_d_m_e.html#autotoc_md13',1,'']]],
+  ['—_20register_20allocation_20with_20web_20splitting_5',['T2.3 — Register Allocation with Web Splitting',['../md__r_e_a_d_m_e.html#autotoc_md15',1,'']]]
 ];
