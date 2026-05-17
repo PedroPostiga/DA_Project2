@@ -68,6 +68,7 @@ void runMenu() {
             std::string filename;
             std::cout << "Enter live ranges file path: ";
             std::cin >> filename;
+            std::cout << std::endl;
             if (parser.parseLiveRanges(filename)) {
                 rangesLoaded = true;
                 allocated = false;
@@ -78,6 +79,7 @@ void runMenu() {
             std::string filename;
             std::cout << "Enter config file path: ";
             std::cin >> filename;
+            std::cout << std::endl;
             if (parser.parseConfig(filename)) {
                 config = parser.getConfig();
                 configLoaded = true;
