@@ -156,7 +156,7 @@ AllocationResult RegisterAllocator::allocateFree() const {
     for (int idx : order) {
         Web& web = webs[idx];
 
-        // ── 3a. Mark registers used by already-assigned interfering neighbors ──
+        // Mark registers used by already-assigned interfering neighbors ──
         // Reset only the slots we set last iteration (or use fill for simplicity).
         std::fill(usedReg.begin(), usedReg.end(), false);
 
@@ -172,7 +172,7 @@ AllocationResult RegisterAllocator::allocateFree() const {
             }
         }
 
-        // ── 3b. Assign lowest free register ────────────────────────────────
+        // Assign lowest free register ────────────────────────────────
         int assigned = -1;
         for (int r = 0; r < numRegisters; r++) {
             if (!usedReg[r]) { assigned = r; break; }
@@ -183,7 +183,7 @@ AllocationResult RegisterAllocator::allocateFree() const {
             continue;  // done for this web
         }
 
-        // ── 3c. No register free — spill the interfering neighbor with the
+        // No register free — spill the interfering neighbor with the
         //        fewest program points, then retry in a single pass ───────────
         Web* spillCandidate = nullptr;
 
@@ -191,7 +191,7 @@ AllocationResult RegisterAllocator::allocateFree() const {
             if (row[j] && webs[j].reg >= 0) {
                 if (!spillCandidate ||
                     webs[j].programPoints.size() < spillCandidate->programPoints.size()) {
-                    spillCandidate    = &webs[j];
+                    spillCandidate = &webs[j];
 
                 }
             }
@@ -231,6 +231,7 @@ AllocationResult RegisterAllocator::allocateFree() const {
     }
 
     result.registersUsed = static_cast<int>(distinctRegs.size());
-    result.feasible      = !anySpilled;
+    result.feasible      = !anySpilled;  // true only when every web got a register
+    result.partialResult = true;          // always write partial output, never all-M
     return result;
 }

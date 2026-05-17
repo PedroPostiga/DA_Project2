@@ -54,13 +54,19 @@ bool RegisterAllocator::writeOutput(const AllocationResult& result,
 
     out << "# Total number of registers used, followed by assignment to webs\n";
 
-    if (!result.feasible) {
+    if (!result.feasible && !result.partialResult) {
+        // Basic mode: allocation truly failed — all webs go to memory.
         std::cerr << "[RegisterAllocator] Warning: register allocation was not possible "
                      "with the provided number of registers (" << config.numRegisters << ").\n";
         out << "registers: 0\n";
         for (const Web& w : webs)
             out << "M: web" << w.id << "\n";
     } else {
+        // Partial or full allocation: write the actual register map.
+        if (!result.feasible)
+            std::cerr << "[RegisterAllocator] Warning: some webs could not be assigned a "
+                         "register and were spilled to memory.\n";
+
         out << "registers: " << result.registersUsed << "\n";
 
         // Group webs by register for clean output
@@ -93,7 +99,8 @@ void RegisterAllocator::printResult(const AllocationResult& result) const {
         std::cout << "web" << w.id << " (" << w.variable << "): "
                   << w.toString() << "\n";
 
-    if (!result.feasible) {
+    if (!result.feasible && !result.partialResult) {
+        // Basic mode: allocation truly failed — all webs go to memory.
         std::cerr << "Warning: allocation not feasible with "
                   << config.numRegisters << " register(s).\n";
         std::cout << "registers: 0\n";
@@ -101,6 +108,11 @@ void RegisterAllocator::printResult(const AllocationResult& result) const {
             std::cout << "M: web" << w.id << "\n";
         return;
     }
+
+    // Partial or full allocation: write the actual register map.
+    if (!result.feasible)
+        std::cerr << "Warning: some webs were spilled to memory with "
+                  << config.numRegisters << " register(s).\n";
 
     std::cout << "registers: " << result.registersUsed << "\n";
 
