@@ -1,0 +1,82 @@
+\doxysection{Algorithm\+Config Struct Reference}
+\hypertarget{struct_algorithm_config}{}\label{struct_algorithm_config}\index{AlgorithmConfig@{AlgorithmConfig}}
+
+
+Holds the parsed algorithm configuration from the registers/\+config input file.  
+
+
+
+
+{\ttfamily \+\#include $<$Data\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367}{Algorithm\+Config}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{struct_algorithm_config_a8b840373e153becdd5b5f7e90951a4f6}{num\+Registers}}
+\begin{DoxyCompactList}\small\item\em Number of physical registers available (K). \end{DoxyCompactList}\item 
+std::\+string \doxymbox{\hyperlink{struct_algorithm_config_a0dc0b3bceaef8a123821926487386372}{algorithm}}
+\begin{DoxyCompactList}\small\item\em One of:\+ "{}basic"{}, "{}spilling"{}, "{}splitting"{}, "{}free"{}. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_algorithm_config_a14e4136c22e233172caf5cebb0271e60}{algorithm\+Param}}
+\begin{DoxyCompactList}\small\item\em Parameter K for spilling/\+splitting; -\/1 if not applicable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds the parsed algorithm configuration from the registers/\+config input file. 
+
+Populated by \doxylink{class_parser_a8f80891b51e5f74f443904df25aa6c5a}{Parser::\+parse\+Config()} and consumed by the register allocator. 
+
+\label{doc-constructors}
+\Hypertarget{struct_algorithm_config_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367}\index{AlgorithmConfig@{AlgorithmConfig}!AlgorithmConfig@{AlgorithmConfig}}
+\index{AlgorithmConfig@{AlgorithmConfig}!AlgorithmConfig@{AlgorithmConfig}}
+\doxysubsubsection{\texorpdfstring{AlgorithmConfig()}{AlgorithmConfig()}}
+{\footnotesize\ttfamily \label{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367} 
+Algorithm\+Config::\+\+Algorithm\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_algorithm_config_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_algorithm_config_a0dc0b3bceaef8a123821926487386372}\index{AlgorithmConfig@{AlgorithmConfig}!algorithm@{algorithm}}
+\index{algorithm@{algorithm}!AlgorithmConfig@{AlgorithmConfig}}
+\doxysubsubsection{\texorpdfstring{algorithm}{algorithm}}
+{\footnotesize\ttfamily \label{struct_algorithm_config_a0dc0b3bceaef8a123821926487386372} 
+std::\+string Algorithm\+Config::\+algorithm}
+
+
+
+One of:\+ "{}basic"{}, "{}spilling"{}, "{}splitting"{}, "{}free"{}. 
+
+\Hypertarget{struct_algorithm_config_a14e4136c22e233172caf5cebb0271e60}\index{AlgorithmConfig@{AlgorithmConfig}!algorithmParam@{algorithmParam}}
+\index{algorithmParam@{algorithmParam}!AlgorithmConfig@{AlgorithmConfig}}
+\doxysubsubsection{\texorpdfstring{algorithmParam}{algorithmParam}}
+{\footnotesize\ttfamily \label{struct_algorithm_config_a14e4136c22e233172caf5cebb0271e60} 
+int Algorithm\+Config::\+algorithm\+Param}
+
+
+
+Parameter K for spilling/\+splitting; -\/1 if not applicable. 
+
+\Hypertarget{struct_algorithm_config_a8b840373e153becdd5b5f7e90951a4f6}\index{AlgorithmConfig@{AlgorithmConfig}!numRegisters@{numRegisters}}
+\index{numRegisters@{numRegisters}!AlgorithmConfig@{AlgorithmConfig}}
+\doxysubsubsection{\texorpdfstring{numRegisters}{numRegisters}}
+{\footnotesize\ttfamily \label{struct_algorithm_config_a8b840373e153becdd5b5f7e90951a4f6} 
+int Algorithm\+Config::\+num\+Registers}
+
+
+
+Number of physical registers available (K). 
+
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_data_types_8h}{Data\+Types.\+h}}\item 
+src/\+\+Data\+Types/\+\doxymbox{\hyperlink{_algorithm_config_8cpp}{Algorithm\+Config.\+cpp}}\end{DoxyCompactItemize}

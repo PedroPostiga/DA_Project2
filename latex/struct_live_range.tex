@@ -1,0 +1,146 @@
+\doxysection{Live\+Range Struct Reference}
+\hypertarget{struct_live_range}{}\label{struct_live_range}\index{LiveRange@{LiveRange}}
+
+
+Represents a single live range for a variable.  
+
+
+
+
+{\ttfamily \+\#include $<$Data\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{Live\+Range}} ()
+\item 
+bool \doxymbox{\hyperlink{struct_live_range_a6b60131b044f8f5a73ef9046072d4efd}{overlaps\+With}} (const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&other) const
+\begin{DoxyCompactList}\small\item\em Checks whether this live range overlaps with another. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{struct_live_range_a5da26501dfdf80b43053d7896efb5dc5}{merge}} (const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&other)
+\begin{DoxyCompactList}\small\item\em Merges another live range into this one in-\/place. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{struct_live_range_a83f4bdb3ba704524fddd14b1d975d7c8}{variable}}
+\begin{DoxyCompactList}\small\item\em Variable name this range belongs to. \end{DoxyCompactList}\item 
+std::\+set$<$ int $>$ \doxymbox{\hyperlink{struct_live_range_a25f54ba9b3d2ea723954adfe9ee364d4}{program\+Points}}
+\begin{DoxyCompactList}\small\item\em Sorted set of program line numbers. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_live_range_a2cefbd0e5b37ac2ab2587a156f659266}{def\+Point}}
+\begin{DoxyCompactList}\small\item\em Line where the variable is defined (\textquotesingle{}+\textquotesingle{}), -\/1 if none. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_live_range_a03c0d77e800df7fca69164e1da6c1024}{last\+Use\+Point}}
+\begin{DoxyCompactList}\small\item\em Line where the variable is last used (\textquotesingle{}-\/\textquotesingle{}), -\/1 if none. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a single live range for a variable. 
+
+A live range is a set of program points (line numbers) along which a variable holds a specific value. It must have at least one definition point (marked \textquotesingle{}+\textquotesingle{} in the input) and one last-\/use point (marked \textquotesingle{}-\/\textquotesingle{}).
+
+Live ranges for the same variable may later be merged into a \doxylink{struct_web}{Web} if they share any program point. 
+
+\label{doc-constructors}
+\Hypertarget{struct_live_range_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_live_range_ad37bdecde122641139086799b7d55ad3}\index{LiveRange@{LiveRange}!LiveRange@{LiveRange}}
+\index{LiveRange@{LiveRange}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{LiveRange()}{LiveRange()}}
+{\footnotesize\ttfamily \label{struct_live_range_ad37bdecde122641139086799b7d55ad3} 
+Live\+Range::\+\+Live\+Range (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_live_range_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_live_range_a5da26501dfdf80b43053d7896efb5dc5}\index{LiveRange@{LiveRange}!merge@{merge}}
+\index{merge@{merge}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{merge()}{merge()}}
+{\footnotesize\ttfamily \label{struct_live_range_a5da26501dfdf80b43053d7896efb5dc5} 
+void Live\+Range::\+merge (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&}]{other}{}\end{DoxyParamCaption})}
+
+
+
+Merges another live range into this one in-\/place. 
+
+Unions all program points and updates def\+Point /\+ last\+Use\+Point.
+
+Time complexity:\+ O(m log n)
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The live range to absorb. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_live_range_a6b60131b044f8f5a73ef9046072d4efd}\index{LiveRange@{LiveRange}!overlapsWith@{overlapsWith}}
+\index{overlapsWith@{overlapsWith}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{overlapsWith()}{overlapsWith()}}
+{\footnotesize\ttfamily \label{struct_live_range_a6b60131b044f8f5a73ef9046072d4efd} 
+bool Live\+Range::\+overlaps\+With (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks whether this live range overlaps with another. 
+
+Two live ranges overlap if they share at least one program point, with the exception:\+ if one range starts at point P due to a definition and the other ends at P due to a last use, they do NOT overlap at P. This models the "{}i = i + 1"{} pattern where the old value is consumed and a new value is defined at the same instruction.
+
+Time complexity:\+ O(min(\texorpdfstring{$\vert$}{|}\+A\texorpdfstring{$\vert$}{|},\texorpdfstring{$\vert$}{|}\+B\texorpdfstring{$\vert$}{|}) \texorpdfstring{$\ast$}{*} log(max(\texorpdfstring{$\vert$}{|}\+A\texorpdfstring{$\vert$}{|},\texorpdfstring{$\vert$}{|}\+B\texorpdfstring{$\vert$}{|})))
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other live range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the ranges overlap (and should be fused into one web). 
+\end{DoxyReturn}
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_live_range_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_live_range_a2cefbd0e5b37ac2ab2587a156f659266}\index{LiveRange@{LiveRange}!defPoint@{defPoint}}
+\index{defPoint@{defPoint}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{defPoint}{defPoint}}
+{\footnotesize\ttfamily \label{struct_live_range_a2cefbd0e5b37ac2ab2587a156f659266} 
+int Live\+Range::\+def\+Point}
+
+
+
+Line where the variable is defined (\textquotesingle{}+\textquotesingle{}), -\/1 if none. 
+
+\Hypertarget{struct_live_range_a03c0d77e800df7fca69164e1da6c1024}\index{LiveRange@{LiveRange}!lastUsePoint@{lastUsePoint}}
+\index{lastUsePoint@{lastUsePoint}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{lastUsePoint}{lastUsePoint}}
+{\footnotesize\ttfamily \label{struct_live_range_a03c0d77e800df7fca69164e1da6c1024} 
+int Live\+Range::\+last\+Use\+Point}
+
+
+
+Line where the variable is last used (\textquotesingle{}-\/\textquotesingle{}), -\/1 if none. 
+
+\Hypertarget{struct_live_range_a25f54ba9b3d2ea723954adfe9ee364d4}\index{LiveRange@{LiveRange}!programPoints@{programPoints}}
+\index{programPoints@{programPoints}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{programPoints}{programPoints}}
+{\footnotesize\ttfamily \label{struct_live_range_a25f54ba9b3d2ea723954adfe9ee364d4} 
+std::\+set$<$int$>$ Live\+Range::\+program\+Points}
+
+
+
+Sorted set of program line numbers. 
+
+\Hypertarget{struct_live_range_a83f4bdb3ba704524fddd14b1d975d7c8}\index{LiveRange@{LiveRange}!variable@{variable}}
+\index{variable@{variable}!LiveRange@{LiveRange}}
+\doxysubsubsection{\texorpdfstring{variable}{variable}}
+{\footnotesize\ttfamily \label{struct_live_range_a83f4bdb3ba704524fddd14b1d975d7c8} 
+std::\+string Live\+Range::\+variable}
+
+
+
+Variable name this range belongs to. 
+
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_data_types_8h}{Data\+Types.\+h}}\item 
+src/\+\+Data\+Types/\+\doxymbox{\hyperlink{_live_range_8cpp}{Live\+Range.\+cpp}}\end{DoxyCompactItemize}

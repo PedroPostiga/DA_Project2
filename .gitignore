@@ -72,3 +72,10 @@ Testing/
 cmake-build-debug/
 *.iml
 *.csv
+basic/
+balh.txt
+test_config.txt
+test_output.txt
+test_ranges.txt
+*.pdf
+.vscode/

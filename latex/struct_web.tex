@@ -1,0 +1,209 @@
+\doxysection{Web Struct Reference}
+\hypertarget{struct_web}{}\label{struct_web}\index{Web@{Web}}
+
+
+Represents a web:\+ the union of all overlapping live ranges for one variable.  
+
+
+
+
+{\ttfamily \+\#include $<$Data\+Types.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}} ()
+\item 
+\doxymbox{\hyperlink{struct_web_a236268ad8dcb4487b4533c7535cad1ae}{Web}} (int \doxymbox{\hyperlink{struct_web_af59e2bcb1907d91a75a5d2598e0eb1b6}{id}}, const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&lr)
+\item 
+bool \doxymbox{\hyperlink{struct_web_a1daf0ad084076fd059d0e66e75481125}{interferes\+With}} (const \doxymbox{\hyperlink{struct_web}{Web}} \&other) const
+\begin{DoxyCompactList}\small\item\em Checks whether this web interferes with another. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{struct_web_ab67611ff3f4cc55e2f3e0c203c73c092}{merge}} (const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&lr)
+\begin{DoxyCompactList}\small\item\em Merges a live range into this web in-\/place. \end{DoxyCompactList}\item 
+std::\+string \doxymbox{\hyperlink{struct_web_a86e81d9280bf2ca94baf28ee5da596a8}{to\+String}} () const
+\begin{DoxyCompactList}\small\item\em Returns the web\textquotesingle{}s program points as a formatted output string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{struct_web_af59e2bcb1907d91a75a5d2598e0eb1b6}{id}}
+\begin{DoxyCompactList}\small\item\em Unique ID — matches the vertex info in \doxylink{class_graph}{Graph$<$int$>$}. \end{DoxyCompactList}\item 
+std::\+string \doxymbox{\hyperlink{struct_web_a439e3c2fbedccfdd8c34dc780066fb4a}{variable}}
+\begin{DoxyCompactList}\small\item\em Variable name this web represents. \end{DoxyCompactList}\item 
+std::\+set$<$ int $>$ \doxymbox{\hyperlink{struct_web_ac915c14d714a4e4c1f09faab36035bf9}{program\+Points}}
+\begin{DoxyCompactList}\small\item\em Union of all program points across merged ranges. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_web_a6a64d95058a9bd2a135bb0ff5d9bdfc9}{def\+Point}}
+\begin{DoxyCompactList}\small\item\em Earliest definition point, -\/1 if none. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_web_a3cb77b2f807fd86ffb73099b5c060f00}{last\+Use\+Point}}
+\begin{DoxyCompactList}\small\item\em Latest last-\/use point, -\/1 if none. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_web_a8a11a58992b0434d2ffa52f75cc24904}{reg}}
+\begin{DoxyCompactList}\small\item\em Assigned register:\+ -\/1 (none), -\/2 (spilled), or 0..K-\/1. \end{DoxyCompactList}\item 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} $>$ \doxymbox{\hyperlink{struct_web_a53b28176e88fd5ecba852c31bf7212ef}{original\+Ranges}}
+\begin{DoxyCompactList}\small\item\em Original live ranges that make up this web. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a web:\+ the union of all overlapping live ranges for one variable. 
+
+A web is the primary node type in the interference graph. Each web is identified by a numeric ID (its index in the interference graph\textquotesingle{}s vertex set) and tracks the full union of program points contributed by all merged live ranges.
+
+The interference graph is built as \doxylink{class_graph}{Graph$<$int$>$} where the integer stored in each vertex is the web ID. 
+
+\label{doc-constructors}
+\Hypertarget{struct_web_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}\index{Web@{Web}!Web@{Web}}
+\index{Web@{Web}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{Web()}{Web()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_web_aa5e813821bc4a8e27b85e384298b3dcf} 
+Web::\+\+Web (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_web_a236268ad8dcb4487b4533c7535cad1ae}\index{Web@{Web}!Web@{Web}}
+\index{Web@{Web}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{Web()}{Web()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_web_a236268ad8dcb4487b4533c7535cad1ae} 
+Web::\+\+Web (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&}]{lr}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_web_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_web_a1daf0ad084076fd059d0e66e75481125}\index{Web@{Web}!interferesWith@{interferesWith}}
+\index{interferesWith@{interferesWith}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{interferesWith()}{interferesWith()}}
+{\footnotesize\ttfamily \label{struct_web_a1daf0ad084076fd059d0e66e75481125} 
+bool Web::\+interferes\+With (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_web}{Web}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks whether this web interferes with another. 
+
+Two webs interfere if they are simultaneously live at any program point. The same def-\/start /\+ last-\/use-\/end exception from \doxylink{struct_live_range}{Live\+Range} applies here.
+
+Used to decide whether to add an edge between the two corresponding vertices in the interference graph.
+
+Time complexity:\+ O(min(\texorpdfstring{$\vert$}{|}\+A\texorpdfstring{$\vert$}{|},\texorpdfstring{$\vert$}{|}\+B\texorpdfstring{$\vert$}{|}) \texorpdfstring{$\ast$}{*} log(max(\texorpdfstring{$\vert$}{|}\+A\texorpdfstring{$\vert$}{|},\texorpdfstring{$\vert$}{|}\+B\texorpdfstring{$\vert$}{|})))
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The other web. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if an interference edge should be added between them. 
+\end{DoxyReturn}
+\Hypertarget{struct_web_ab67611ff3f4cc55e2f3e0c203c73c092}\index{Web@{Web}!merge@{merge}}
+\index{merge@{merge}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{merge()}{merge()}}
+{\footnotesize\ttfamily \label{struct_web_ab67611ff3f4cc55e2f3e0c203c73c092} 
+void Web::\+merge (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_live_range}{Live\+Range}} \&}]{lr}{}\end{DoxyParamCaption})}
+
+
+
+Merges a live range into this web in-\/place. 
+
+Time complexity:\+ O(m log n)
+
+
+\begin{DoxyParams}{Parameters}
+{\em lr} & The live range to absorb. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{struct_web_a86e81d9280bf2ca94baf28ee5da596a8}\index{Web@{Web}!toString@{toString}}
+\index{toString@{toString}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{struct_web_a86e81d9280bf2ca94baf28ee5da596a8} 
+std::\+string Web::\+to\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the web\textquotesingle{}s program points as a formatted output string. 
+
+Points are sorted in ascending order; the def\+Point is suffixed with \textquotesingle{}+\textquotesingle{} and the last\+Use\+Point is suffixed with \textquotesingle{}-\/\textquotesingle{}.
+
+Time complexity:\+ O(n)
+
+\begin{DoxyReturn}{Returns}
+e.\+g. "{}1+,2,3,4,5,6-\/"{} 
+\end{DoxyReturn}
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_web_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_web_a6a64d95058a9bd2a135bb0ff5d9bdfc9}\index{Web@{Web}!defPoint@{defPoint}}
+\index{defPoint@{defPoint}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{defPoint}{defPoint}}
+{\footnotesize\ttfamily \label{struct_web_a6a64d95058a9bd2a135bb0ff5d9bdfc9} 
+int Web::\+def\+Point}
+
+
+
+Earliest definition point, -\/1 if none. 
+
+\Hypertarget{struct_web_af59e2bcb1907d91a75a5d2598e0eb1b6}\index{Web@{Web}!id@{id}}
+\index{id@{id}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily \label{struct_web_af59e2bcb1907d91a75a5d2598e0eb1b6} 
+int Web::\+id}
+
+
+
+Unique ID — matches the vertex info in \doxylink{class_graph}{Graph$<$int$>$}. 
+
+\Hypertarget{struct_web_a3cb77b2f807fd86ffb73099b5c060f00}\index{Web@{Web}!lastUsePoint@{lastUsePoint}}
+\index{lastUsePoint@{lastUsePoint}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{lastUsePoint}{lastUsePoint}}
+{\footnotesize\ttfamily \label{struct_web_a3cb77b2f807fd86ffb73099b5c060f00} 
+int Web::\+last\+Use\+Point}
+
+
+
+Latest last-\/use point, -\/1 if none. 
+
+\Hypertarget{struct_web_a53b28176e88fd5ecba852c31bf7212ef}\index{Web@{Web}!originalRanges@{originalRanges}}
+\index{originalRanges@{originalRanges}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{originalRanges}{originalRanges}}
+{\footnotesize\ttfamily \label{struct_web_a53b28176e88fd5ecba852c31bf7212ef} 
+std::\+vector$<$\doxymbox{\hyperlink{struct_live_range}{Live\+Range}}$>$ Web::\+original\+Ranges}
+
+
+
+Original live ranges that make up this web. 
+
+\Hypertarget{struct_web_ac915c14d714a4e4c1f09faab36035bf9}\index{Web@{Web}!programPoints@{programPoints}}
+\index{programPoints@{programPoints}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{programPoints}{programPoints}}
+{\footnotesize\ttfamily \label{struct_web_ac915c14d714a4e4c1f09faab36035bf9} 
+std::\+set$<$int$>$ Web::\+program\+Points}
+
+
+
+Union of all program points across merged ranges. 
+
+\Hypertarget{struct_web_a8a11a58992b0434d2ffa52f75cc24904}\index{Web@{Web}!reg@{reg}}
+\index{reg@{reg}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{reg}{reg}}
+{\footnotesize\ttfamily \label{struct_web_a8a11a58992b0434d2ffa52f75cc24904} 
+int Web::\+reg}
+
+
+
+Assigned register:\+ -\/1 (none), -\/2 (spilled), or 0..K-\/1. 
+
+\Hypertarget{struct_web_a439e3c2fbedccfdd8c34dc780066fb4a}\index{Web@{Web}!variable@{variable}}
+\index{variable@{variable}!Web@{Web}}
+\doxysubsubsection{\texorpdfstring{variable}{variable}}
+{\footnotesize\ttfamily \label{struct_web_a439e3c2fbedccfdd8c34dc780066fb4a} 
+std::\+string Web::\+variable}
+
+
+
+Variable name this web represents. 
+
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_data_types_8h}{Data\+Types.\+h}}\item 
+src/\+\+Data\+Types/\+\doxymbox{\hyperlink{_web_8cpp}{Web.\+cpp}}\end{DoxyCompactItemize}

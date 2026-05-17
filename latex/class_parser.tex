@@ -1,0 +1,169 @@
+\doxysection{Parser Class Reference}
+\hypertarget{class_parser}{}\label{class_parser}\index{Parser@{Parser}}
+
+
+Parses the live ranges input file and the algorithm configuration file.  
+
+
+
+
+{\ttfamily \+\#include $<$Parser.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_parser_a5208129b497bfdf7c8ecceeb70e4bba8}{Parser}} ()=default
+\item 
+bool \doxymbox{\hyperlink{class_parser_a4f01c9e96b81aced2c597d39a1bfb8ee}{parse\+Live\+Ranges}} (const std::\+string \&filename)
+\begin{DoxyCompactList}\small\item\em Parses the live ranges input file. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_parser_a8f80891b51e5f74f443904df25aa6c5a}{parse\+Config}} (const std::\+string \&filename)
+\begin{DoxyCompactList}\small\item\em Parses the algorithm configuration file. \end{DoxyCompactList}\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \& \doxymbox{\hyperlink{class_parser_ad12d47fe359415455c4a738f817ced12}{get\+Webs}} () const
+\begin{DoxyCompactList}\small\item\em Returns the webs produced after parsing and merging live ranges. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_algorithm_config}{Algorithm\+Config}} \& \doxymbox{\hyperlink{class_parser_a6eb037aedd75d9e39fb3dd78b8698e0f}{get\+Config}} () const
+\begin{DoxyCompactList}\small\item\em Returns the parsed algorithm configuration. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_parser_ad4f098f98e6bf0bb913a753ad69055ee}{print\+Webs}} () const
+\begin{DoxyCompactList}\small\item\em Prints a human-\/readable summary of all webs to stdout. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_parser_af13bcf3da1dbe6b8300571bae5219792}{print\+Config}} () const
+\begin{DoxyCompactList}\small\item\em Prints the algorithm configuration to stdout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parses the live ranges input file and the algorithm configuration file. 
+
+Responsibilities:\+
+\begin{DoxyEnumerate}
+\item Read and tokenize the live ranges file, producing \doxylink{struct_live_range}{Live\+Range} objects.
+\item Merge overlapping live ranges of the same variable into \doxylink{struct_web}{Web} objects using a greedy algorithm.
+\item Read the algorithm configuration file (register count, algorithm type).
+\end{DoxyEnumerate}
+
+The webs produced here become the nodes of the interference graph, which is built separately by \doxylink{class_interference_graph}{Interference\+Graph} using \doxylink{class_graph}{Graph$<$int$>$} as its base.\hypertarget{class_parser_autotoc_md2}{}\doxysubsubsubsection{\texorpdfstring{Live Ranges File Format}{Live Ranges File Format}}\label{class_parser_autotoc_md2}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#\ comment}}
+\DoxyCodeLine{varName:\ lineNum+,\ lineNum,\ ...,\ lineNum-\/}
+
+\end{DoxyCode}
+\hypertarget{class_parser_autotoc_md3}{}\doxysubsubsubsection{\texorpdfstring{Config File Format}{Config File Format}}\label{class_parser_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#\ comment}}
+\DoxyCodeLine{registers:\ N}
+\DoxyCodeLine{algorithm:\ basic\ |\ spilling,\ K\ |\ splitting,\ K\ |\ free}
+
+\end{DoxyCode}
+
+
+Time complexity of full parse:\+ O(\+V \texorpdfstring{$\ast$}{*} R\texorpdfstring{$^\wedge$}{\string^}2 \texorpdfstring{$\ast$}{*} P \texorpdfstring{$\ast$}{*} log P) V = variables, R = ranges per variable, P = program points per range. 
+
+\label{doc-constructors}
+\Hypertarget{class_parser_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_parser_a5208129b497bfdf7c8ecceeb70e4bba8}\index{Parser@{Parser}!Parser@{Parser}}
+\index{Parser@{Parser}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{Parser()}{Parser()}}
+{\footnotesize\ttfamily \label{class_parser_a5208129b497bfdf7c8ecceeb70e4bba8} 
+Parser::\+\+Parser (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_parser_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_parser_a6eb037aedd75d9e39fb3dd78b8698e0f}\index{Parser@{Parser}!getConfig@{getConfig}}
+\index{getConfig@{getConfig}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{getConfig()}{getConfig()}}
+{\footnotesize\ttfamily \label{class_parser_a6eb037aedd75d9e39fb3dd78b8698e0f} 
+const \doxymbox{\hyperlink{struct_algorithm_config}{Algorithm\+Config}} \& Parser::\+get\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the parsed algorithm configuration. 
+
+\begin{DoxyReturn}{Returns}
+Const reference to the \doxylink{struct_algorithm_config}{Algorithm\+Config} struct. 
+\end{DoxyReturn}
+\Hypertarget{class_parser_ad12d47fe359415455c4a738f817ced12}\index{Parser@{Parser}!getWebs@{getWebs}}
+\index{getWebs@{getWebs}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{getWebs()}{getWebs()}}
+{\footnotesize\ttfamily \label{class_parser_ad12d47fe359415455c4a738f817ced12} 
+const std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \& Parser::\+get\+Webs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the webs produced after parsing and merging live ranges. 
+
+\begin{DoxyReturn}{Returns}
+Const reference to the vector of webs. 
+\end{DoxyReturn}
+\Hypertarget{class_parser_a8f80891b51e5f74f443904df25aa6c5a}\index{Parser@{Parser}!parseConfig@{parseConfig}}
+\index{parseConfig@{parseConfig}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{parseConfig()}{parseConfig()}}
+{\footnotesize\ttfamily \label{class_parser_a8f80891b51e5f74f443904df25aa6c5a} 
+bool Parser::\+parse\+Config (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Parses the algorithm configuration file. 
+
+Reads the number of registers and the algorithm specification. The result is retrievable via \doxylink{class_parser_a6eb037aedd75d9e39fb3dd78b8698e0f}{get\+Config()}.
+
+Time complexity:\+ O(\+L), L = number of lines in the file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to the configuration file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if parsing succeeded, false on file or format error. 
+\end{DoxyReturn}
+\Hypertarget{class_parser_a4f01c9e96b81aced2c597d39a1bfb8ee}\index{Parser@{Parser}!parseLiveRanges@{parseLiveRanges}}
+\index{parseLiveRanges@{parseLiveRanges}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{parseLiveRanges()}{parseLiveRanges()}}
+{\footnotesize\ttfamily \label{class_parser_a4f01c9e96b81aced2c597d39a1bfb8ee} 
+bool Parser::\+parse\+Live\+Ranges (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Parses the live ranges input file. 
+
+Reads variable names and their associated live ranges, applies the \textquotesingle{}+\textquotesingle{}/\+\textquotesingle{}-\/\textquotesingle{} markers, then merges overlapping ranges for each variable into webs. The resulting webs are retrievable via \doxylink{class_parser_ad12d47fe359415455c4a738f817ced12}{get\+Webs()}.
+
+Time complexity:\+ O(\+V \texorpdfstring{$\ast$}{*} R\texorpdfstring{$^\wedge$}{\string^}2 \texorpdfstring{$\ast$}{*} P \texorpdfstring{$\ast$}{*} log P)
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to the live ranges file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if parsing succeeded, false on file or format error. 
+\end{DoxyReturn}
+\Hypertarget{class_parser_af13bcf3da1dbe6b8300571bae5219792}\index{Parser@{Parser}!printConfig@{printConfig}}
+\index{printConfig@{printConfig}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{printConfig()}{printConfig()}}
+{\footnotesize\ttfamily \label{class_parser_af13bcf3da1dbe6b8300571bae5219792} 
+void Parser::\+print\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Prints the algorithm configuration to stdout. 
+
+\Hypertarget{class_parser_ad4f098f98e6bf0bb913a753ad69055ee}\index{Parser@{Parser}!printWebs@{printWebs}}
+\index{printWebs@{printWebs}!Parser@{Parser}}
+\doxysubsubsection{\texorpdfstring{printWebs()}{printWebs()}}
+{\footnotesize\ttfamily \label{class_parser_ad4f098f98e6bf0bb913a753ad69055ee} 
+void Parser::\+print\+Webs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Prints a human-\/readable summary of all webs to stdout. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_parser_8h}{Parser.\+h}}\item 
+src/\+\+Parser/\+\doxymbox{\hyperlink{_parser_8cpp}{Parser.\+cpp}}\end{DoxyCompactItemize}

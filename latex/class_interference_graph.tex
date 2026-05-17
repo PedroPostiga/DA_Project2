@@ -1,0 +1,267 @@
+\doxysection{Interference\+Graph Class Reference}
+\hypertarget{class_interference_graph}{}\label{class_interference_graph}\index{InterferenceGraph@{InterferenceGraph}}
+
+
+Builds and manages the web interference graph for register allocation.  
+
+
+
+
+{\ttfamily \+\#include $<$Interference\+Graph.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_interference_graph_aea0d5dae50cb22e666b3a9b49454bdab}{Interference\+Graph}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_interference_graph_ad68d7a95dbde1a1aa7e5dac96ff13b6e}{build}} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \&webs)
+\begin{DoxyCompactList}\small\item\em Builds the interference graph from a list of webs. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_interference_graph_a75352321bd62c1f70415dde6719771ec}{get\+Degree}} (int web\+Id) const
+\begin{DoxyCompactList}\small\item\em Returns the degree of a web\textquotesingle{}s node in the interference graph. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_interference_graph_abf516640d6f25eb94df56bb10797fb6d}{get\+Max\+Degree}} () const
+\begin{DoxyCompactList}\small\item\em Returns the maximum degree across all nodes in the graph. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_interference_graph_a95f3dc31927786139e314be02de76e73}{interferes}} (int web\+Id1, int web\+Id2) const
+\begin{DoxyCompactList}\small\item\em Checks whether two webs interfere (i.\+e., share an edge). \end{DoxyCompactList}\item 
+std::\+vector$<$ int $>$ \doxymbox{\hyperlink{class_interference_graph_afde40d98ec67911df32d4ce36313164f}{get\+Neighbors}} (int web\+Id) const
+\begin{DoxyCompactList}\small\item\em Returns the list of web IDs that interfere with a given web. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_interference_graph_abe9154c316f7df0a64343bfa45eb5d58}{get\+Num\+Webs}} () const
+\begin{DoxyCompactList}\small\item\em Returns the total number of webs (nodes) in the graph. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_web}{Web}} \& \doxymbox{\hyperlink{class_interference_graph_a3415195d916ef205619f356386181bf3}{get\+Web}} (int web\+Id) const
+\begin{DoxyCompactList}\small\item\em Returns the \doxylink{struct_web}{Web} object for a given web ID. \end{DoxyCompactList}\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \& \doxymbox{\hyperlink{class_interference_graph_a82e45889d4203f30ff7331dced1f5650}{get\+Webs}} () const
+\begin{DoxyCompactList}\small\item\em Returns all webs in the graph. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_graph}{Graph}}$<$ int $>$ \& \doxymbox{\hyperlink{class_interference_graph_ab60a250596587b908061a523dc598418}{get\+Graph}} ()
+\begin{DoxyCompactList}\small\item\em Provides direct access to the underlying \doxylink{class_graph}{Graph$<$int$>$}. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{class_graph}{Graph}}$<$ int $>$ \& \doxymbox{\hyperlink{class_interference_graph_ab2f24eb760a02c827c5e3da10c82aa4b}{get\+Graph}} () const
+\item 
+void \doxymbox{\hyperlink{class_interference_graph_a8ed2be8330ae75504ef60eacae1bd41e}{print}} () const
+\begin{DoxyCompactList}\small\item\em Prints a human-\/readable representation of the interference graph. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_interference_graph_aa7ad4bd81b8cc1d1837e2e034984496b}{emit\+DOT}} (const std::\+string \&filename) const
+\begin{DoxyCompactList}\small\item\em Emits a DOT file for graphical visualization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Builds and manages the web interference graph for register allocation. 
+
+\doxylink{class_interference_graph}{Interference\+Graph} is a domain-\/specific layer on top of \doxylink{class_graph}{Graph$<$int$>$}. Each vertex in the underlying \doxylink{class_graph}{Graph$<$int$>$} stores a web ID (int), and the full \doxylink{struct_web}{Web} data is kept in a parallel vector indexed by that same ID.\hypertarget{class_interference_graph_autotoc_md0}{}\doxysubsubsubsection{\texorpdfstring{Why Graph$<$int$>$ and not Graph$<$\+Web$>$?}{Why Graph$<$int$>$ and not Graph$<$\+Web$>$?}}\label{class_interference_graph_autotoc_md0}
+\doxylink{struct_web}{Web} objects are large and mutable — they are modified during spilling and splitting (T2.\+2, T2.\+3). Storing only the integer ID in the graph avoids copying and allows the full \doxylink{struct_web}{Web} data to be looked up in O(1) via the vector, from any graph traversal result.\hypertarget{class_interference_graph_autotoc_md1}{}\doxysubsubsubsection{\texorpdfstring{Why two directed edges per interference?}{Why two directed edges per interference?}}\label{class_interference_graph_autotoc_md1}
+\doxylink{class_graph}{Graph$<$\+T$>$} models directed edges. An interference relation is symmetric (if web A interferes with web B, B interferes with A), so we add one edge in each direction. The degree of a node is then the size of its adjacency list, which correctly reflects the number of interfering webs.
+
+Time complexity of \doxylink{class_interference_graph_ad68d7a95dbde1a1aa7e5dac96ff13b6e}{build()}:\+ O(\+W\texorpdfstring{$^\wedge$}{\string^}2 \texorpdfstring{$\ast$}{*} P \texorpdfstring{$\ast$}{*} log P) W = number of webs, P = average program points per web. 
+
+\label{doc-constructors}
+\Hypertarget{class_interference_graph_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_interference_graph_aea0d5dae50cb22e666b3a9b49454bdab}\index{InterferenceGraph@{InterferenceGraph}!InterferenceGraph@{InterferenceGraph}}
+\index{InterferenceGraph@{InterferenceGraph}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{InterferenceGraph()}{InterferenceGraph()}}
+{\footnotesize\ttfamily \label{class_interference_graph_aea0d5dae50cb22e666b3a9b49454bdab} 
+Interference\+Graph::\+\+Interference\+Graph (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_interference_graph_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_interference_graph_ad68d7a95dbde1a1aa7e5dac96ff13b6e}\index{InterferenceGraph@{InterferenceGraph}!build@{build}}
+\index{build@{build}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \label{class_interference_graph_ad68d7a95dbde1a1aa7e5dac96ff13b6e} 
+void Interference\+Graph::\+build (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \&}]{webs}{}\end{DoxyParamCaption})}
+
+
+
+Builds the interference graph from a list of webs. 
+
+For each web, adds a vertex with info = web.\+id to the underlying \doxylink{class_graph}{Graph$<$int$>$}. Then, for every pair of webs, calls \doxylink{struct_web_a1daf0ad084076fd059d0e66e75481125}{Web::\+interferes\+With()} and adds a bidirectional edge if they interfere.
+
+Any previously built graph is cleared before building.
+
+Time complexity:\+ O(\+W\texorpdfstring{$^\wedge$}{\string^}2 \texorpdfstring{$\ast$}{*} P \texorpdfstring{$\ast$}{*} log P)
+
+
+\begin{DoxyParams}{Parameters}
+{\em webs} & The webs produced by the \doxylink{class_parser}{Parser}. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_interference_graph_aa7ad4bd81b8cc1d1837e2e034984496b}\index{InterferenceGraph@{InterferenceGraph}!emitDOT@{emitDOT}}
+\index{emitDOT@{emitDOT}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{emitDOT()}{emitDOT()}}
+{\footnotesize\ttfamily \label{class_interference_graph_aa7ad4bd81b8cc1d1837e2e034984496b} 
+void Interference\+Graph::\+emit\+DOT (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filename}{}\end{DoxyParamCaption}) const}
+
+
+
+Emits a DOT file for graphical visualization. 
+
+Wraps \doxylink{class_graph_a4eca9d8e63b518989c767655b9b4691f}{Graph$<$int$>$::\+emit\+DOTFile}, naming nodes by "{}web\+N (var\+Name)"{} for readability.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Output filename (without .gv extension). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_interference_graph_a75352321bd62c1f70415dde6719771ec}\index{InterferenceGraph@{InterferenceGraph}!getDegree@{getDegree}}
+\index{getDegree@{getDegree}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getDegree()}{getDegree()}}
+{\footnotesize\ttfamily \label{class_interference_graph_a75352321bd62c1f70415dde6719771ec} 
+int Interference\+Graph::\+get\+Degree (\begin{DoxyParamCaption}\item[{int}]{web\+Id}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the degree of a web\textquotesingle{}s node in the interference graph. 
+
+Degree = number of other webs that interfere with this one. Since edges are stored as directed pairs, the degree equals the size of the adjacency list of the corresponding vertex.
+
+Time complexity:\+ O(1) after build.
+
+
+\begin{DoxyParams}{Parameters}
+{\em web\+Id} & The web ID to query. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Degree of the node, or -\/1 if the web ID does not exist. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_ab60a250596587b908061a523dc598418}\index{InterferenceGraph@{InterferenceGraph}!getGraph@{getGraph}}
+\index{getGraph@{getGraph}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getGraph()}{getGraph()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_interference_graph_ab60a250596587b908061a523dc598418} 
+\doxymbox{\hyperlink{class_graph}{Graph}}$<$ int $>$ \& Interference\+Graph::\+get\+Graph (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Provides direct access to the underlying \doxylink{class_graph}{Graph$<$int$>$}. 
+
+Exposed so that the coloring algorithm can use \doxylink{class_graph}{Graph}\textquotesingle{}s traversal primitives (DFS, BFS, get\+Vertex\+Set) directly when needed.
+
+\begin{DoxyReturn}{Returns}
+Reference to the underlying \doxylink{class_graph}{Graph$<$int$>$}. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_ab2f24eb760a02c827c5e3da10c82aa4b}\index{InterferenceGraph@{InterferenceGraph}!getGraph@{getGraph}}
+\index{getGraph@{getGraph}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getGraph()}{getGraph()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_interference_graph_ab2f24eb760a02c827c5e3da10c82aa4b} 
+const \doxymbox{\hyperlink{class_graph}{Graph}}$<$ int $>$ \& Interference\+Graph::\+get\+Graph (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_interference_graph_abf516640d6f25eb94df56bb10797fb6d}\index{InterferenceGraph@{InterferenceGraph}!getMaxDegree@{getMaxDegree}}
+\index{getMaxDegree@{getMaxDegree}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getMaxDegree()}{getMaxDegree()}}
+{\footnotesize\ttfamily \label{class_interference_graph_abf516640d6f25eb94df56bb10797fb6d} 
+int Interference\+Graph::\+get\+Max\+Degree (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the maximum degree across all nodes in the graph. 
+
+Used by the greedy coloring algorithm to set the upper bound on N.
+
+Time complexity:\+ O(\+W)
+
+\begin{DoxyReturn}{Returns}
+Maximum degree, or 0 if the graph is empty. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_afde40d98ec67911df32d4ce36313164f}\index{InterferenceGraph@{InterferenceGraph}!getNeighbors@{getNeighbors}}
+\index{getNeighbors@{getNeighbors}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getNeighbors()}{getNeighbors()}}
+{\footnotesize\ttfamily \label{class_interference_graph_afde40d98ec67911df32d4ce36313164f} 
+std::\+vector$<$ int $>$ Interference\+Graph::\+get\+Neighbors (\begin{DoxyParamCaption}\item[{int}]{web\+Id}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the list of web IDs that interfere with a given web. 
+
+Time complexity:\+ O(degree(web\+Id))
+
+
+\begin{DoxyParams}{Parameters}
+{\em web\+Id} & The web ID to query. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of interfering web IDs. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_abe9154c316f7df0a64343bfa45eb5d58}\index{InterferenceGraph@{InterferenceGraph}!getNumWebs@{getNumWebs}}
+\index{getNumWebs@{getNumWebs}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getNumWebs()}{getNumWebs()}}
+{\footnotesize\ttfamily \label{class_interference_graph_abe9154c316f7df0a64343bfa45eb5d58} 
+int Interference\+Graph::\+get\+Num\+Webs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the total number of webs (nodes) in the graph. 
+
+\begin{DoxyReturn}{Returns}
+Number of vertices. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_a3415195d916ef205619f356386181bf3}\index{InterferenceGraph@{InterferenceGraph}!getWeb@{getWeb}}
+\index{getWeb@{getWeb}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getWeb()}{getWeb()}}
+{\footnotesize\ttfamily \label{class_interference_graph_a3415195d916ef205619f356386181bf3} 
+const \doxymbox{\hyperlink{struct_web}{Web}} \& Interference\+Graph::\+get\+Web (\begin{DoxyParamCaption}\item[{int}]{web\+Id}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns the \doxylink{struct_web}{Web} object for a given web ID. 
+
+Time complexity:\+ O(1)
+
+
+\begin{DoxyParams}{Parameters}
+{\em web\+Id} & The web ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Const reference to the \doxylink{struct_web}{Web}. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_a82e45889d4203f30ff7331dced1f5650}\index{InterferenceGraph@{InterferenceGraph}!getWebs@{getWebs}}
+\index{getWebs@{getWebs}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{getWebs()}{getWebs()}}
+{\footnotesize\ttfamily \label{class_interference_graph_a82e45889d4203f30ff7331dced1f5650} 
+const std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \& Interference\+Graph::\+get\+Webs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Returns all webs in the graph. 
+
+\begin{DoxyReturn}{Returns}
+Const reference to the webs vector. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_a95f3dc31927786139e314be02de76e73}\index{InterferenceGraph@{InterferenceGraph}!interferes@{interferes}}
+\index{interferes@{interferes}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{interferes()}{interferes()}}
+{\footnotesize\ttfamily \label{class_interference_graph_a95f3dc31927786139e314be02de76e73} 
+bool Interference\+Graph::\+interferes (\begin{DoxyParamCaption}\item[{int}]{web\+Id1}{, }\item[{int}]{web\+Id2}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks whether two webs interfere (i.\+e., share an edge). 
+
+Time complexity:\+ O(degree(web\+Id1))
+
+
+\begin{DoxyParams}{Parameters}
+{\em web\+Id1} & First web ID. \\
+\hline
+{\em web\+Id2} & Second web ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if an interference edge exists between them. 
+\end{DoxyReturn}
+\Hypertarget{class_interference_graph_a8ed2be8330ae75504ef60eacae1bd41e}\index{InterferenceGraph@{InterferenceGraph}!print@{print}}
+\index{print@{print}!InterferenceGraph@{InterferenceGraph}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{class_interference_graph_a8ed2be8330ae75504ef60eacae1bd41e} 
+void Interference\+Graph::\+print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Prints a human-\/readable representation of the interference graph. 
+
+Lists each web with its variable name, program points, and the IDs of all webs it interferes with. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_interference_graph_8h}{Interference\+Graph.\+h}}\item 
+src/\+\+Interference\+Graph/\+\doxymbox{\hyperlink{_interference_graph_8cpp}{Interference\+Graph.\+cpp}}\end{DoxyCompactItemize}

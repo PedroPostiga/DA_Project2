@@ -1,0 +1,94 @@
+\doxysection{Allocation\+Result Struct Reference}
+\hypertarget{struct_allocation_result}{}\label{struct_allocation_result}\index{AllocationResult@{AllocationResult}}
+
+
+Holds the result of a register allocation attempt.  
+
+
+
+
+{\ttfamily \+\#include $<$Register\+Allocator.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_allocation_result_ac66f7489916694f23d9f583138b10769}{Allocation\+Result}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+map$<$ int, int $>$ \doxymbox{\hyperlink{struct_allocation_result_aeb09a1803c90a5ba1a8d6638f9ff3b3d}{web\+To\+Register}}
+\begin{DoxyCompactList}\small\item\em web ID → register number, or SPILLED \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_allocation_result_ad2745bf126a525f87be4ea94e99d393a}{registers\+Used}}
+\begin{DoxyCompactList}\small\item\em Number of distinct registers actually assigned. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a}{feasible}}
+\begin{DoxyCompactList}\small\item\em true if all webs got a register (no spills forced) \end{DoxyCompactList}\item 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \doxymbox{\hyperlink{struct_allocation_result_a0594ff7608a831b09e23c8767079c13d}{webs}}
+\begin{DoxyCompactList}\small\item\em Final webs used (may differ from original after splitting). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds the result of a register allocation attempt. 
+
+Maps each web ID to either a register number (0..K-\/1) or SPILLED (-\/1). Also records how many registers were actually used and whether the allocation succeeded within the requested register budget. 
+
+\label{doc-constructors}
+\Hypertarget{struct_allocation_result_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_allocation_result_ac66f7489916694f23d9f583138b10769}\index{AllocationResult@{AllocationResult}!AllocationResult@{AllocationResult}}
+\index{AllocationResult@{AllocationResult}!AllocationResult@{AllocationResult}}
+\doxysubsubsection{\texorpdfstring{AllocationResult()}{AllocationResult()}}
+{\footnotesize\ttfamily \label{struct_allocation_result_ac66f7489916694f23d9f583138b10769} 
+Allocation\+Result::\+\+Allocation\+Result (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_allocation_result_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a}\index{AllocationResult@{AllocationResult}!feasible@{feasible}}
+\index{feasible@{feasible}!AllocationResult@{AllocationResult}}
+\doxysubsubsection{\texorpdfstring{feasible}{feasible}}
+{\footnotesize\ttfamily \label{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a} 
+bool Allocation\+Result::\+feasible}
+
+
+
+true if all webs got a register (no spills forced) 
+
+\Hypertarget{struct_allocation_result_ad2745bf126a525f87be4ea94e99d393a}\index{AllocationResult@{AllocationResult}!registersUsed@{registersUsed}}
+\index{registersUsed@{registersUsed}!AllocationResult@{AllocationResult}}
+\doxysubsubsection{\texorpdfstring{registersUsed}{registersUsed}}
+{\footnotesize\ttfamily \label{struct_allocation_result_ad2745bf126a525f87be4ea94e99d393a} 
+int Allocation\+Result::\+registers\+Used}
+
+
+
+Number of distinct registers actually assigned. 
+
+\Hypertarget{struct_allocation_result_a0594ff7608a831b09e23c8767079c13d}\index{AllocationResult@{AllocationResult}!webs@{webs}}
+\index{webs@{webs}!AllocationResult@{AllocationResult}}
+\doxysubsubsection{\texorpdfstring{webs}{webs}}
+{\footnotesize\ttfamily \label{struct_allocation_result_a0594ff7608a831b09e23c8767079c13d} 
+std::\+vector$<$\doxymbox{\hyperlink{struct_web}{Web}}$>$ Allocation\+Result::\+webs}
+
+
+
+Final webs used (may differ from original after splitting). 
+
+\Hypertarget{struct_allocation_result_aeb09a1803c90a5ba1a8d6638f9ff3b3d}\index{AllocationResult@{AllocationResult}!webToRegister@{webToRegister}}
+\index{webToRegister@{webToRegister}!AllocationResult@{AllocationResult}}
+\doxysubsubsection{\texorpdfstring{webToRegister}{webToRegister}}
+{\footnotesize\ttfamily \label{struct_allocation_result_aeb09a1803c90a5ba1a8d6638f9ff3b3d} 
+std::\+map$<$int, int$>$ Allocation\+Result::\+web\+To\+Register}
+
+
+
+web ID → register number, or SPILLED 
+
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_register_allocator_8h}{Register\+Allocator.\+h}}\item 
+src/\+\+Register\+Allocator/\+\doxymbox{\hyperlink{_allocation_result_8cpp}{Allocation\+Result.\+cpp}}\end{DoxyCompactItemize}

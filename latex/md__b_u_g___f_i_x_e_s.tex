@@ -1,0 +1,66 @@
+\chapter{Bug Analysis and Fixes for Split Function Crash }
+\hypertarget{md__b_u_g___f_i_x_e_s}{}\label{md__b_u_g___f_i_x_e_s}\index{Bug Analysis and Fixes for Split Function Crash@{Bug Analysis and Fixes for Split Function Crash}}
+\label{md__b_u_g___f_i_x_e_s_autotoc_md0}%
+\Hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md0}%
+\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md1}{}\doxysection{\texorpdfstring{Problem}{Problem}}\label{md__b_u_g___f_i_x_e_s_autotoc_md1}
+The program crashes when the necessary registers ({\ttfamily num\+Registers}) is lower than ideal in the splitting algorithm.\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md2}{}\doxysection{\texorpdfstring{Root Causes Found and Fixed}{Root Causes Found and Fixed}}\label{md__b_u_g___f_i_x_e_s_autotoc_md2}
+\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md3}{}\doxysubsection{\texorpdfstring{Bug 1:\+ Improper Comparison in {\ttfamily select\+Split\+Candidate} Fallback}{Bug 1:\+ Improper Comparison in {\ttfamily select\+Split\+Candidate} Fallback}}\label{md__b_u_g___f_i_x_e_s_autotoc_md3}
+{\bfseries{Location}}:\+ {\ttfamily \doxylink{_helpers_8cpp}{src/\+\+Register\+Allocator/\+\+Helpers.\+cpp}} -\/ {\ttfamily select\+Split\+Candidate} function fallback
+
+{\bfseries{Issue}}:\+ When no good split is found in the main optimization loop, the fallback code tries to find ANY splittable web. However, it uses the condition:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (deg\ >\ bestOrigDeg\ ||\ (deg\ ==\ bestOrigDeg\ \&\&\ w.id\ <\ bestId))}
+
+\end{DoxyCode}
+
+
+When {\ttfamily best\+Id} starts as {\ttfamily -\/1} (uninitialized), comparing {\ttfamily w.\+id \texorpdfstring{$<$}{<} -\/1} doesn\textquotesingle{}t make sense and can cause incorrect behavior or crashes when accessing the {\ttfamily disabled} vector with potentially invalid indices.
+
+{\bfseries{Fix}}:\+ Added explicit check for uninitialized state:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (bestId\ ==\ -\/1\ ||\ deg\ >\ bestOrigDeg\ ||\ (deg\ ==\ bestOrigDeg\ \&\&\ w.id\ <\ bestId))}
+
+\end{DoxyCode}
+
+
+This ensures that the first valid candidate is selected before attempting tie-\/breaking comparisons.\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md4}{}\doxysubsection{\texorpdfstring{Bug 2:\+ Similar Issue in {\ttfamily select\+Spill\+Candidate}}{Bug 2:\+ Similar Issue in {\ttfamily select\+Spill\+Candidate}}}\label{md__b_u_g___f_i_x_e_s_autotoc_md4}
+{\bfseries{Location}}:\+ {\ttfamily \doxylink{_helpers_8cpp}{src/\+\+Register\+Allocator/\+\+Helpers.\+cpp}} -\/ {\ttfamily select\+Spill\+Candidate} function
+
+{\bfseries{Issue}}:\+ Same root cause as Bug 1. When {\ttfamily best\+Id == -\/1} and comparing {\ttfamily w.\+id \texorpdfstring{$<$}{<} best\+Id}, the logic fails.
+
+{\bfseries{Fix}}:\+ Applied the same defensive check:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (bestId\ ==\ -\/1\ ||\ score\ >\ bestScore\ ||\ ...)}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md5}{}\doxysubsection{\texorpdfstring{Bug 3:\+ No Guard for K \texorpdfstring{$<$}{<}= 0 in {\ttfamily allocate\+Splitting}}{Bug 3:\+ No Guard for K \texorpdfstring{$<$}{<}= 0 in {\ttfamily allocate\+Splitting}}}\label{md__b_u_g___f_i_x_e_s_autotoc_md5}
+{\bfseries{Location}}:\+ {\ttfamily \doxylink{_algorithms_8cpp}{src/\+\+Register\+Allocator/\+\+Algorithms.\+cpp}} -\/ {\ttfamily allocate\+Splitting} function
+
+{\bfseries{Issue}}:\+ When {\ttfamily num\+Registers} (K) is 0 or negative, the algorithm should handle this edge case gracefully by immediately spilling all webs, rather than attempting complex splitting logic that may crash.
+
+{\bfseries{Fix}}:\+ Added early exit guard:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (K\ <=\ 0)\ \{}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\ workingIg\ =\ ig;}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ r\ =\ greedyColor(workingIg,\ K,\ -\/1);}
+\DoxyCodeLine{\ \ \ \ r.\doxymbox{\hyperlink{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a}{feasible}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md6}{}\doxysection{\texorpdfstring{Why These Bugs Cause Crashes}{Why These Bugs Cause Crashes}}\label{md__b_u_g___f_i_x_e_s_autotoc_md6}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Array Index Out of Bounds}}:\+ When {\ttfamily disabled\+[w.\+id]\+} is accessed with an uninitialized or invalid {\ttfamily best\+Id}, and the comparison logic fails to properly bound-\/check, it can lead to accessing memory outside the {\ttfamily disabled} vector.
+\item {\bfseries{Memory Safety}}:\+ The condition {\ttfamily w.\+id \texorpdfstring{$<$}{<} best\+Id} where {\ttfamily best\+Id == -\/1} bypasses normal tie-\/breaking and can cause the algorithm to select invalid candidates or skip valid ones.
+\item {\bfseries{\doxylink{class_edge}{Edge} Case Handling}}:\+ When {\ttfamily K} is 0, the algorithm should immediately spill everything rather than attempting to split webs, which could lead to inefficient state transitions or infinite loops in certain graph configurations.
+\end{DoxyEnumerate}\hypertarget{md__b_u_g___f_i_x_e_s_autotoc_md7}{}\doxysection{\texorpdfstring{Testing}{Testing}}\label{md__b_u_g___f_i_x_e_s_autotoc_md7}
+To test these fixes:\+
+
+
+\begin{DoxyEnumerate}
+\item Use input with very low {\ttfamily num\+Registers} (e.\+g., 0 or 1)
+\item Use {\ttfamily algorithm:\+ splitting, 2} to trigger the splitting code path
+\item Create test cases with densely-\/connected interference graphs
+\item Verify that the program handles these cases gracefully instead of crashing 
+\end{DoxyEnumerate}
