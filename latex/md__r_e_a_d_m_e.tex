@@ -1,0 +1,93 @@
+\chapter{DA\+\_\+\+Project2 }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{DA\_Project2@{DA\_Project2}}
+\label{md__r_e_a_d_m_e_autotoc_md13}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md13}%
+\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysection{\texorpdfstring{Task Implementation Map}{Task Implementation Map}}\label{md__r_e_a_d_m_e_autotoc_md14}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{T1.\+1 — Command-\/\+Line Menu \& Batch Interface}{T1.\+1 — Command-\/\+Line Menu \& Batch Interface}}\label{md__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{main_8cpp}{main.\+cpp}}}} — Entry point; detects the {\ttfamily -\/b} flag to route between batch and interactive mode. Interactive menu (options 1-\/6) is implemented directly in {\ttfamily \doxylink{main_8cpp_a57588b447fb96de491807b12e6cf3048}{run\+Menu()}}. Batch mode accepts:\+ {\ttfamily my\+Prog -\/b ranges.\+txt registers.\+txt allocation.\+txt}
+\item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily write\+Output()} handles console warnings when allocation is infeasible (per spec §3.5)
+\item {\bfseries{{\ttfamily \doxylink{_parser_8cpp}{Parser.\+cpp}}}} — All parsing errors are directed to {\ttfamily std::\+cerr} for console output as required
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysubsection{\texorpdfstring{T1.\+2 — Read and Parse Input Data}{T1.\+2 — Read and Parse Input Data}}\label{md__r_e_a_d_m_e_autotoc_md17}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_parser_8h}{Parser.\+h}} /\+ {\ttfamily \doxylink{_parser_8cpp}{Parser.\+cpp}}}} — {\ttfamily parse\+Live\+Ranges()} reads the variable ranges file; {\ttfamily parse\+Config()} reads the algorithm configuration. Helpers {\ttfamily parse\+Live\+Range\+Line()}, {\ttfamily trim()}, and {\ttfamily split()} handle tokenization
+\item {\bfseries{{\ttfamily \doxylink{_data_types_8h}{Data\+Types.\+h}}}} — Defines all core data structures:\+ {\ttfamily \doxylink{struct_live_range}{Live\+Range}}, {\ttfamily \doxylink{struct_web}{Web}}, and {\ttfamily \doxylink{struct_algorithm_config}{Algorithm\+Config}}
+\item {\bfseries{{\ttfamily \doxylink{_interference_graph_8h}{Interference\+Graph.\+h}} /\+ {\ttfamily \doxylink{_interference_graph_8cpp}{Interference\+Graph.\+cpp}}}} — {\ttfamily build()} constructs the interference graph from webs. Uses {\ttfamily \doxylink{class_graph}{Graph}\texorpdfstring{$<$}{<}int\texorpdfstring{$>$}{>}} as the underlying representation (vertex info = web ID)
+\item {\bfseries{{\ttfamily \doxylink{main_8cpp}{main.\+cpp}}}} — {\ttfamily \doxylink{main_8cpp_a57588b447fb96de491807b12e6cf3048}{run\+Menu()}} provides options 1 (load ranges), 2 (load config), 3 (display webs), 4 (display config). Option 3 calls {\ttfamily parser.\+print\+Webs()}, option 4 calls {\ttfamily parser.\+print\+Config()}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md19}{}\doxysubsection{\texorpdfstring{T2.\+1 — Basic Register Allocation (Greedy Coloring)}{T2.\+1 — Basic Register Allocation (Greedy Coloring)}}\label{md__r_e_a_d_m_e_autotoc_md19}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily allocate\+Basic()} dispatches to the core {\ttfamily greedy\+Color()} algorithm
+\item {\bfseries{{\ttfamily \doxylink{_helpers_8cpp}{Helpers.\+cpp}}}} — {\ttfamily greedy\+Color()} implements the Figure 9 algorithm from the spec:\+
+\begin{DoxyItemize}
+\item {\bfseries{Phase 1 (Simplification):\+}} Repeatedly removes nodes with degree \texorpdfstring{$<$}{<} N, pushes to stack. When none remain, spills selected nodes if budget permits
+\item {\bfseries{Phase 2 (Coloring):\+}} Pops nodes from stack, assigns lowest-\/numbered color not used by already-\/colored neighbors
+\end{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_interference_graph_8cpp}{Interference\+Graph.\+cpp}}}} — {\ttfamily get\+Degree()}, {\ttfamily get\+Neighbors()}, and {\ttfamily interferes()} support the coloring algorithm
+\item {\bfseries{{\ttfamily \doxylink{_allocation_result_8cpp}{Allocation\+Result.\+cpp}}}} — Stores coloring results with {\ttfamily web\+To\+Register} map and {\ttfamily feasible} flag
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md21}{}\doxysubsection{\texorpdfstring{T2.\+2 — Register Allocation with Web Spilling}{T2.\+2 — Register Allocation with Web Spilling}}\label{md__r_e_a_d_m_e_autotoc_md21}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily allocate\+Spilling()} implements the spilling strategy:\+
+\begin{DoxyItemize}
+\item Attempts basic allocation first (0 spills)
+\item Iteratively increases spill budget from 1 to {\ttfamily config.\+algorithm\+Param}
+\item Returns the first successful allocation
+\end{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_helpers_8cpp}{Helpers.\+cpp}}}} — {\ttfamily select\+Spill\+Candidate()} chooses the web with the highest degree-\/to-\/size ratio (degree /\+ program\+Points). This heuristic prioritizes webs that maximally reduce graph connectivity when removed
+\item {\bfseries{{\ttfamily greedy\+Color()}}} — Accepts {\ttfamily max\+Spills} parameter; spills selected candidates during simplification phase
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md23}{}\doxysubsection{\texorpdfstring{T2.\+3 — Register Allocation with Web Splitting}{T2.\+3 — Register Allocation with Web Splitting}}\label{md__r_e_a_d_m_e_autotoc_md23}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}}} — {\ttfamily allocate\+Splitting()} implements the splitting strategy:\+
+\begin{DoxyItemize}
+\item Attempts basic allocation first (0 splits)
+\item Iteratively splits webs (up to {\ttfamily algorithm\+Param} times) until coloring succeeds
+\item After each split, rebuilds the interference graph and retries
+\end{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_helpers_8cpp}{Helpers.\+cpp}}}} — {\ttfamily select\+Split\+Candidate()} evaluates each splittable web (≥2 program points) by simulating splits at each possible cut point and measuring interference reduction. Returns the web with the greatest reduction
+\item {\bfseries{{\ttfamily split\+Web()}}} — Splits a web at its midpoint (or optimal cut point), creating two derived webs. Updates the interference graph via {\ttfamily \doxylink{class_interference_graph_ad68d7a95dbde1a1aa7e5dac96ff13b6e}{Interference\+Graph::\+build()}}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md25}{}\doxysubsection{\texorpdfstring{T2.\+4 — Free Strategy (Smallest-\/\+Last + Selective Spill)}{T2.\+4 — Free Strategy (Smallest-\/\+Last + Selective Spill)}}\label{md__r_e_a_d_m_e_autotoc_md25}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily \doxylink{_algorithms_8cpp}{Algorithms.\+cpp}}}} — {\ttfamily allocate\+Free()} implements a custom strategy combining:\+
+\begin{DoxyItemize}
+\item {\bfseries{Smallest-\/last ordering:\+}} Processes webs by earliest definition point first (def\+Point order)
+\item {\bfseries{Greedy assignment with eviction:\+}} When no register is free for a web, spills the interfering neighbor with the fewest program points (cheapest to reload), then retries assignment
+\item {\bfseries{No explicit spill budget:\+}} Eviction decisions are made dynamically based on program point count
+\end{DoxyItemize}
+\item {\bfseries{Rationale:\+}} This approach minimizes spills by prioritizing long-\/lived webs (many program points) for registers, while short-\/lived webs (few program points) are cheaper to spill/\+reload. The def\+Point ordering approximates program execution order, improving spatial locality
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md27}{}\doxysection{\texorpdfstring{How to run}{How to run}}\label{md__r_e_a_d_m_e_autotoc_md27}
+If you are on Windows, you have to do this in the wsl terminal.
+
+
+\begin{DoxyEnumerate}
+\item Create a folder {\ttfamily build} with {\ttfamily mkdir build}
+\item Go to folder "{}build"{} with {\ttfamily cd build}
+\item Run {\ttfamily cmake ..} followed by {\ttfamily cmake -\/-\/build .}
+\item Come to the project folder with {\ttfamily cd ..}
+\item Run {\ttfamily ./\+build/\+\+DA\+\_\+\+Project2} for the interactive menu
+\item Run {\ttfamily ./\+build/\+\+DA\+\_\+\+Project2 -\/b input/\+ranges.\+txt input/\+registers.\+txt output/\+allocation.\+txt} for the batch mode
+\end{DoxyEnumerate}
+
+When loading data from a file, in option 1 and 2 of the interactive menu, you have to use {\ttfamily input/\+filename.\+txt} 

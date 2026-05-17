@@ -1,0 +1,118 @@
+\doxysection{Graph\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_graph}{}\label{class_graph}\index{Graph$<$ T $>$@{Graph$<$ T $>$}}
+
+
+{\ttfamily \+\#include $<$Graph.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_graph_a8b7b7465fbfd562e2a469f90a437ab75}{find\+Vertex}} (const T \&in) const
+\item 
+int \doxymbox{\hyperlink{class_graph_a0853eac15cdf0f06d63f4b8a7820ec71}{get\+Num\+Vertex}} () const
+\item 
+bool \doxymbox{\hyperlink{class_graph_a00be284ea2be3b3d0f0d2e493b70245b}{add\+Vertex}} (const T \&in)
+\item 
+bool \doxymbox{\hyperlink{class_graph_af9c903104ad69a7782979fa9caedf163}{remove\+Vertex}} (const T \&in)
+\item 
+bool \doxymbox{\hyperlink{class_graph_ac61af3aafe6277215f5a3b3cc7d58ce2}{add\+Edge}} (const T \&sourc, const T \&dest, double w)
+\item 
+bool \doxymbox{\hyperlink{class_graph_a1106092a37366486cf55576f9ec01692}{remove\+Edge}} (const T \&sourc, const T \&dest)
+\item 
+vector$<$ \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$ \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_graph_a923b43995f81ad9319bbc81a1e433e64}{get\+Vertex\+Set}} () const
+\item 
+vector$<$ T $>$ \doxymbox{\hyperlink{class_graph_a911798b1a89f8c4ae90ba3eee849cff8}{dfs}} () const
+\item 
+vector$<$ T $>$ \doxymbox{\hyperlink{class_graph_a510522c8221b321a82e687fe2f2cb484}{dfs}} (const T \&source) const
+\item 
+vector$<$ T $>$ \doxymbox{\hyperlink{class_graph_aa47a4130165550e208e7a063fce6983a}{bfs}} (const T \&source) const
+\item 
+void \doxymbox{\hyperlink{class_graph_a4eca9d8e63b518989c767655b9b4691f}{emit\+DOTFile}} (string gname)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_graph_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_graph_ac61af3aafe6277215f5a3b3cc7d58ce2}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!addEdge@{addEdge}}
+\index{addEdge@{addEdge}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{addEdge()}{addEdge()}}
+{\footnotesize\ttfamily \label{class_graph_ac61af3aafe6277215f5a3b3cc7d58ce2} 
+template$<$class T$>$ \\
+bool \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+add\+Edge (\begin{DoxyParamCaption}\item[{const T \&}]{sourc}{, }\item[{const T \&}]{dest}{, }\item[{double}]{w}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graph_a00be284ea2be3b3d0f0d2e493b70245b}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!addVertex@{addVertex}}
+\index{addVertex@{addVertex}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{addVertex()}{addVertex()}}
+{\footnotesize\ttfamily \label{class_graph_a00be284ea2be3b3d0f0d2e493b70245b} 
+template$<$class T$>$ \\
+bool \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+add\+Vertex (\begin{DoxyParamCaption}\item[{const T \&}]{in}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graph_aa47a4130165550e208e7a063fce6983a}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!bfs@{bfs}}
+\index{bfs@{bfs}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{bfs()}{bfs()}}
+{\footnotesize\ttfamily \label{class_graph_aa47a4130165550e208e7a063fce6983a} 
+template$<$class T$>$ \\
+vector$<$ T $>$ \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+bfs (\begin{DoxyParamCaption}\item[{const T \&}]{source}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_graph_a911798b1a89f8c4ae90ba3eee849cff8}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!dfs@{dfs}}
+\index{dfs@{dfs}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{dfs()}{dfs()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_graph_a911798b1a89f8c4ae90ba3eee849cff8} 
+template$<$class T$>$ \\
+vector$<$ T $>$ \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+dfs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_graph_a510522c8221b321a82e687fe2f2cb484}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!dfs@{dfs}}
+\index{dfs@{dfs}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{dfs()}{dfs()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_graph_a510522c8221b321a82e687fe2f2cb484} 
+template$<$class T$>$ \\
+vector$<$ T $>$ \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+dfs (\begin{DoxyParamCaption}\item[{const T \&}]{source}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_graph_a4eca9d8e63b518989c767655b9b4691f}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!emitDOTFile@{emitDOTFile}}
+\index{emitDOTFile@{emitDOTFile}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{emitDOTFile()}{emitDOTFile()}}
+{\footnotesize\ttfamily \label{class_graph_a4eca9d8e63b518989c767655b9b4691f} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+emit\+DOTFile (\begin{DoxyParamCaption}\item[{string}]{gname}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_graph_a8b7b7465fbfd562e2a469f90a437ab75}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!findVertex@{findVertex}}
+\index{findVertex@{findVertex}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{findVertex()}{findVertex()}}
+{\footnotesize\ttfamily \label{class_graph_a8b7b7465fbfd562e2a469f90a437ab75} 
+template$<$class T$>$ \\
+\doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+find\+Vertex (\begin{DoxyParamCaption}\item[{const T \&}]{in}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_graph_a0853eac15cdf0f06d63f4b8a7820ec71}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!getNumVertex@{getNumVertex}}
+\index{getNumVertex@{getNumVertex}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getNumVertex()}{getNumVertex()}}
+{\footnotesize\ttfamily \label{class_graph_a0853eac15cdf0f06d63f4b8a7820ec71} 
+template$<$class T$>$ \\
+int \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+get\+Num\+Vertex (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_graph_a923b43995f81ad9319bbc81a1e433e64}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!getVertexSet@{getVertexSet}}
+\index{getVertexSet@{getVertexSet}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getVertexSet()}{getVertexSet()}}
+{\footnotesize\ttfamily \label{class_graph_a923b43995f81ad9319bbc81a1e433e64} 
+template$<$class T$>$ \\
+vector$<$ \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$ \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+get\+Vertex\+Set (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_graph_a1106092a37366486cf55576f9ec01692}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!removeEdge@{removeEdge}}
+\index{removeEdge@{removeEdge}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{removeEdge()}{removeEdge()}}
+{\footnotesize\ttfamily \label{class_graph_a1106092a37366486cf55576f9ec01692} 
+template$<$class T$>$ \\
+bool \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+remove\+Edge (\begin{DoxyParamCaption}\item[{const T \&}]{sourc}{, }\item[{const T \&}]{dest}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graph_af9c903104ad69a7782979fa9caedf163}\index{Graph$<$ T $>$@{Graph$<$ T $>$}!removeVertex@{removeVertex}}
+\index{removeVertex@{removeVertex}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{removeVertex()}{removeVertex()}}
+{\footnotesize\ttfamily \label{class_graph_af9c903104ad69a7782979fa9caedf163} 
+template$<$class T$>$ \\
+bool \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$::\+remove\+Vertex (\begin{DoxyParamCaption}\item[{const T \&}]{in}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_graph_8h}{Graph.\+h}}\end{DoxyCompactItemize}

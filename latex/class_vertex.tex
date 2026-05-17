@@ -1,0 +1,176 @@
+\doxysection{Vertex\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_vertex}{}\label{class_vertex}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+
+
+{\ttfamily \+\#include $<$Graph.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_vertex_afcbdd4d4198b672356559cb8fa088408}{Vertex}} (T in)
+\item 
+T \doxymbox{\hyperlink{class_vertex_a48eae2f7af2362634adab02b7b2dbec6}{get\+Info}} () const
+\item 
+void \doxymbox{\hyperlink{class_vertex_a68c9c8792b2752b7540e2f8c14f686a4}{set\+Info}} (T in)
+\item 
+bool \doxymbox{\hyperlink{class_vertex_aa2bb17f6ebd98a67f8da1f689b22fadc}{is\+Visited}} () const
+\item 
+void \doxymbox{\hyperlink{class_vertex_aa1a1921cded8cb209382407b5a9433f3}{set\+Visited}} (bool v)
+\item 
+bool \doxymbox{\hyperlink{class_vertex_aaa41dfa4ce1a19b4e529cc6cdc23b764}{is\+Processing}} () const
+\item 
+void \doxymbox{\hyperlink{class_vertex_ac7b2e53890abfbcd4d7ce3b7d34ee932}{set\+Processing}} (bool p)
+\item 
+int \doxymbox{\hyperlink{class_vertex_ac78980191ea1f9d22e6617e9e511b755}{get\+Indegree}} () const
+\item 
+void \doxymbox{\hyperlink{class_vertex_ad1602c48fedae2d3d5a3949594dc5ab8}{set\+Indegree}} (int indegree)
+\item 
+void \doxymbox{\hyperlink{class_vertex_ada7d878fff0c3d585fce0a51cffa6435}{set\+Low}} (int low)
+\item 
+void \doxymbox{\hyperlink{class_vertex_a7eecd09188d8f959b1c0ac9332c14218}{set\+Num}} (int num)
+\item 
+int \doxymbox{\hyperlink{class_vertex_ab2916c006fa35b918910a2232095e785}{get\+Num}} () const
+\item 
+int \doxymbox{\hyperlink{class_vertex_a3b8e12b4d9805979321212dd6db05961}{get\+Low}} () const
+\item 
+const vector$<$ \doxymbox{\hyperlink{class_edge}{Edge}}$<$ T $>$ $>$ \& \doxymbox{\hyperlink{class_vertex_a0b0341340972782503ff5065f46673fe}{get\+Adj}} () const
+\item 
+void \doxymbox{\hyperlink{class_vertex_aacc5763deca4f0f308756b69f9598584}{set\+Adj}} (const vector$<$ \doxymbox{\hyperlink{class_edge}{Edge}}$<$ T $>$ $>$ \&adj)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_vertex_aefa9b76cd57411c5354e5620dc2d84dd}{Graph$<$ T $>$}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_vertex_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_vertex_afcbdd4d4198b672356559cb8fa088408}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!Vertex@{Vertex}}
+\index{Vertex@{Vertex}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Vertex()}{Vertex()}}
+{\footnotesize\ttfamily \label{class_vertex_afcbdd4d4198b672356559cb8fa088408} 
+template$<$class T$>$ \\
+\doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+\+Vertex (\begin{DoxyParamCaption}\item[{T}]{in}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_vertex_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_vertex_a0b0341340972782503ff5065f46673fe}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!getAdj@{getAdj}}
+\index{getAdj@{getAdj}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getAdj()}{getAdj()}}
+{\footnotesize\ttfamily \label{class_vertex_a0b0341340972782503ff5065f46673fe} 
+template$<$class T$>$ \\
+const vector$<$ \doxymbox{\hyperlink{class_edge}{Edge}}$<$ T $>$ $>$ \& \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+get\+Adj (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_ac78980191ea1f9d22e6617e9e511b755}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!getIndegree@{getIndegree}}
+\index{getIndegree@{getIndegree}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getIndegree()}{getIndegree()}}
+{\footnotesize\ttfamily \label{class_vertex_ac78980191ea1f9d22e6617e9e511b755} 
+template$<$class T$>$ \\
+int \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+get\+Indegree (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_a48eae2f7af2362634adab02b7b2dbec6}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!getInfo@{getInfo}}
+\index{getInfo@{getInfo}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getInfo()}{getInfo()}}
+{\footnotesize\ttfamily \label{class_vertex_a48eae2f7af2362634adab02b7b2dbec6} 
+template$<$class T$>$ \\
+T \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+get\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_a3b8e12b4d9805979321212dd6db05961}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!getLow@{getLow}}
+\index{getLow@{getLow}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getLow()}{getLow()}}
+{\footnotesize\ttfamily \label{class_vertex_a3b8e12b4d9805979321212dd6db05961} 
+template$<$class T$>$ \\
+int \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+get\+Low (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_ab2916c006fa35b918910a2232095e785}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!getNum@{getNum}}
+\index{getNum@{getNum}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getNum()}{getNum()}}
+{\footnotesize\ttfamily \label{class_vertex_ab2916c006fa35b918910a2232095e785} 
+template$<$class T$>$ \\
+int \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+get\+Num (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_aaa41dfa4ce1a19b4e529cc6cdc23b764}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!isProcessing@{isProcessing}}
+\index{isProcessing@{isProcessing}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{isProcessing()}{isProcessing()}}
+{\footnotesize\ttfamily \label{class_vertex_aaa41dfa4ce1a19b4e529cc6cdc23b764} 
+template$<$class T$>$ \\
+bool \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+is\+Processing (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_aa2bb17f6ebd98a67f8da1f689b22fadc}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!isVisited@{isVisited}}
+\index{isVisited@{isVisited}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{isVisited()}{isVisited()}}
+{\footnotesize\ttfamily \label{class_vertex_aa2bb17f6ebd98a67f8da1f689b22fadc} 
+template$<$class T$>$ \\
+bool \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+is\+Visited (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_vertex_aacc5763deca4f0f308756b69f9598584}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setAdj@{setAdj}}
+\index{setAdj@{setAdj}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setAdj()}{setAdj()}}
+{\footnotesize\ttfamily \label{class_vertex_aacc5763deca4f0f308756b69f9598584} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Adj (\begin{DoxyParamCaption}\item[{const vector$<$ \doxymbox{\hyperlink{class_edge}{Edge}}$<$ T $>$ $>$ \&}]{adj}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_vertex_ad1602c48fedae2d3d5a3949594dc5ab8}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setIndegree@{setIndegree}}
+\index{setIndegree@{setIndegree}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setIndegree()}{setIndegree()}}
+{\footnotesize\ttfamily \label{class_vertex_ad1602c48fedae2d3d5a3949594dc5ab8} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Indegree (\begin{DoxyParamCaption}\item[{int}]{indegree}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_vertex_a68c9c8792b2752b7540e2f8c14f686a4}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setInfo@{setInfo}}
+\index{setInfo@{setInfo}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setInfo()}{setInfo()}}
+{\footnotesize\ttfamily \label{class_vertex_a68c9c8792b2752b7540e2f8c14f686a4} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Info (\begin{DoxyParamCaption}\item[{T}]{in}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_vertex_ada7d878fff0c3d585fce0a51cffa6435}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setLow@{setLow}}
+\index{setLow@{setLow}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setLow()}{setLow()}}
+{\footnotesize\ttfamily \label{class_vertex_ada7d878fff0c3d585fce0a51cffa6435} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Low (\begin{DoxyParamCaption}\item[{int}]{low}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_vertex_a7eecd09188d8f959b1c0ac9332c14218}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setNum@{setNum}}
+\index{setNum@{setNum}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setNum()}{setNum()}}
+{\footnotesize\ttfamily \label{class_vertex_a7eecd09188d8f959b1c0ac9332c14218} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Num (\begin{DoxyParamCaption}\item[{int}]{num}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_vertex_ac7b2e53890abfbcd4d7ce3b7d34ee932}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setProcessing@{setProcessing}}
+\index{setProcessing@{setProcessing}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setProcessing()}{setProcessing()}}
+{\footnotesize\ttfamily \label{class_vertex_ac7b2e53890abfbcd4d7ce3b7d34ee932} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Processing (\begin{DoxyParamCaption}\item[{bool}]{p}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_vertex_aa1a1921cded8cb209382407b5a9433f3}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!setVisited@{setVisited}}
+\index{setVisited@{setVisited}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setVisited()}{setVisited()}}
+{\footnotesize\ttfamily \label{class_vertex_aa1a1921cded8cb209382407b5a9433f3} 
+template$<$class T$>$ \\
+void \doxymbox{\hyperlink{class_vertex}{Vertex}}$<$ T $>$::\+set\+Visited (\begin{DoxyParamCaption}\item[{bool}]{v}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_vertex_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_vertex_aefa9b76cd57411c5354e5620dc2d84dd}\index{Vertex$<$ T $>$@{Vertex$<$ T $>$}!Graph$<$ T $>$@{Graph$<$ T $>$}}
+\index{Graph$<$ T $>$@{Graph$<$ T $>$}!Vertex$<$ T $>$@{Vertex$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Graph$<$ T $>$}{Graph< T >}}
+{\footnotesize\ttfamily \label{class_vertex_aefa9b76cd57411c5354e5620dc2d84dd} 
+template$<$class T$>$ \\
+friend class \doxymbox{\hyperlink{class_graph}{Graph}}$<$ T $>$\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_graph_8h}{Graph.\+h}}\end{DoxyCompactItemize}

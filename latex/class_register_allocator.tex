@@ -1,0 +1,129 @@
+\doxysection{Register\+Allocator Class Reference}
+\hypertarget{class_register_allocator}{}\label{class_register_allocator}\index{RegisterAllocator@{RegisterAllocator}}
+
+
+Performs register allocation via graph coloring on an \doxylink{class_interference_graph}{Interference\+Graph}.  
+
+
+
+
+{\ttfamily \+\#include $<$Register\+Allocator.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_register_allocator_a7df802175fd709ff94da6db43b209e3a}{Register\+Allocator}} (const \doxymbox{\hyperlink{class_interference_graph}{Interference\+Graph}} \&ig, const \doxymbox{\hyperlink{struct_algorithm_config}{Algorithm\+Config}} \&config)
+\begin{DoxyCompactList}\small\item\em Constructs the allocator with a pre-\/built interference graph and the algorithm configuration. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_allocation_result}{Allocation\+Result}} \doxymbox{\hyperlink{class_register_allocator_a875798ef82faae8bbd5922b85640e790}{allocate}} ()
+\begin{DoxyCompactList}\small\item\em Runs the allocation algorithm specified in the config. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_register_allocator_a688e441792bf93ae2e64445f194960dd}{write\+Output}} (const \doxymbox{\hyperlink{struct_allocation_result}{Allocation\+Result}} \&result, const std::\+string \&filename) const
+\begin{DoxyCompactList}\small\item\em Writes the allocation result to a file in the spec output format. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_register_allocator_af49b4735c8df38beeb820932bb508662}{print\+Result}} (const \doxymbox{\hyperlink{struct_allocation_result}{Allocation\+Result}} \&result) const
+\begin{DoxyCompactList}\small\item\em Prints the allocation result to stdout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Performs register allocation via graph coloring on an \doxylink{class_interference_graph}{Interference\+Graph}. 
+
+Implements four allocation strategies as required by the project spec:\+
+
+
+\begin{DoxyItemize}
+\item {\bfseries{basic}} (T2.\+1):\+ Greedy coloring of the interference graph with N colors. Reports failure if K registers are not enough.
+\item {\bfseries{spilling}} (T2.\+2):\+ If basic coloring fails with K registers, selects up to K webs to spill to memory (removing their nodes from the graph), then retries coloring on the simplified graph.
+\item {\bfseries{splitting}} (T2.\+3):\+ If basic coloring fails with K registers, splits up to K webs into two derived webs with fewer interferences, then retries coloring on the modified graph.
+\item {\bfseries{free}} (T2.\+4):\+ A custom strategy combining degree-\/ordered coloring with selective spilling, aiming to minimise the number of registers used without an explicit spill budget.
+\end{DoxyItemize}\hypertarget{class_register_allocator_autotoc_md12}{}\doxysubsubsubsection{\texorpdfstring{Algorithm overview (greedy coloring, Figure 9 of the spec)}{Algorithm overview (greedy coloring, Figure 9 of the spec)}}\label{class_register_allocator_autotoc_md12}
+Phase 1 — Simplification:\+ While the graph is not empty, repeatedly remove nodes whose degree \texorpdfstring{$<$}{<} N and push them onto a stack. If all remaining nodes have degree \texorpdfstring{$>$}{>}= N, select one node to spill and remove it (no register assigned). Nodes are "{}removed"{} by marking them disabled — the underlying \doxylink{class_graph}{Graph$<$int$>$} is not structurally modified; degrees are recomputed on the active subgraph.
+
+Phase 2 — Coloring:\+ Pop nodes from the stack and assign each the lowest-\/numbered color not already used by any of its active neighbors. Because the node had degree \texorpdfstring{$<$}{<} N when it was pushed, a free color always exists.
+
+Time complexity of allocate\+Basic():\+ O(\+W\texorpdfstring{$^\wedge$}{\string^}2 \texorpdfstring{$\ast$}{*} N) W = number of webs, N = number of registers. 
+
+\label{doc-constructors}
+\Hypertarget{class_register_allocator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_register_allocator_a7df802175fd709ff94da6db43b209e3a}\index{RegisterAllocator@{RegisterAllocator}!RegisterAllocator@{RegisterAllocator}}
+\index{RegisterAllocator@{RegisterAllocator}!RegisterAllocator@{RegisterAllocator}}
+\doxysubsubsection{\texorpdfstring{RegisterAllocator()}{RegisterAllocator()}}
+{\footnotesize\ttfamily \label{class_register_allocator_a7df802175fd709ff94da6db43b209e3a} 
+Register\+Allocator::\+\+Register\+Allocator (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_interference_graph}{Interference\+Graph}} \&}]{ig}{, }\item[{const \doxymbox{\hyperlink{struct_algorithm_config}{Algorithm\+Config}} \&}]{config}{}\end{DoxyParamCaption})}
+
+
+
+Constructs the allocator with a pre-\/built interference graph and the algorithm configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ig} & The interference graph (will be copied internally so the original is never modified). \\
+\hline
+{\em config} & The parsed algorithm configuration. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_register_allocator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_register_allocator_a875798ef82faae8bbd5922b85640e790}\index{RegisterAllocator@{RegisterAllocator}!allocate@{allocate}}
+\index{allocate@{allocate}!RegisterAllocator@{RegisterAllocator}}
+\doxysubsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily \label{class_register_allocator_a875798ef82faae8bbd5922b85640e790} 
+\doxymbox{\hyperlink{struct_allocation_result}{Allocation\+Result}} Register\+Allocator::\+allocate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Runs the allocation algorithm specified in the config. 
+
+Dispatches to allocate\+Basic(), allocate\+Spilling(), allocate\+Splitting(), or allocate\+Free() based on config.\+algorithm.
+
+\begin{DoxyReturn}{Returns}
+The allocation result. 
+\end{DoxyReturn}
+\Hypertarget{class_register_allocator_af49b4735c8df38beeb820932bb508662}\index{RegisterAllocator@{RegisterAllocator}!printResult@{printResult}}
+\index{printResult@{printResult}!RegisterAllocator@{RegisterAllocator}}
+\doxysubsubsection{\texorpdfstring{printResult()}{printResult()}}
+{\footnotesize\ttfamily \label{class_register_allocator_af49b4735c8df38beeb820932bb508662} 
+void Register\+Allocator::\+print\+Result (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_allocation_result}{Allocation\+Result}} \&}]{result}{}\end{DoxyParamCaption}) const}
+
+
+
+Prints the allocation result to stdout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em result} & The allocation result to display. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_register_allocator_a688e441792bf93ae2e64445f194960dd}\index{RegisterAllocator@{RegisterAllocator}!writeOutput@{writeOutput}}
+\index{writeOutput@{writeOutput}!RegisterAllocator@{RegisterAllocator}}
+\doxysubsubsection{\texorpdfstring{writeOutput()}{writeOutput()}}
+{\footnotesize\ttfamily \label{class_register_allocator_a688e441792bf93ae2e64445f194960dd} 
+bool Register\+Allocator::\+write\+Output (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_allocation_result}{Allocation\+Result}} \&}]{result}{, }\item[{const std::\+string \&}]{filename}{}\end{DoxyParamCaption}) const}
+
+
+
+Writes the allocation result to a file in the spec output format. 
+
+Outputs the webs section followed by the register assignment section. Webs assigned to memory are written as "{}\+M:\+ web\+N"{}. Issues a warning to stderr if the allocation was not feasible.
+
+Time complexity:\+ O(\+W log W)
+
+
+\begin{DoxyParams}{Parameters}
+{\em result} & The allocation result to write. \\
+\hline
+{\em filename} & Output file path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false if the file could not be opened. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+include/\+\doxymbox{\hyperlink{_register_allocator_8h}{Register\+Allocator.\+h}}\item 
+src/\+\+Register\+Allocator/\+\doxymbox{\hyperlink{_algorithms_8cpp}{Algorithms.\+cpp}}\item 
+src/\+\+Register\+Allocator/\+\doxymbox{\hyperlink{_helpers_8cpp}{Helpers.\+cpp}}\item 
+src/\+\+Register\+Allocator/\+\doxymbox{\hyperlink{_register_allocator_8cpp}{Register\+Allocator.\+cpp}}\end{DoxyCompactItemize}
