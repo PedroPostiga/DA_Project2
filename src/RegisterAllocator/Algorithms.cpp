@@ -115,17 +115,15 @@ AllocationResult RegisterAllocator::allocateSplitting() const {
 }
 
 // ─────────────────────────────────────────────────────────────
-// T2.4 — Free Strategy (Smallest-Last Ordering + Selective Spill)
+// T2.4 — Free Strategy (Linear Scan Register Allocation)
 //
-// Phase 1 — Smallest-last simplification:
-//   Repeatedly remove the node with the LOWEST effective degree
-//   and push it onto the stack. Low-degree nodes are more likely
-//   to find a free color when reinserted, producing fewer spills
-//   than the basic heuristic on sparse graphs.
-//   When all remaining nodes have degree >= K, spill the node
-//   with the highest degree (no explicit budget).
-//
-// Phase 2 — Coloring: identical to greedyColor phase 2.
+// Implements a fast Linear Scan allocator. It sorts the webs
+// chronologically by their first definition point (defPoint)
+// and assigns registers in a single forward pass.
+// If all registers are currently in use by overlapping
+// active webs, it evicts the overlapping web with the fewest
+// program points to memory, preferring to keep longer-lived
+// and more heavily used webs in registers.
 // ─────────────────────────────────────────────────────────────
 
 AllocationResult RegisterAllocator::allocateFree() const {
