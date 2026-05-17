@@ -1,6 +1,14 @@
 #ifndef INTERFERENCEGRAPH_H
 #define INTERFERENCEGRAPH_H
 
+/**
+ * @file InterferenceGraph.h
+ * @brief Builds and manages the web interference graph for register allocation.
+ *
+ * This header defines the InterferenceGraph class, which forms the domain-specific logic
+ * on top of the generic Graph template to manage symmetric interference relations.
+ */
+
 #include "DataTypes.h"
 #include "Graph.h"
 

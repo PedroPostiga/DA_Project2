@@ -109,6 +109,8 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:ad2745bf126a525f87be4ea94e99d393a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of distinct registers actually assigned.  <br /></td></tr>
 <tr class="memitem:a15e2d2c98221ee91b5b55197423e522a" id="r_a15e2d2c98221ee91b5b55197423e522a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a15e2d2c98221ee91b5b55197423e522a">feasible</a></td></tr>
 <tr class="memdesc:a15e2d2c98221ee91b5b55197423e522a"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if all webs got a register (no spills forced)  <br /></td></tr>
+<tr class="memitem:ab9773a71fbe6047fdfb2df54b5abe2d2" id="r_ab9773a71fbe6047fdfb2df54b5abe2d2"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab9773a71fbe6047fdfb2df54b5abe2d2">partialResult</a></td></tr>
+<tr class="memdesc:ab9773a71fbe6047fdfb2df54b5abe2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if partial output should always be written (e.g. free mode)  <br /></td></tr>
 <tr class="memitem:a0594ff7608a831b09e23c8767079c13d" id="r_a0594ff7608a831b09e23c8767079c13d"><td class="memItemLeft">std::vector&lt; <a class="el" href="struct_web.html">Web</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0594ff7608a831b09e23c8767079c13d">webs</a></td></tr>
 <tr class="memdesc:a0594ff7608a831b09e23c8767079c13d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Final webs used (may differ from original after splitting).  <br /></td></tr>
 </table>
@@ -147,6 +149,22 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>true if all webs got a register (no spills forced) </p>
+
+</div>
+</div>
+<a id="ab9773a71fbe6047fdfb2df54b5abe2d2" name="ab9773a71fbe6047fdfb2df54b5abe2d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9773a71fbe6047fdfb2df54b5abe2d2">&#9670;&#160;</a></span>partialResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AllocationResult::partialResult</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>true if partial output should always be written (e.g. free mode) </p>
 
 </div>
 </div>

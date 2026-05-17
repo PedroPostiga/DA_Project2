@@ -5,51 +5,52 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DATATYPES\_H}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DATATYPES\_H}}
 \DoxyCodeLine{00003\ }
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <set>}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <sstream>}}
-\DoxyCodeLine{00008\ }
-\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}\ \{}
-\DoxyCodeLine{00020\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_live_range_a83f4bdb3ba704524fddd14b1d975d7c8}{variable}};\ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00021\ \ \ \ \ std::set<int>\ \doxymbox{\hyperlink{struct_live_range_a25f54ba9b3d2ea723954adfe9ee364d4}{programPoints}};\ }
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_live_range_a2cefbd0e5b37ac2ab2587a156f659266}{defPoint}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_live_range_a03c0d77e800df7fca69164e1da6c1024}{lastUsePoint}};\ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}();}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_live_range_a6b60131b044f8f5a73ef9046072d4efd}{overlapsWith}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}\&\ other)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_live_range_a5da26501dfdf80b43053d7896efb5dc5}{merge}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}\&\ other);}
-\DoxyCodeLine{00053\ \};}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00066\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}\ \{}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_af59e2bcb1907d91a75a5d2598e0eb1b6}{id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00068\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_web_a439e3c2fbedccfdd8c34dc780066fb4a}{variable}};\ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00069\ \ \ \ \ std::set<int>\ \doxymbox{\hyperlink{struct_web_ac915c14d714a4e4c1f09faab36035bf9}{programPoints}};\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_a6a64d95058a9bd2a135bb0ff5d9bdfc9}{defPoint}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_a3cb77b2f807fd86ffb73099b5c060f00}{lastUsePoint}};\ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_a8a11a58992b0434d2ffa52f75cc24904}{reg}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00073\ \ \ \ \ std::vector<LiveRange>\ \doxymbox{\hyperlink{struct_web_a53b28176e88fd5ecba852c31bf7212ef}{originalRanges}};\ }
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}();}
-\DoxyCodeLine{00076\ \ \ \ \ \doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range}{LiveRange}}\&\ lr);}
-\DoxyCodeLine{00077\ }
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_web_a1daf0ad084076fd059d0e66e75481125}{interferesWith}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}\&\ other)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_web_ab67611ff3f4cc55e2f3e0c203c73c092}{merge}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range}{LiveRange}}\&\ lr);}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_live_range_a83f4bdb3ba704524fddd14b1d975d7c8}{variable}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ std::set<int>\ \doxymbox{\hyperlink{struct_live_range_a25f54ba9b3d2ea723954adfe9ee364d4}{programPoints}};\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_live_range_a2cefbd0e5b37ac2ab2587a156f659266}{defPoint}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_live_range_a03c0d77e800df7fca69164e1da6c1024}{lastUsePoint}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_live_range_a6b60131b044f8f5a73ef9046072d4efd}{overlapsWith}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_live_range_a5da26501dfdf80b43053d7896efb5dc5}{merge}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range_ad37bdecde122641139086799b7d55ad3}{LiveRange}}\&\ other);}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_af59e2bcb1907d91a75a5d2598e0eb1b6}{id}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_web_a439e3c2fbedccfdd8c34dc780066fb4a}{variable}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ std::set<int>\ \doxymbox{\hyperlink{struct_web_ac915c14d714a4e4c1f09faab36035bf9}{programPoints}};\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_a6a64d95058a9bd2a135bb0ff5d9bdfc9}{defPoint}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_a3cb77b2f807fd86ffb73099b5c060f00}{lastUsePoint}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_web_a8a11a58992b0434d2ffa52f75cc24904}{reg}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ std::vector<LiveRange>\ \doxymbox{\hyperlink{struct_web_a53b28176e88fd5ecba852c31bf7212ef}{originalRanges}};\ }
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}();}
+\DoxyCodeLine{00085\ \ \ \ \ \doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range}{LiveRange}}\&\ lr);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_web_a1daf0ad084076fd059d0e66e75481125}{interferesWith}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_web_aa5e813821bc4a8e27b85e384298b3dcf}{Web}}\&\ other)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00102\ }
-\DoxyCodeLine{00113\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_web_a86e81d9280bf2ca94baf28ee5da596a8}{toString}}()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00114\ \};}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00121\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367}{AlgorithmConfig}}\ \{}
-\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_algorithm_config_a8b840373e153becdd5b5f7e90951a4f6}{numRegisters}};\ \ \ \ }
-\DoxyCodeLine{00123\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_algorithm_config_a0dc0b3bceaef8a123821926487386372}{algorithm}};\ \ \ }
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_algorithm_config_a14e4136c22e233172caf5cebb0271e60}{algorithmParam}};\ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_web_ab67611ff3f4cc55e2f3e0c203c73c092}{merge}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_live_range}{LiveRange}}\&\ lr);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00123\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_web_a86e81d9280bf2ca94baf28ee5da596a8}{toString}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00124\ \};}
 \DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \ \ \ \ \doxymbox{\hyperlink{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367}{AlgorithmConfig}}();}
-\DoxyCodeLine{00127\ \};}
-\DoxyCodeLine{00128\ }
-\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00131\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367}{AlgorithmConfig}}\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_algorithm_config_a8b840373e153becdd5b5f7e90951a4f6}{numRegisters}};\ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_algorithm_config_a0dc0b3bceaef8a123821926487386372}{algorithm}};\ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_algorithm_config_a14e4136c22e233172caf5cebb0271e60}{algorithmParam}};\ \ }
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \doxymbox{\hyperlink{struct_algorithm_config_a0bd7b2c1b90eb68c57bebccc54067367}{AlgorithmConfig}}();}
+\DoxyCodeLine{00137\ \};}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

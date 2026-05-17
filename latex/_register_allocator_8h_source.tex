@@ -5,69 +5,72 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ REGISTERALLOCATOR\_H}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ REGISTERALLOCATOR\_H}}
 \DoxyCodeLine{00003\ }
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_data_types_8h}{DataTypes.h}}"{}}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interference_graph_8h}{InterferenceGraph.h}}"{}}}
-\DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <map>}}
-\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
-\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ SPILLED\ =\ -\/1;}
-\DoxyCodeLine{00013\ }
-\DoxyCodeLine{00021\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_allocation_result_ac66f7489916694f23d9f583138b10769}{AllocationResult}}\ \{}
-\DoxyCodeLine{00022\ \ \ \ \ std::map<int,\ int>\ \doxymbox{\hyperlink{struct_allocation_result_aeb09a1803c90a5ba1a8d6638f9ff3b3d}{webToRegister}};\ }
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_allocation_result_ad2745bf126a525f87be4ea94e99d393a}{registersUsed}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a}{feasible}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00025\ \ \ \ \ std::vector<Web>\ \doxymbox{\hyperlink{struct_allocation_result_a0594ff7608a831b09e23c8767079c13d}{webs}};\ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result_ac66f7489916694f23d9f583138b10769}{AllocationResult}}();}
-\DoxyCodeLine{00028\ \};}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00067\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_register_allocator_a7df802175fd709ff94da6db43b209e3a}{RegisterAllocator}}\ \{}
-\DoxyCodeLine{00068\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00077\ \ \ \ \ \doxymbox{\hyperlink{class_register_allocator_a7df802175fd709ff94da6db43b209e3a}{RegisterAllocator}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ ig,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_algorithm_config}{AlgorithmConfig}}\&\ config);}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00087\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ \doxymbox{\hyperlink{class_register_allocator_a875798ef82faae8bbd5922b85640e790}{allocate}}();}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_data_types_8h}{DataTypes.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interference_graph_8h}{InterferenceGraph.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ SPILLED\ =\ -\/1;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_allocation_result_ac66f7489916694f23d9f583138b10769}{AllocationResult}}\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ std::map<int,\ int>\ \doxymbox{\hyperlink{struct_allocation_result_aeb09a1803c90a5ba1a8d6638f9ff3b3d}{webToRegister}};\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_allocation_result_ad2745bf126a525f87be4ea94e99d393a}{registersUsed}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a}{feasible}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_allocation_result_ab9773a71fbe6047fdfb2df54b5abe2d2}{partialResult}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ std::vector<Web>\ \doxymbox{\hyperlink{struct_allocation_result_a0594ff7608a831b09e23c8767079c13d}{webs}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result_ac66f7489916694f23d9f583138b10769}{AllocationResult}}();}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_register_allocator_a7df802175fd709ff94da6db43b209e3a}{RegisterAllocator}}\ \{}
+\DoxyCodeLine{00078\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00087\ \ \ \ \ \doxymbox{\hyperlink{class_register_allocator_a7df802175fd709ff94da6db43b209e3a}{RegisterAllocator}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ ig,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_algorithm_config}{AlgorithmConfig}}\&\ config);}
 \DoxyCodeLine{00088\ }
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_register_allocator_a688e441792bf93ae2e64445f194960dd}{writeOutput}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\&\ result,}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00104\ }
-\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_register_allocator_af49b4735c8df38beeb820932bb508662}{printResult}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\&\ result)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00111\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00112\ \ \ \ \ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\ ig;\ \ \ \ \ \ }
-\DoxyCodeLine{00113\ \ \ \ \ \doxymbox{\hyperlink{struct_algorithm_config}{AlgorithmConfig}}\ \ \ config;\ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ \doxymbox{\hyperlink{class_register_allocator_a875798ef82faae8bbd5922b85640e790}{allocate}}();}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_register_allocator_a688e441792bf93ae2e64445f194960dd}{writeOutput}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\&\ result,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ filename)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00114\ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ ──\ Core\ algorithms\ ───────────────────────────────────────────────────}}
-\DoxyCodeLine{00116\ }
-\DoxyCodeLine{00130\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ greedyColor(\doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ N,}
-\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxSpills)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00133\ }
-\DoxyCodeLine{00144\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateBasic()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00145\ }
-\DoxyCodeLine{00159\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateSpilling()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00160\ }
-\DoxyCodeLine{00176\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateSplitting()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00190\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateFree()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00191\ }
-\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ ──\ Helpers\ ───────────────────────────────────────────────────────────}}
-\DoxyCodeLine{00193\ }
-\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{int}\ selectSpillCandidate(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<bool>\&\ disabled)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00206\ }
-\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{int}\ selectSplitCandidate(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
-\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<bool>\&\ disabled)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00219\ }
-\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{void}\ splitWeb(\doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,\ \textcolor{keywordtype}{int}\ webId)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00232\ }
-\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordtype}{int}\ effectiveDegree(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
-\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ webId,}
-\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<bool>\&\ disabled)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00246\ \};}
-\DoxyCodeLine{00247\ }
-\DoxyCodeLine{00248\ }
-\DoxyCodeLine{00249\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//REGISTERALLOCATOR\_H}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_register_allocator_af49b4735c8df38beeb820932bb508662}{printResult}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\&\ result)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00122\ \ \ \ \ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\ ig;\ \ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \doxymbox{\hyperlink{struct_algorithm_config}{AlgorithmConfig}}\ \ \ config;\ \ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//\ ──\ Core\ algorithms\ ───────────────────────────────────────────────────}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00140\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ greedyColor(\doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ N,}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxSpills)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00154\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateBasic()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00169\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateSpilling()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00186\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateSplitting()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00201\ \ \ \ \ \doxymbox{\hyperlink{struct_allocation_result}{AllocationResult}}\ allocateFree()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ ──\ Helpers\ ───────────────────────────────────────────────────────────}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{int}\ selectSpillCandidate(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<bool>\&\ disabled)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00228\ \ \ \ \ std::pair<int,\ int>\ selectSplitCandidate(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<bool>\&\ disabled)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordtype}{void}\ splitWeb(\doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,\ \textcolor{keywordtype}{int}\ webId,\ \textcolor{keywordtype}{int}\ splitIndex)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordtype}{int}\ effectiveDegree(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_interference_graph}{InterferenceGraph}}\&\ workingIg,}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ webId,}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<bool>\&\ disabled)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00258\ \};}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//REGISTERALLOCATOR\_H}}
 
 \end{DoxyCode}

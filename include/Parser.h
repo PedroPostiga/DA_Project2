@@ -1,6 +1,14 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+/**
+ * @file Parser.h
+ * @brief Parses input files (live ranges, configurations) and builds fused Web structures.
+ *
+ * This header defines the Parser class which is responsible for parsing inputs and merging
+ * overlapping live ranges of variables into webs using the specification's fusion rule.
+ */
+
 #include "DataTypes.h"
 
 #include <map>

@@ -93,49 +93,50 @@ $(function(){initNavTree('_parser_8h_source.html','',''); });
 <div class="contents">
 <a href="_parser_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef PARSER_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define PARSER_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_data_types_8h.html">DataTypes.h</a>&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span></div>
-<div class="foldopen" id="foldopen00038" data-start="{" data-end="};">
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_parser.html">   38</a></span><span class="keyword">class </span><a class="code hl_function" href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">Parser</a> {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">   40</a></span>    <a class="code hl_function" href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">Parser</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_parser.html#a4f01c9e96b81aced2c597d39a1bfb8ee">parseLiveRanges</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_parser.html#a8f80891b51e5f74f443904df25aa6c5a">parseConfig</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keyword">const</span> std::vector&lt;Web&gt;&amp; <a class="code hl_function" href="class_parser.html#ad12d47fe359415455c4a738f817ced12">getWebs</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_algorithm_config.html">AlgorithmConfig</a>&amp; <a class="code hl_function" href="class_parser.html#a6eb037aedd75d9e39fb3dd78b8698e0f">getConfig</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_parser.html#ad4f098f98e6bf0bb913a753ad69055ee">printWebs</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_parser.html#af13bcf3da1dbe6b8300571bae5219792">printConfig</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    std::vector&lt;Web&gt; webs;   </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_struct" href="struct_algorithm_config.html">AlgorithmConfig</a> config;  </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordtype">bool</span> parseLiveRangeLine(<span class="keyword">const</span> std::string&amp; line,</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                            std::string&amp; varName,</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                            <a class="code hl_struct" href="struct_live_range.html">LiveRange</a>&amp; range);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordtype">void</span> mergeRangesIntoWebs(<span class="keyword">const</span> std::string&amp; variable,</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                             std::vector&lt;LiveRange&gt;&amp; ranges);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">static</span> std::string trim(<span class="keyword">const</span> std::string&amp; s);</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keyword">static</span> std::vector&lt;std::string&gt; split(<span class="keyword">const</span> std::string&amp; s, <span class="keywordtype">char</span> del);</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>};</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_data_types_8h.html">DataTypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="};">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_parser.html">   46</a></span><span class="keyword">class </span><a class="code hl_function" href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">Parser</a> {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">   48</a></span>    <a class="code hl_function" href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">Parser</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_parser.html#a4f01c9e96b81aced2c597d39a1bfb8ee">parseLiveRanges</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_parser.html#a8f80891b51e5f74f443904df25aa6c5a">parseConfig</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">const</span> std::vector&lt;Web&gt;&amp; <a class="code hl_function" href="class_parser.html#ad12d47fe359415455c4a738f817ced12">getWebs</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct_algorithm_config.html">AlgorithmConfig</a>&amp; <a class="code hl_function" href="class_parser.html#a6eb037aedd75d9e39fb3dd78b8698e0f">getConfig</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_parser.html#ad4f098f98e6bf0bb913a753ad69055ee">printWebs</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_parser.html#af13bcf3da1dbe6b8300571bae5219792">printConfig</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    std::vector&lt;Web&gt; webs;   </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <a class="code hl_struct" href="struct_algorithm_config.html">AlgorithmConfig</a> config;  </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">bool</span> parseLiveRangeLine(<span class="keyword">const</span> std::string&amp; line,</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                            std::string&amp; varName,</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                            <a class="code hl_struct" href="struct_live_range.html">LiveRange</a>&amp; range);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keywordtype">void</span> mergeRangesIntoWebs(<span class="keyword">const</span> std::string&amp; variable,</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                             std::vector&lt;LiveRange&gt;&amp; ranges);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keyword">static</span> std::string trim(<span class="keyword">const</span> std::string&amp; s);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keyword">static</span> std::vector&lt;std::string&gt; split(<span class="keyword">const</span> std::string&amp; s, <span class="keywordtype">char</span> del);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>};</div>
 </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="a_data_types_8h_html"><div class="ttname"><a href="_data_types_8h.html">DataTypes.h</a></div></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a_data_types_8h_html"><div class="ttname"><a href="_data_types_8h.html">DataTypes.h</a></div><div class="ttdoc">Defines core data structures for the register allocator (LiveRange, Web, AlgorithmConfig).</div></div>
 <div class="ttc" id="aclass_parser_html_a4f01c9e96b81aced2c597d39a1bfb8ee"><div class="ttname"><a href="class_parser.html#a4f01c9e96b81aced2c597d39a1bfb8ee">Parser::parseLiveRanges</a></div><div class="ttdeci">bool parseLiveRanges(const std::string &amp;filename)</div><div class="ttdoc">Parses the live ranges input file.</div><div class="ttdef"><b>Definition</b> Parser.cpp:204</div></div>
 <div class="ttc" id="aclass_parser_html_a5208129b497bfdf7c8ecceeb70e4bba8"><div class="ttname"><a href="class_parser.html#a5208129b497bfdf7c8ecceeb70e4bba8">Parser::Parser</a></div><div class="ttdeci">Parser()=default</div></div>
 <div class="ttc" id="aclass_parser_html_a6eb037aedd75d9e39fb3dd78b8698e0f"><div class="ttname"><a href="class_parser.html#a6eb037aedd75d9e39fb3dd78b8698e0f">Parser::getConfig</a></div><div class="ttdeci">const AlgorithmConfig &amp; getConfig() const</div><div class="ttdoc">Returns the parsed algorithm configuration.</div><div class="ttdef"><b>Definition</b> Parser.cpp:352</div></div>
@@ -143,8 +144,8 @@ $(function(){initNavTree('_parser_8h_source.html','',''); });
 <div class="ttc" id="aclass_parser_html_ad12d47fe359415455c4a738f817ced12"><div class="ttname"><a href="class_parser.html#ad12d47fe359415455c4a738f817ced12">Parser::getWebs</a></div><div class="ttdeci">const std::vector&lt; Web &gt; &amp; getWebs() const</div><div class="ttdoc">Returns the webs produced after parsing and merging live ranges.</div><div class="ttdef"><b>Definition</b> Parser.cpp:350</div></div>
 <div class="ttc" id="aclass_parser_html_ad4f098f98e6bf0bb913a753ad69055ee"><div class="ttname"><a href="class_parser.html#ad4f098f98e6bf0bb913a753ad69055ee">Parser::printWebs</a></div><div class="ttdeci">void printWebs() const</div><div class="ttdoc">Prints a human-readable summary of all webs to stdout.</div><div class="ttdef"><b>Definition</b> Parser.cpp:354</div></div>
 <div class="ttc" id="aclass_parser_html_af13bcf3da1dbe6b8300571bae5219792"><div class="ttname"><a href="class_parser.html#af13bcf3da1dbe6b8300571bae5219792">Parser::printConfig</a></div><div class="ttdeci">void printConfig() const</div><div class="ttdoc">Prints the algorithm configuration to stdout.</div><div class="ttdef"><b>Definition</b> Parser.cpp:361</div></div>
-<div class="ttc" id="astruct_algorithm_config_html"><div class="ttname"><a href="struct_algorithm_config.html">AlgorithmConfig</a></div><div class="ttdoc">Holds the parsed algorithm configuration from the registers/config input file.</div><div class="ttdef"><b>Definition</b> DataTypes.h:121</div></div>
-<div class="ttc" id="astruct_live_range_html"><div class="ttname"><a href="struct_live_range.html">LiveRange</a></div><div class="ttdoc">Represents a single live range for a variable.</div><div class="ttdef"><b>Definition</b> DataTypes.h:19</div></div>
+<div class="ttc" id="astruct_algorithm_config_html"><div class="ttname"><a href="struct_algorithm_config.html">AlgorithmConfig</a></div><div class="ttdoc">Holds the parsed algorithm configuration from the registers/config input file.</div><div class="ttdef"><b>Definition</b> DataTypes.h:131</div></div>
+<div class="ttc" id="astruct_live_range_html"><div class="ttname"><a href="struct_live_range.html">LiveRange</a></div><div class="ttdoc">Represents a single live range for a variable.</div><div class="ttdef"><b>Definition</b> DataTypes.h:28</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

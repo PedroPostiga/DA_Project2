@@ -23,6 +23,8 @@ int \doxymbox{\hyperlink{struct_allocation_result_ad2745bf126a525f87be4ea94e99d3
 \begin{DoxyCompactList}\small\item\em Number of distinct registers actually assigned. \end{DoxyCompactList}\item 
 bool \doxymbox{\hyperlink{struct_allocation_result_a15e2d2c98221ee91b5b55197423e522a}{feasible}}
 \begin{DoxyCompactList}\small\item\em true if all webs got a register (no spills forced) \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{struct_allocation_result_ab9773a71fbe6047fdfb2df54b5abe2d2}{partial\+Result}}
+\begin{DoxyCompactList}\small\item\em true if partial output should always be written (e.\+g. free mode) \end{DoxyCompactList}\item 
 std::\+vector$<$ \doxymbox{\hyperlink{struct_web}{Web}} $>$ \doxymbox{\hyperlink{struct_allocation_result_a0594ff7608a831b09e23c8767079c13d}{webs}}
 \begin{DoxyCompactList}\small\item\em Final webs used (may differ from original after splitting). \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -55,6 +57,16 @@ bool Allocation\+Result::\+feasible}
 
 
 true if all webs got a register (no spills forced) 
+
+\Hypertarget{struct_allocation_result_ab9773a71fbe6047fdfb2df54b5abe2d2}\index{AllocationResult@{AllocationResult}!partialResult@{partialResult}}
+\index{partialResult@{partialResult}!AllocationResult@{AllocationResult}}
+\doxysubsubsection{\texorpdfstring{partialResult}{partialResult}}
+{\footnotesize\ttfamily \label{struct_allocation_result_ab9773a71fbe6047fdfb2df54b5abe2d2} 
+bool Allocation\+Result::\+partial\+Result}
+
+
+
+true if partial output should always be written (e.\+g. free mode) 
 
 \Hypertarget{struct_allocation_result_ad2745bf126a525f87be4ea94e99d393a}\index{AllocationResult@{AllocationResult}!registersUsed@{registersUsed}}
 \index{registersUsed@{registersUsed}!AllocationResult@{AllocationResult}}

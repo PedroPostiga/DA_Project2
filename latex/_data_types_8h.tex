@@ -1,5 +1,10 @@
 \doxysection{include/\+\+Data\+Types.h File Reference}
 \hypertarget{_data_types_8h}{}\label{_data_types_8h}\index{include/DataTypes.h@{include/DataTypes.h}}
+
+
+Defines core data structures for the register allocator (\doxylink{struct_live_range}{Live\+Range}, \doxylink{struct_web}{Web}, \doxylink{struct_algorithm_config}{Algorithm\+Config}).  
+
+
 {\ttfamily \+\#include $<$set$>$}\newline
 {\ttfamily \+\#include $<$string$>$}\newline
 {\ttfamily \+\#include $<$vector$>$}\newline
@@ -13,3 +18,9 @@ struct \doxymbox{\hyperlink{struct_web}{Web}}
 \begin{DoxyCompactList}\small\item\em Represents a web:\+ the union of all overlapping live ranges for one variable. \end{DoxyCompactList}\item 
 struct \doxymbox{\hyperlink{struct_algorithm_config}{Algorithm\+Config}}
 \begin{DoxyCompactList}\small\item\em Holds the parsed algorithm configuration from the registers/\+config input file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines core data structures for the register allocator (\doxylink{struct_live_range}{Live\+Range}, \doxylink{struct_web}{Web}, \doxylink{struct_algorithm_config}{Algorithm\+Config}). 
+
+This header declares and documents the essential abstractions used throughout the project, including \doxylink{struct_live_range}{Live\+Range} (individual variable lifespans), \doxylink{struct_web}{Web} (unions of overlapping live ranges forming nodes in the interference graph), and \doxylink{struct_algorithm_config}{Algorithm\+Config} (parsed settings). 

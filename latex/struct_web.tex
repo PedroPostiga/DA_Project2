@@ -121,7 +121,7 @@ Returns the web\textquotesingle{}s program points as a formatted output string.
 
 Points are sorted in ascending order; the def\+Point is suffixed with \textquotesingle{}+\textquotesingle{} and the last\+Use\+Point is suffixed with \textquotesingle{}-\/\textquotesingle{}.
 
-Time complexity:\+ O(n)
+Time complexity:\+ O(n \texorpdfstring{$\ast$}{*} R) where n = number of program points, R = number of original live ranges (typically small and bounded).
 
 \begin{DoxyReturn}{Returns}
 e.\+g. "{}1+,2,3,4,5,6-\/"{} 

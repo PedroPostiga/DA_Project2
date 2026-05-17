@@ -105,16 +105,16 @@ T1.1 — Command-Line Menu &amp; Batch Interface</h2>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 T1.2 — Read and Parse Input Data</h2>
 <ul>
-<li><b><span class="tt"><a class="el" href="_parser_8h.html">Parser.h</a></span> / <span class="tt"><a class="el" href="_parser_8cpp.html">Parser.cpp</a></span></b> — <span class="tt">parseLiveRanges()</span> reads the variable ranges file; <span class="tt">parseConfig()</span> reads the algorithm configuration. Helpers <span class="tt">parseLiveRangeLine()</span>, <span class="tt">trim()</span>, and <span class="tt">split()</span> handle tokenization</li>
-<li><b><span class="tt"><a class="el" href="_data_types_8h.html">DataTypes.h</a></span></b> — Defines all core data structures: <span class="tt"><a class="el" href="struct_live_range.html" title="Represents a single live range for a variable.">LiveRange</a></span>, <span class="tt"><a class="el" href="struct_web.html" title="Represents a web: the union of all overlapping live ranges for one variable.">Web</a></span>, and <span class="tt"><a class="el" href="struct_algorithm_config.html" title="Holds the parsed algorithm configuration from the registers/config input file.">AlgorithmConfig</a></span></li>
-<li><b><span class="tt"><a class="el" href="_interference_graph_8h.html">InterferenceGraph.h</a></span> / <span class="tt"><a class="el" href="_interference_graph_8cpp.html">InterferenceGraph.cpp</a></span></b> — <span class="tt">build()</span> constructs the interference graph from webs. Uses <span class="tt"><a class="el" href="class_graph.html">Graph</a>&lt;int&gt;</span> as the underlying representation (vertex info = web ID)</li>
+<li><b><span class="tt"><a class="el" href="_parser_8h.html" title="Parses input files (live ranges, configurations) and builds fused Web structures.">Parser.h</a></span> / <span class="tt"><a class="el" href="_parser_8cpp.html">Parser.cpp</a></span></b> — <span class="tt">parseLiveRanges()</span> reads the variable ranges file; <span class="tt">parseConfig()</span> reads the algorithm configuration. Helpers <span class="tt">parseLiveRangeLine()</span>, <span class="tt">trim()</span>, and <span class="tt">split()</span> handle tokenization</li>
+<li><b><span class="tt"><a class="el" href="_data_types_8h.html" title="Defines core data structures for the register allocator (LiveRange, Web, AlgorithmConfig).">DataTypes.h</a></span></b> — Defines all core data structures: <span class="tt"><a class="el" href="struct_live_range.html" title="Represents a single live range for a variable.">LiveRange</a></span>, <span class="tt"><a class="el" href="struct_web.html" title="Represents a web: the union of all overlapping live ranges for one variable.">Web</a></span>, and <span class="tt"><a class="el" href="struct_algorithm_config.html" title="Holds the parsed algorithm configuration from the registers/config input file.">AlgorithmConfig</a></span></li>
+<li><b><span class="tt"><a class="el" href="_interference_graph_8h.html" title="Builds and manages the web interference graph for register allocation.">InterferenceGraph.h</a></span> / <span class="tt"><a class="el" href="_interference_graph_8cpp.html">InterferenceGraph.cpp</a></span></b> — <span class="tt">build()</span> constructs the interference graph from webs. Uses <span class="tt"><a class="el" href="class_graph.html">Graph</a>&lt;int&gt;</span> as the underlying representation (vertex info = web ID)</li>
 <li><b><span class="tt"><a class="el" href="main_8cpp.html">main.cpp</a></span></b> — <span class="tt"><a class="el" href="main_8cpp.html#a57588b447fb96de491807b12e6cf3048">runMenu()</a></span> provides options 1 (load ranges), 2 (load config), 3 (display webs), 4 (display config). Option 3 calls <span class="tt">parser.printWebs()</span>, option 4 calls <span class="tt">parser.printConfig()</span></li>
 </ul>
 <hr  />
 <h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 T2.1 — Basic Register Allocation (Greedy Coloring)</h2>
 <ul>
-<li><b><span class="tt"><a class="el" href="_register_allocator_8cpp.html">RegisterAllocator.cpp</a></span></b> — <span class="tt">allocateBasic()</span> dispatches to the core <span class="tt">greedyColor()</span> algorithm</li>
+<li><b><span class="tt"><a class="el" href="_algorithms_8cpp.html">Algorithms.cpp</a></span></b> — <span class="tt">allocateBasic()</span> dispatches to the core <span class="tt">greedyColor()</span> algorithm</li>
 <li><b><span class="tt"><a class="el" href="_helpers_8cpp.html">Helpers.cpp</a></span></b> — <span class="tt">greedyColor()</span> implements the Figure 9 algorithm from the spec:<ul>
 <li><b>Phase 1 (Simplification):</b> Repeatedly removes nodes with degree &lt; N, pushes to stack. When none remain, spills selected nodes if budget permits</li>
 <li><b>Phase 2 (Coloring):</b> Pops nodes from stack, assigns lowest-numbered color not used by already-colored neighbors</li>
@@ -127,7 +127,7 @@ T2.1 — Basic Register Allocation (Greedy Coloring)</h2>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 T2.2 — Register Allocation with Web Spilling</h2>
 <ul>
-<li><b><span class="tt"><a class="el" href="_register_allocator_8cpp.html">RegisterAllocator.cpp</a></span></b> — <span class="tt">allocateSpilling()</span> implements the spilling strategy:<ul>
+<li><b><span class="tt"><a class="el" href="_algorithms_8cpp.html">Algorithms.cpp</a></span></b> — <span class="tt">allocateSpilling()</span> implements the spilling strategy:<ul>
 <li>Attempts basic allocation first (0 spills)</li>
 <li>Iteratively increases spill budget from 1 to <span class="tt">config.algorithmParam</span></li>
 <li>Returns the first successful allocation</li>
@@ -140,9 +140,9 @@ T2.2 — Register Allocation with Web Spilling</h2>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 T2.3 — Register Allocation with Web Splitting</h2>
 <ul>
-<li><b><span class="tt"><a class="el" href="_register_allocator_8cpp.html">RegisterAllocator.cpp</a></span></b> — <span class="tt">allocateSplitting()</span> implements the splitting strategy:<ul>
+<li><b><span class="tt"><a class="el" href="_algorithms_8cpp.html">Algorithms.cpp</a></span></b> — <span class="tt">allocateSplitting()</span> implements the splitting strategy:<ul>
 <li>Attempts basic allocation first (0 splits)</li>
-<li>Iteratively splits webs (up to <span class="tt">algorithmParam</span> times) until coloring succeeds</li>
+<li>Iteratively splits webs (up to <span class="tt">config.algorithmParam</span> times) until coloring succeeds</li>
 <li>After each split, rebuilds the interference graph and retries</li>
 </ul>
 </li>
@@ -151,10 +151,10 @@ T2.3 — Register Allocation with Web Splitting</h2>
 </ul>
 <hr  />
 <h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
-T2.4 — Free Strategy (Smallest-Last + Selective Spill)</h2>
+T2.4 — Free Strategy (Linear Scan + Selective Eviction)</h2>
 <ul>
 <li><b><span class="tt"><a class="el" href="_algorithms_8cpp.html">Algorithms.cpp</a></span></b> — <span class="tt">allocateFree()</span> implements a custom strategy combining:<ul>
-<li><b>Smallest-last ordering:</b> Processes webs by earliest definition point first (defPoint order)</li>
+<li><b>Earliest definition point first ordering:</b> Processes webs by earliest definition point first (defPoint order)</li>
 <li><b>Greedy assignment with eviction:</b> When no register is free for a web, spills the interfering neighbor with the fewest program points (cheapest to reload), then retries assignment</li>
 <li><b>No explicit spill budget:</b> Eviction decisions are made dynamically based on program point count</li>
 </ul>

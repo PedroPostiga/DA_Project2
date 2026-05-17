@@ -1,5 +1,10 @@
 \doxysection{include/\+\+Parser.h File Reference}
 \hypertarget{_parser_8h}{}\label{_parser_8h}\index{include/Parser.h@{include/Parser.h}}
+
+
+Parses input files (live ranges, configurations) and builds fused \doxylink{struct_web}{Web} structures.  
+
+
 {\ttfamily \+\#include "{}Data\+Types.\+h"{}}\newline
 {\ttfamily \+\#include $<$map$>$}\newline
 {\ttfamily \+\#include $<$string$>$}\newline
@@ -9,3 +14,9 @@
 \item 
 class \doxymbox{\hyperlink{class_parser}{Parser}}
 \begin{DoxyCompactList}\small\item\em Parses the live ranges input file and the algorithm configuration file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parses input files (live ranges, configurations) and builds fused \doxylink{struct_web}{Web} structures. 
+
+This header defines the \doxylink{class_parser}{Parser} class which is responsible for parsing inputs and merging overlapping live ranges of variables into webs using the specification\textquotesingle{}s fusion rule. 

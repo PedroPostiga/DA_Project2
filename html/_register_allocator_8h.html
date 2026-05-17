@@ -91,11 +91,15 @@ $(function(){initNavTree('_register_allocator_8h.html','',''); });
   <div class="headertitle"><div class="title">RegisterAllocator.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Coordinates register allocation using various algorithms (Basic, Spilling, Splitting, Free).  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_data_types_8h_source.html">DataTypes.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_interference_graph_8h_source.html">InterferenceGraph.h</a>&quot;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
 </div>
 <p><a href="_register_allocator_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -106,7 +110,10 @@ Classes</h2></td></tr>
 <tr class="memitem:RegisterAllocator" id="r_RegisterAllocator"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_register_allocator.html">RegisterAllocator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs register allocation via graph coloring on an <a class="el" href="class_interference_graph.html" title="Builds and manages the web interference graph for register allocation.">InterferenceGraph</a>.  <a href="class_register_allocator.html#details">More...</a><br /></td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Coordinates register allocation using various algorithms (Basic, Spilling, Splitting, Free). </p>
+<p>This header defines the main <a class="el" href="class_register_allocator.html" title="Performs register allocation via graph coloring on an InterferenceGraph.">RegisterAllocator</a> class and the <a class="el" href="struct_allocation_result.html" title="Holds the result of a register allocation attempt.">AllocationResult</a> helper class to run interference-graph-based graph coloring, web spilling, web splitting, or linear scan allocation. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

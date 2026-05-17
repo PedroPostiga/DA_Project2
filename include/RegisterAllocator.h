@@ -1,6 +1,14 @@
 #ifndef REGISTERALLOCATOR_H
 #define REGISTERALLOCATOR_H
 
+/**
+ * @file RegisterAllocator.h
+ * @brief Coordinates register allocation using various algorithms (Basic, Spilling, Splitting, Free).
+ *
+ * This header defines the main RegisterAllocator class and the AllocationResult helper class
+ * to run interference-graph-based graph coloring, web spilling, web splitting, or linear scan allocation.
+ */
+
 #include "DataTypes.h"
 #include "InterferenceGraph.h"
 
@@ -185,7 +193,8 @@ private:
      * highest-degree nodes when the graph cannot be colored. This tends to
      * produce fewer spills than the basic heuristic for dense graphs.
      *
-     * Time complexity: O(W^2 * K)
+     * Time complexity: O(W^2 * P) dominated by the interference matrix
+     * construction, where P = average program points per web.
      *
      * @return AllocationResult.
      */

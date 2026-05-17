@@ -1,5 +1,10 @@
 \doxysection{include/\+\+Graph.h File Reference}
 \hypertarget{_graph_8h}{}\label{_graph_8h}\index{include/Graph.h@{include/Graph.h}}
+
+
+Generic, template-\/based graph data structure representing vertices and directed edges.  
+
+
 {\ttfamily \+\#include $<$cstddef$>$}\newline
 {\ttfamily \+\#include $<$vector$>$}\newline
 {\ttfamily \+\#include $<$queue$>$}\newline
@@ -16,3 +21,9 @@ class \doxymbox{\hyperlink{class_edge}{Edge$<$ T $>$}}
 \item 
 class \doxymbox{\hyperlink{class_graph}{Graph$<$ T $>$}}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generic, template-\/based graph data structure representing vertices and directed edges. 
+
+This header defines the templates \doxylink{class_vertex}{Vertex}, \doxylink{class_edge}{Edge}, and \doxylink{class_graph}{Graph}, which form the structural foundation for the interference graph used by the register allocator. 

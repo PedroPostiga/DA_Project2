@@ -241,7 +241,7 @@ Public Attributes</h2></td></tr>
 
 <p>Returns the web's program points as a formatted output string. </p>
 <p>Points are sorted in ascending order; the defPoint is suffixed with '+' and the lastUsePoint is suffixed with '-'.</p>
-<p>Time complexity: O(n)</p>
+<p>Time complexity: O(n * R) where n = number of program points, R = number of original live ranges (typically small and bounded).</p>
 <dl class="section return"><dt>Returns</dt><dd>e.g. "1+,2,3,4,5,6-" </dd></dl>
 
 </div>

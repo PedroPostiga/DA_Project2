@@ -1,6 +1,15 @@
 #ifndef DATATYPES_H
 #define DATATYPES_H
 
+/**
+ * @file DataTypes.h
+ * @brief Defines core data structures for the register allocator (LiveRange, Web, AlgorithmConfig).
+ *
+ * This header declares and documents the essential abstractions used throughout the
+ * project, including LiveRange (individual variable lifespans), Web (unions of overlapping
+ * live ranges forming nodes in the interference graph), and AlgorithmConfig (parsed settings).
+ */
+
 #include <set>
 #include <string>
 #include <vector>
@@ -106,7 +115,8 @@ struct Web {
      * Points are sorted in ascending order; the defPoint is suffixed with '+'
      * and the lastUsePoint is suffixed with '-'.
      *
-     * Time complexity: O(n)
+     * Time complexity: O(n * R) where n = number of program points,
+     * R = number of original live ranges (typically small and bounded).
      *
      * @return e.g. "1+,2,3,4,5,6-"
      */

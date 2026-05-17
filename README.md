@@ -21,7 +21,7 @@
 
 ### T2.1 — Basic Register Allocation (Greedy Coloring)
 
-- **`RegisterAllocator.cpp`** — `allocateBasic()` dispatches to the core `greedyColor()` algorithm
+- **`Algorithms.cpp`** — `allocateBasic()` dispatches to the core `greedyColor()` algorithm
 - **`Helpers.cpp`** — `greedyColor()` implements the Figure 9 algorithm from the spec:
     - **Phase 1 (Simplification):** Repeatedly removes nodes with degree < N, pushes to stack. When none remain, spills selected nodes if budget permits
     - **Phase 2 (Coloring):** Pops nodes from stack, assigns lowest-numbered color not used by already-colored neighbors
@@ -32,7 +32,7 @@
 
 ### T2.2 — Register Allocation with Web Spilling
 
-- **`RegisterAllocator.cpp`** — `allocateSpilling()` implements the spilling strategy:
+- **`Algorithms.cpp`** — `allocateSpilling()` implements the spilling strategy:
     - Attempts basic allocation first (0 spills)
     - Iteratively increases spill budget from 1 to `config.algorithmParam`
     - Returns the first successful allocation
@@ -43,19 +43,19 @@
 
 ### T2.3 — Register Allocation with Web Splitting
 
-- **`RegisterAllocator.cpp`** — `allocateSplitting()` implements the splitting strategy:
+- **`Algorithms.cpp`** — `allocateSplitting()` implements the splitting strategy:
     - Attempts basic allocation first (0 splits)
-    - Iteratively splits webs (up to `algorithmParam` times) until coloring succeeds
+    - Iteratively splits webs (up to `config.algorithmParam` times) until coloring succeeds
     - After each split, rebuilds the interference graph and retries
 - **`Helpers.cpp`** — `selectSplitCandidate()` evaluates each splittable web (≥2 program points) by simulating splits at each possible cut point and measuring interference reduction. Returns the web with the greatest reduction
 - **`splitWeb()`** — Splits a web at its midpoint (or optimal cut point), creating two derived webs. Updates the interference graph via `InterferenceGraph::build()`
 
 ---
 
-### T2.4 — Free Strategy (Smallest-Last + Selective Spill)
+### T2.4 — Free Strategy (Linear Scan + Selective Eviction)
 
 - **`Algorithms.cpp`** — `allocateFree()` implements a custom strategy combining:
-    - **Smallest-last ordering:** Processes webs by earliest definition point first (defPoint order)
+    - **Earliest definition point first ordering:** Processes webs by earliest definition point first (defPoint order)
     - **Greedy assignment with eviction:** When no register is free for a web, spills the interfering neighbor with the fewest program points (cheapest to reload), then retries assignment
     - **No explicit spill budget:** Eviction decisions are made dynamically based on program point count
 - **Rationale:** This approach minimizes spills by prioritizing long-lived webs (many program points) for registers, while short-lived webs (few program points) are cheaper to spill/reload. The defPoint ordering approximates program execution order, improving spatial locality

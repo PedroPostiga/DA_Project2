@@ -1,5 +1,9 @@
-/*
- * Graph.h
+/**
+ * @file Graph.h
+ * @brief Generic, template-based graph data structure representing vertices and directed edges.
+ *
+ * This header defines the templates Vertex, Edge, and Graph, which form the structural foundation
+ * for the interference graph used by the register allocator.
  */
 #ifndef GRAPH_H_
 #define GRAPH_H_
